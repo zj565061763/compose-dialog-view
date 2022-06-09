@@ -24,12 +24,6 @@ import androidx.compose.ui.unit.sp
 import com.sd.lib.dialog.IDialog
 import com.sd.lib.dialog.impl.FDialog
 
-object FDialogConfirmViewDefaults {
-    var colors by mutableStateOf(FDialogConfirmViewColors.light())
-    var typography by mutableStateOf(FDialogConfirmViewTypography())
-    var shapes by mutableStateOf(FDialogConfirmViewShapes())
-}
-
 fun fDialogConfirm(
     activity: Activity,
     content: String,
@@ -185,6 +179,12 @@ fun FDialogConfirmButtons(
             }
         }
     }
+}
+
+object FDialogConfirmViewDefaults {
+    var colors by mutableStateOf(FDialogConfirmViewColors.light())
+    var typography by mutableStateOf(FDialogConfirmViewTypography())
+    var shapes by mutableStateOf(FDialogConfirmViewShapes())
 }
 
 class FDialogConfirmViewColors(
