@@ -5,19 +5,17 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.sd.lib.compose.dialogview.FDialogConfirm
-import com.sd.lib.compose.dialogview.FDialogConfirmViewColors
 import com.sd.lib.compose.dialogview.FDialogConfirmViewDefaults
 import com.sd.lib.compose.dialogview.FDialogMenu
 import com.sd.lib.demo.compose_dialog_view.ui.theme.ComposedialogviewTheme
@@ -28,15 +26,7 @@ private const val TAG = "MainActivity"
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        FDialogConfirmViewDefaults.colors = FDialogConfirmViewColors.light()
-
-        // 参数拦截
-        FDialogConfirmViewDefaults.paramsHook = {
-            it.title = {
-                Text(text = "我是拦截的title")
-            }
-        }
-
+//        hookParams()
         setContent {
             ComposedialogviewTheme {
                 Surface(
@@ -44,6 +34,36 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     MainView()
+                }
+            }
+        }
+    }
+}
+
+/**
+ * 参数拦截
+ */
+private fun hookParams() {
+    FDialogConfirmViewDefaults.paramsHook = {
+        val cancel = it.cancel
+        val confirm = it.confirm
+        if (cancel != null || confirm != null) {
+            it.buttons = {
+                Row(
+                    modifier = Modifier.fillMaxWidth(1f),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                ) {
+                    if (cancel != null) {
+                        Button(onClick = { it.onClickCancel?.invoke() }) {
+                            cancel.invoke()
+                        }
+                    }
+                    if (confirm != null) {
+                        Button(onClick = { it.onClickConfirm?.invoke() }) {
+                            confirm.invoke()
+                        }
+                    }
                 }
             }
         }
