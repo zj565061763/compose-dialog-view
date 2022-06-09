@@ -119,6 +119,7 @@ fun FDialogConfirmView(
     Surface(
         shape = FDialogConfirmViewDefaults.shapes.dialog,
         color = FDialogConfirmViewDefaults.colors.background,
+        contentColor = FDialogConfirmViewDefaults.colors.onBackground,
     ) {
         val padding = 15.dp
         Column(
@@ -281,6 +282,8 @@ class FDialogConfirmViewParams {
 class FDialogConfirmViewColors(
     /** 背景 */
     background: Color,
+    /** 在背景上面内容颜色 */
+    onBackground: Color,
     /** 标题 */
     title: Color,
     /** 内容 */
@@ -295,6 +298,9 @@ class FDialogConfirmViewColors(
     isLight: Boolean,
 ) {
     var background by mutableStateOf(background)
+        private set
+
+    var onBackground by mutableStateOf(background)
         private set
 
     var title by mutableStateOf(title)
@@ -317,6 +323,7 @@ class FDialogConfirmViewColors(
 
     fun copy(
         background: Color = this.background,
+        onBackground: Color = this.onBackground,
         title: Color = this.title,
         content: Color = this.content,
         buttonCancel: Color = this.buttonCancel,
@@ -325,6 +332,7 @@ class FDialogConfirmViewColors(
         isLight: Boolean = this.isLight,
     ): FDialogConfirmViewColors = FDialogConfirmViewColors(
         background = background,
+        onBackground = onBackground,
         title = title,
         content = content,
         buttonCancel = buttonCancel,
@@ -334,25 +342,35 @@ class FDialogConfirmViewColors(
     )
 
     companion object {
-        fun light(): FDialogConfirmViewColors = FDialogConfirmViewColors(
-            background = Color.White,
-            title = Color.Black.copy(alpha = 0.8f),
-            content = Color.Black.copy(alpha = 0.6f),
-            buttonCancel = Color.Black.copy(alpha = 0.35f),
-            buttonConfirm = Color.Black.copy(alpha = 0.5f),
-            divider = Color.Black.copy(alpha = 0.2f),
-            isLight = true,
-        )
+        fun light(): FDialogConfirmViewColors {
+            val background = Color.White
+            val onBackground = Color.Black
+            return FDialogConfirmViewColors(
+                background = background,
+                onBackground = onBackground,
+                title = onBackground.copy(alpha = 0.8f),
+                content = onBackground.copy(alpha = 0.6f),
+                buttonCancel = onBackground.copy(alpha = 0.35f),
+                buttonConfirm = onBackground.copy(alpha = 0.5f),
+                divider = onBackground.copy(alpha = 0.2f),
+                isLight = true,
+            )
+        }
 
-        fun dark(): FDialogConfirmViewColors = FDialogConfirmViewColors(
-            background = Color.Black,
-            title = Color.White.copy(alpha = 0.8f),
-            content = Color.White.copy(alpha = 0.6f),
-            buttonCancel = Color.White.copy(alpha = 0.35f),
-            buttonConfirm = Color.White.copy(alpha = 0.5f),
-            divider = Color.White.copy(alpha = 0.2f),
-            isLight = false,
-        )
+        fun dark(): FDialogConfirmViewColors {
+            val background = Color.Black
+            val onBackground = Color.White
+            return FDialogConfirmViewColors(
+                background = background,
+                onBackground = onBackground,
+                title = onBackground.copy(alpha = 0.8f),
+                content = onBackground.copy(alpha = 0.6f),
+                buttonCancel = onBackground.copy(alpha = 0.35f),
+                buttonConfirm = onBackground.copy(alpha = 0.5f),
+                divider = onBackground.copy(alpha = 0.2f),
+                isLight = false,
+            )
+        }
     }
 }
 
