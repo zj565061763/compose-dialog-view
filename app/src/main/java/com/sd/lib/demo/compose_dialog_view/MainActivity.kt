@@ -16,9 +16,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import com.sd.lib.compose.dialogview.*
+import com.sd.lib.compose.dialogview.FDialogConfirm
+import com.sd.lib.compose.dialogview.FDialogConfirmViewColors
+import com.sd.lib.compose.dialogview.FDialogConfirmViewDefaults
+import com.sd.lib.compose.dialogview.FDialogMenu
 import com.sd.lib.demo.compose_dialog_view.ui.theme.ComposedialogviewTheme
-import com.sd.lib.dialog.IDialog
 import com.sd.lib.dialog.animator.ScaleXYCreator
 
 private const val TAG = "MainActivity"
@@ -43,9 +45,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainView() {
-    val confirmDialog = confirmDialog()
     val activity = LocalContext.current as Activity
-
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -60,16 +60,6 @@ fun MainView() {
             Text(text = "Confirm")
         }
 
-        // Confirm in Composable
-        Button(
-            onClick = {
-                confirmDialog.show()
-            },
-            modifier = Modifier.fillMaxWidth(),
-        ) {
-            Text(text = "Confirm in Composable")
-        }
-
         // Menu
         Button(
             onClick = {
@@ -78,30 +68,6 @@ fun MainView() {
             modifier = Modifier.fillMaxWidth(),
         ) {
             Text(text = "Menu")
-        }
-    }
-}
-
-@Composable
-private fun confirmDialog(): IDialog {
-    val context = LocalContext.current
-    return rememberFDialog {
-        // 设置动画类型
-        animatorCreator = ScaleXYCreator()
-        // 设置显示内容
-        setComposable {
-            FDialogConfirmView(
-                onClickCancel = {
-                    Toast.makeText(context, "onCancel", Toast.LENGTH_SHORT).show()
-                    dismiss()
-                },
-                onClickConfirm = {
-                    Toast.makeText(context, "onConfirm", Toast.LENGTH_SHORT).show()
-                    dismiss()
-                },
-            ) {
-                Text(text = "Confirm in Composable")
-            }
         }
     }
 }
@@ -142,24 +108,19 @@ private fun showMenuDialog(activity: Activity) {
     val list = listOf(
         "Kotlin",
         "Java",
+        "C",
+        "C++",
+        "OC",
+        "Swift",
+        "PHP",
+        "C#",
+        "GO",
+        "Groovy",
+        "Rust",
+        "Python",
         "Javascript",
-        "Javascript",
-        "Javascript",
-        "Javascript",
-        "Javascript",
-        "Javascript",
-        "Javascript",
-        "Javascript",
-        "Javascript",
-        "Javascript",
-        "Javascript",
-        "Javascript",
-        "Javascript",
-        "Javascript",
-        "Javascript",
-        "Javascript",
-        "Javascript",
-        "Javascript",
+        "Html",
+        "CSS",
     )
 
     val dialog = FDialogMenu<String>(activity).apply {
