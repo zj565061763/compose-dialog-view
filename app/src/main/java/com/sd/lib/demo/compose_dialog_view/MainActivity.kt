@@ -36,21 +36,6 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-
-        val dialog = FDialogMenu<String>(this)
-        dialog.title = "title"
-        dialog.cancel = "cancel"
-        dialog.data.add("1")
-        dialog.data.add("2")
-        dialog.data.add("3")
-        dialog.onClickCancel = {
-            Toast.makeText(applicationContext, "cancel", Toast.LENGTH_SHORT).show()
-        }
-        dialog.show()
-
-        window.decorView.postDelayed({
-            dialog.title = "changed title"
-        }, 3000)
     }
 }
 
@@ -140,7 +125,7 @@ private fun showConfirmDialog(activity: Activity) {
  * 菜单窗口
  */
 private fun showMenuDialog(activity: Activity) {
-    val data = listOf(
+    val list = listOf(
         "Kotlin",
         "Java",
         "Javascript",
@@ -162,18 +147,22 @@ private fun showMenuDialog(activity: Activity) {
         "Javascript",
         "Javascript",
     )
-    fDialogMenu(
-        activity = activity,
-        title = "title",
-        data = data,
-        onClickCancel = {
-            Toast.makeText(activity, "onCancel", Toast.LENGTH_SHORT).show()
-            it.dismiss()
-        },
-    ) { index, item, dialog ->
-        Toast.makeText(activity, item, Toast.LENGTH_SHORT).show()
+
+    val dialog = FDialogMenu<String>(activity).apply {
+        title = "title"
+        cancel = "cancel"
+        data.addAll(list)
+    }
+
+    dialog.onClickRow = { index, item, dialog ->
         dialog.dismiss()
-    }.show()
+        Toast.makeText(activity, item, Toast.LENGTH_SHORT).show()
+    }
+    dialog.onClickCancel = {
+        dialog.dismiss()
+        Toast.makeText(activity, "onCancel", Toast.LENGTH_SHORT).show()
+    }
+    dialog.show()
 }
 
 @Preview(showBackground = true)

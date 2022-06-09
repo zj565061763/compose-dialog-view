@@ -27,8 +27,6 @@ import com.sd.lib.dialog.impl.FDialog
 class FDialogMenu<T>(activity: Activity) : FDialog(activity) {
     /** 数据 */
     var data = mutableStateListOf<T>()
-    /** 每一行要显示的界面 */
-    var row: @Composable (RowScope.(index: Int, item: T) -> Unit)? = null
 
     /** 标题 */
     var title by mutableStateOf("")
@@ -54,7 +52,6 @@ class FDialogMenu<T>(activity: Activity) : FDialog(activity) {
                     onClickCancel?.invoke(this@FDialogMenu)
                 },
                 data = data,
-                row = row,
                 onClickRow = { index, item ->
                     onClickRow?.invoke(index, item, this@FDialogMenu)
                 },
