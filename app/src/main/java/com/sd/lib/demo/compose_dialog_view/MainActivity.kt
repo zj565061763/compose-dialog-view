@@ -125,11 +125,11 @@ private fun showConfirmDialog(activity: Activity) {
 
         onClickCancel = {
             Toast.makeText(activity, "onCancel", Toast.LENGTH_SHORT).show()
-            it.dismiss()
+            dismiss()
         }
         onClickConfirm = {
             Toast.makeText(activity, "onConfirm", Toast.LENGTH_SHORT).show()
-            it.dismiss()
+            dismiss()
         }
     }
     dialog.show()
@@ -166,15 +166,20 @@ private fun showMenuDialog(activity: Activity) {
         title = "title"
         cancel = "cancel"
         data.addAll(list)
-    }
 
-    dialog.onClickRow = { index, item, _ ->
-        dialog.dismiss()
-        Toast.makeText(activity, item, Toast.LENGTH_SHORT).show()
-    }
-    dialog.onClickCancel = {
-        dialog.dismiss()
-        Toast.makeText(activity, "onCancel", Toast.LENGTH_SHORT).show()
+        // 自定义每一行的样式
+//        row = { index, item ->
+//            Text(text = "I'm row $item")
+//        }
+
+        onClickCancel = {
+            dismiss()
+            Toast.makeText(activity, "onCancel", Toast.LENGTH_SHORT).show()
+        }
+        onClickRow = { index, item, _ ->
+            dismiss()
+            Toast.makeText(activity, item, Toast.LENGTH_SHORT).show()
+        }
     }
     dialog.show()
 }

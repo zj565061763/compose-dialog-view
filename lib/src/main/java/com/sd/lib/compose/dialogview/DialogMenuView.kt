@@ -27,6 +27,8 @@ import com.sd.lib.dialog.impl.FDialog
 class FDialogMenu<T>(activity: Activity) : FDialog(activity) {
     /** 数据 */
     var data = mutableStateListOf<T>()
+    /** 自定义每一行的样式 */
+    var row: @Composable (RowScope.(index: Int, item: T) -> Unit)? = null
 
     /** 标题 */
     var title by mutableStateOf("")
@@ -34,9 +36,9 @@ class FDialogMenu<T>(activity: Activity) : FDialog(activity) {
     var cancel by mutableStateOf(activity.getString(R.string.lib_compose_dialog_view_menu_text_cancel))
 
     /** 点击取消 */
-    var onClickCancel: ((IDialog) -> Unit)? = { dismiss() }
+    var onClickCancel: ((IDialog) -> Unit)? = { it.dismiss() }
     /** 点击某一行 */
-    var onClickRow: ((index: Int, item: T, dialog: IDialog) -> Unit)? = null
+    lateinit var onClickRow: (index: Int, item: T, dialog: IDialog) -> Unit
 
     override fun onCreate() {
         super.onCreate()
@@ -52,8 +54,9 @@ class FDialogMenu<T>(activity: Activity) : FDialog(activity) {
                     onClickCancel?.invoke(this@FDialogMenu)
                 },
                 data = data,
+                row = row,
                 onClickRow = { index, item ->
-                    onClickRow?.invoke(index, item, this@FDialogMenu)
+                    onClickRow.invoke(index, item, this@FDialogMenu)
                 },
             )
         }

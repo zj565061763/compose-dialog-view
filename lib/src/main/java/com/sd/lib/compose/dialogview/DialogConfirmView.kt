@@ -27,7 +27,7 @@ import com.sd.lib.dialog.impl.FDialog
 class FDialogConfirm(activity: Activity) : FDialog(activity) {
     /** 内容 */
     var content by mutableStateOf("")
-    /** 可组合内容，优先级高于[content] */
+    /** 自定义内容，优先级高于[content] */
     var composableContent by mutableStateOf<@Composable (() -> Unit)?>(null)
 
     /** 标题 */
