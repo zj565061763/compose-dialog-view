@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -96,10 +97,11 @@ fun <T> FDialogMenuView(
                     color = FDialogMenuViewDefaults.colors.content
                 )
             ) {
+                val maxHeight = LocalContext.current.resources.displayMetrics.heightPixels / 2f
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .heightIn(max = 500.dp),
+                        .heightIn(max = with(LocalDensity.current) { maxHeight.toDp() }),
                     verticalArrangement = Arrangement.spacedBy((1f / LocalDensity.current.density).dp),
                 ) {
                     items(count = data.size) { index ->
@@ -128,11 +130,11 @@ fun <T> FDialogMenuView(
                 TextButton(
                     onClick = { onClickCancel?.invoke() },
                     modifier = Modifier
-                        .background(FDialogMenuViewDefaults.colors.background)
                         .fillMaxWidth()
-                        .height(40.dp),
+                        .heightIn(min = 40.dp),
                     shape = RoundedCornerShape(0.dp),
                     colors = ButtonDefaults.textButtonColors(
+                        backgroundColor = FDialogMenuViewDefaults.colors.background,
                         contentColor = FDialogMenuViewDefaults.colors.buttonCancel
                     ),
                 ) {

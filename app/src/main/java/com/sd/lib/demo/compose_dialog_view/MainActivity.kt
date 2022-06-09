@@ -127,7 +127,28 @@ private fun showConfirmDialog(activity: Activity) {
  * 菜单窗口
  */
 private fun showMenuDialog(activity: Activity) {
-    val data = listOf("Kotlin", "Java", "Javascript")
+    val data = listOf(
+        "Kotlin",
+        "Java",
+        "Javascript",
+        "Javascript",
+        "Javascript",
+        "Javascript",
+        "Javascript",
+        "Javascript",
+        "Javascript",
+        "Javascript",
+        "Javascript",
+        "Javascript",
+        "Javascript",
+        "Javascript",
+        "Javascript",
+        "Javascript",
+        "Javascript",
+        "Javascript",
+        "Javascript",
+        "Javascript",
+    )
     fDialogMenu(
         activity = activity,
         data = data,
