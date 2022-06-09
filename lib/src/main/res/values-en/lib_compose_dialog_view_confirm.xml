@@ -1,0 +1,8 @@
+<resources>
+
+    <!--          string          -->
+    <string name="lib_compose_dialog_view_confirm_text_title">Tips</string>
+    <string name="lib_compose_dialog_view_confirm_text_cancel">Cancel</string>
+    <string name="lib_compose_dialog_view_confirm_text_confirm">Confirm</string>
+
+</resources>
