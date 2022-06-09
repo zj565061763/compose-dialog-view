@@ -33,13 +33,13 @@ fun rememberFDialog(apply: IDialog.() -> Unit): IDialog {
  * 设置内容
  */
 fun IDialog.setComposable(content: @Composable (IDialog) -> Unit) {
-    val view = contentView
-    if (view is ComposeView) {
-        view.setContent { content(this) }
-    } else {
-        ComposeView(context).also {
+    var view = contentView
+    if (view !is ComposeView) {
+        view = ComposeView(context).also {
             setContentView(it)
-            it.setContent { content(this) }
         }
+    }
+    view.setContent {
+        content(this@setComposable)
     }
 }
