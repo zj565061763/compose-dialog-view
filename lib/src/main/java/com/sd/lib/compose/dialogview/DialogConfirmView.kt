@@ -27,6 +27,8 @@ import com.sd.lib.dialog.impl.FDialog
 class FDialogConfirm(activity: Activity) : FDialog(activity) {
     /** 内容 */
     var content by mutableStateOf("")
+    /** 可组合内容，优先级高于[content] */
+    var composableContent: @Composable (() -> Unit)? = null
 
     /** 标题 */
     var title by mutableStateOf<String?>(
@@ -48,14 +50,6 @@ class FDialogConfirm(activity: Activity) : FDialog(activity) {
 
     override fun onCreate() {
         super.onCreate()
-        setCustomContent {
-            Text(text = content)
-        }
-    }
-
-    private fun setCustomContent(
-        content: @Composable () -> Unit,
-    ) {
         setComposable {
             val title = title
             val cancel = cancel
@@ -76,7 +70,7 @@ class FDialogConfirm(activity: Activity) : FDialog(activity) {
                 onClickConfirm = {
                     onClickConfirm?.invoke(this@FDialogConfirm)
                 },
-                content = content
+                content = composableContent ?: { Text(text = content) }
             )
         }
     }

@@ -112,7 +112,12 @@ private fun showConfirmDialog(activity: Activity) {
         animatorCreator = ScaleXYCreator()
 
         title = "title"
-        content = "content"
+
+        content = "我是 content"
+        composableContent = {
+            Text(text = "我是 content 我的优先级更高")
+        }
+
         cancel = "cancel"
         confirm = "confirm"
 
