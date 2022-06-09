@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.sd.lib.compose.dialogview.DialogViewHook
 import com.sd.lib.compose.dialogview.FDialogConfirm
 import com.sd.lib.compose.dialogview.FDialogMenu
+import com.sd.lib.compose.dialogview.setComposable
 import com.sd.lib.demo.compose_dialog_view.ui.theme.ComposedialogviewTheme
 import com.sd.lib.dialog.animator.ScaleXYCreator
 
@@ -26,7 +27,7 @@ private const val TAG = "MainActivity"
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        hookParams()
+//        testHook()
         setContent {
             ComposedialogviewTheme {
                 Surface(
@@ -41,9 +42,10 @@ class MainActivity : ComponentActivity() {
 }
 
 /**
- * 参数拦截
+ * 拦截
  */
-private fun hookParams() {
+private fun testHook() {
+    // 确认View参数拦截
     DialogViewHook.confirmViewParamsHook = {
         val cancel = it.cancel
         val confirm = it.confirm
@@ -65,6 +67,16 @@ private fun hookParams() {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    /** [setComposable]拦截 */
+    DialogViewHook.setComposableHook = { content, dialog ->
+        ComposedialogviewTheme {
+            Column {
+                Text(text = "setComposableHook")
+                content(dialog)
             }
         }
     }

@@ -40,6 +40,11 @@ fun IDialog.setComposable(content: @Composable (IDialog) -> Unit) {
         }
     }
     view.setContent {
-        content(this@setComposable)
+        val hook = DialogViewHook.setComposableHook
+        if (hook == null) {
+            content(this@setComposable)
+        } else {
+            hook(content, this@setComposable)
+        }
     }
 }
