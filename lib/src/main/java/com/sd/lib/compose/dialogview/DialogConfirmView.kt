@@ -184,7 +184,7 @@ fun FDialogConfirmView(
 }
 
 @Composable
-fun FDialogConfirmButtons(
+private fun FDialogConfirmButtons(
     cancel: @Composable (() -> Unit)? = null,
     confirm: @Composable (() -> Unit)? = null,
     showDivider: Boolean = true,
@@ -258,6 +258,7 @@ object FDialogConfirmViewDefaults {
     /** 形状 */
     var shapes by mutableStateOf(FDialogConfirmViewShapes())
 
+    /** 参数拦截 */
     var paramsHook: ((FDialogConfirmViewParams) -> Unit)? = null
 }
 
@@ -281,12 +282,19 @@ class FDialogConfirmViewParams {
 }
 
 class FDialogConfirmViewColors(
+    /** 背景 */
     background: Color,
+    /** 标题 */
     title: Color,
+    /** 内容 */
     content: Color,
+    /** 取消按钮 */
     buttonCancel: Color,
+    /** 确认按钮 */
     buttonConfirm: Color,
+    /** 分割线 */
     divider: Color,
+    /** 是否亮色 */
     isLight: Boolean,
 ) {
     var background by mutableStateOf(background)
@@ -352,21 +360,25 @@ class FDialogConfirmViewColors(
 }
 
 class FDialogConfirmViewTypography(
+    /** 标题 */
     title: TextStyle = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         letterSpacing = 0.25.sp
     ),
+    /** 内容 */
     content: TextStyle = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
         letterSpacing = 0.25.sp
     ),
+    /** 取消按钮 */
     buttonCancel: TextStyle = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
         letterSpacing = 0.25.sp,
     ),
+    /** 确认按钮 */
     buttonConfirm: TextStyle = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
@@ -399,6 +411,7 @@ class FDialogConfirmViewTypography(
 }
 
 class FDialogConfirmViewShapes(
+    /** 窗口形状 */
     dialog: Shape = RoundedCornerShape(8.dp),
 ) {
     var dialog by mutableStateOf(dialog)
