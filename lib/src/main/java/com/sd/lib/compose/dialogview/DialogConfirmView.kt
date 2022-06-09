@@ -25,13 +25,13 @@ import com.sd.lib.dialog.IDialog
 import com.sd.lib.dialog.impl.FDialog
 
 class FDialogConfirm(activity: Activity) : FDialog(activity) {
+    /** 内容 */
+    var content by mutableStateOf("")
+
     /** 标题 */
     var title by mutableStateOf<String?>(
         activity.getString(R.string.lib_compose_dialog_view_confirm_text_title)
     )
-    /** 内容 */
-    lateinit var content: @Composable () -> Unit
-
     /** 取消按钮 */
     var cancel by mutableStateOf<String?>(
         activity.getString(R.string.lib_compose_dialog_view_confirm_text_cancel)
@@ -68,7 +68,9 @@ class FDialogConfirm(activity: Activity) : FDialog(activity) {
                 onClickConfirm = {
                     onClickConfirm?.invoke(this@FDialogConfirm)
                 },
-                content = content
+                content = {
+                    Text(text = content)
+                }
             )
         }
     }

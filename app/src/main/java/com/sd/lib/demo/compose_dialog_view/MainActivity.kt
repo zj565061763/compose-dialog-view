@@ -110,12 +110,12 @@ private fun confirmDialog(): IDialog {
 private fun showConfirmDialog(activity: Activity) {
     val dialog = FDialogConfirm(activity).apply {
         animatorCreator = ScaleXYCreator()
+
         title = "title"
-        content = {
-            Text(text = "content")
-        }
+        content = "content"
         cancel = "cancel"
         confirm = "confirm"
+
         onClickCancel = {
             Toast.makeText(activity, "onCancel", Toast.LENGTH_SHORT).show()
             it.dismiss()
@@ -126,13 +126,6 @@ private fun showConfirmDialog(activity: Activity) {
         }
     }
     dialog.show()
-
-    dialog.contentView?.postDelayed({
-        dialog.title = "changed title"
-        dialog.content = {
-            Text(text = "changed content")
-        }
-    }, 3000)
 }
 
 /**
