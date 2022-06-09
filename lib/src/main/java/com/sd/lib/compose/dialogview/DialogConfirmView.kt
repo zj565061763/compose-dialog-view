@@ -48,7 +48,15 @@ class FDialogConfirm(activity: Activity) : FDialog(activity) {
 
     override fun onCreate() {
         super.onCreate()
-        setContent {
+        setCustomContent {
+            Text(text = content)
+        }
+    }
+
+    private fun setCustomContent(
+        content: @Composable () -> Unit,
+    ) {
+        setComposable {
             val title = title
             val cancel = cancel
             val confirm = confirm
@@ -68,9 +76,7 @@ class FDialogConfirm(activity: Activity) : FDialog(activity) {
                 onClickConfirm = {
                     onClickConfirm?.invoke(this@FDialogConfirm)
                 },
-                content = {
-                    Text(text = content)
-                }
+                content = content
             )
         }
     }

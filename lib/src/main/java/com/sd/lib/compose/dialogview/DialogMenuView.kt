@@ -40,7 +40,7 @@ class FDialogMenu<T>(activity: Activity) : FDialog(activity) {
 
     override fun onCreate() {
         super.onCreate()
-        setContent {
+        setComposable {
             FDialogMenuView(
                 title = if (title.isEmpty()) null else {
                     { Text(text = title) }

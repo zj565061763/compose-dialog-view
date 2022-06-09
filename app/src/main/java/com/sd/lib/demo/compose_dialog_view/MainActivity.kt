@@ -87,7 +87,7 @@ private fun confirmDialog(): IDialog {
         // 设置动画类型
         animatorCreator = ScaleXYCreator()
         // 设置显示内容
-        setContent {
+        setComposable {
             FDialogConfirmView(
                 onClickCancel = {
                     Toast.makeText(context, "onCancel", Toast.LENGTH_SHORT).show()
