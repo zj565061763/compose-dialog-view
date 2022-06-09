@@ -69,6 +69,16 @@ fun MainView() {
         ) {
             Text(text = "Confirm in Composable")
         }
+
+        // Menu
+        Button(
+            onClick = {
+                showMenuDialog(activity)
+            },
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            Text(text = "Menu")
+        }
     }
 }
 
@@ -95,6 +105,9 @@ private fun confirmDialog(): IDialog {
     }
 }
 
+/**
+ * 确认窗口
+ */
 private fun showConfirmDialog(activity: Activity) {
     fDialogConfirm(
         activity = activity,
@@ -108,6 +121,23 @@ private fun showConfirmDialog(activity: Activity) {
             it.dismiss()
         }
     ).apply { animatorCreator = ScaleXYCreator() }.show()
+}
+
+/**
+ * 菜单窗口
+ */
+private fun showMenuDialog(activity: Activity) {
+    val data = listOf("Kotlin", "Java", "Javascript")
+    fDialogMenu(
+        activity = activity,
+        data = data,
+        onClickCancel = {
+            Toast.makeText(activity, "onCancel", Toast.LENGTH_SHORT).show()
+            it.dismiss()
+        },
+    ) { index, item ->
+        Toast.makeText(activity, item, Toast.LENGTH_SHORT).show()
+    }.show()
 }
 
 @Preview(showBackground = true)

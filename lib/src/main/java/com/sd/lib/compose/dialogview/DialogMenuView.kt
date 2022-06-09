@@ -1,12 +1,12 @@
 package com.sd.lib.compose.dialogview
 
+import android.app.Activity
+import android.view.Gravity
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -16,28 +16,66 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.sd.lib.dialog.IDialog
+import com.sd.lib.dialog.animator.SlideTopBottomCreator
+import com.sd.lib.dialog.impl.FDialog
+
+fun <T> fDialogMenu(
+    activity: Activity,
+    data: List<T>,
+    title: String? = null,
+    cancel: String? = activity.getString(R.string.lib_compose_dialog_view_menu_text_cancel),
+    onClickCancel: (IDialog) -> Unit = { it.dismiss() },
+    onClick: (index: Int, item: T) -> Unit,
+): IDialog {
+    return FDialog(activity).apply {
+        setPadding(0, 0, 0, 0)
+        gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
+        animatorCreator = SlideTopBottomCreator()
+
+        setContent { dialog ->
+            FDialogMenuView(
+                title = if (title.isNullOrEmpty()) null else {
+                    { Text(text = title) }
+                },
+                cancel = if (cancel.isNullOrEmpty()) null else {
+                    { Text(text = cancel) }
+                },
+                onClickCancel = {
+                    onClickCancel.invoke(dialog)
+                },
+                data = data,
+                onClick = onClick,
+            )
+        }
+    }
+}
 
 @Composable
-fun FDialogMenuView(
-    title: @Composable (() -> Unit)? = { Text(text = stringResource(id = R.string.lib_compose_dialog_view_menu_text_title)) },
+fun <T> FDialogMenuView(
+    data: List<T>,
+    content: @Composable RowScope.(index: Int, item: T) -> Unit = { index, item ->
+        Text(item.toString())
+    },
+    title: @Composable (() -> Unit)? = null,
     cancel: @Composable (() -> Unit)? = { Text(text = stringResource(id = R.string.lib_compose_dialog_view_menu_text_cancel)) },
-    onCancel: (() -> Unit)? = null,
-    content: LazyListScope.() -> Unit,
+    onClickCancel: (() -> Unit)? = null,
+    onClick: (index: Int, item: T) -> Unit,
 ) {
     Surface(
         shape = FDialogMenuViewDefaults.shapes.dialog,
-        color = FDialogMenuViewDefaults.colors.background,
     ) {
-        val padding = 15.dp
         Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = padding),
+                .background(FDialogMenuViewDefaults.colors.divider)
+                .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
@@ -61,24 +99,38 @@ fun FDialogMenuView(
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .heightIn(max = 500.dp)
-                        .padding(padding)
-                        .verticalScroll(rememberScrollState()),
-                    content = content,
-                )
+                        .heightIn(max = 500.dp),
+                    verticalArrangement = Arrangement.spacedBy((1f / LocalDensity.current.density).dp),
+                ) {
+                    items(count = data.size) { index ->
+                        Row(
+                            modifier = Modifier
+                                .background(FDialogMenuViewDefaults.colors.background)
+                                .fillMaxWidth()
+                                .heightIn(min = 40.dp)
+                                .clickable {
+                                    onClick(index, data[index])
+                                },
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center,
+                        ) {
+                            content(index, data[index])
+                        }
+                    }
+                }
             }
 
             // 按钮
             if (cancel != null) {
                 Spacer(modifier = Modifier
-                    .height(10.dp)
-                    .background(FDialogMenuViewDefaults.colors.divider))
+                    .height(10.dp))
 
                 TextButton(
-                    onClick = { onCancel?.invoke() },
+                    onClick = { onClickCancel?.invoke() },
                     modifier = Modifier
-                        .weight(1f)
-                        .fillMaxHeight(),
+                        .background(FDialogMenuViewDefaults.colors.background)
+                        .fillMaxWidth()
+                        .height(40.dp),
                     shape = RoundedCornerShape(0.dp),
                     colors = ButtonDefaults.textButtonColors(
                         contentColor = FDialogMenuViewDefaults.colors.buttonCancel
@@ -147,7 +199,7 @@ class FDialogMenuViewColors(
             title = Color.Black.copy(alpha = 0.8f),
             content = Color.Black.copy(alpha = 0.6f),
             buttonCancel = Color.Black.copy(alpha = 0.35f),
-            divider = Color.Black.copy(alpha = 0.2f),
+            divider = Color.Black.copy(alpha = 0.1f),
             isLight = true,
         )
 
@@ -156,7 +208,7 @@ class FDialogMenuViewColors(
             title = Color.White.copy(alpha = 0.8f),
             content = Color.White.copy(alpha = 0.6f),
             buttonCancel = Color.White.copy(alpha = 0.35f),
-            divider = Color.White.copy(alpha = 0.2f),
+            divider = Color.White.copy(alpha = 0.1f),
             isLight = false,
         )
     }
@@ -166,12 +218,13 @@ class FDialogMenuViewTypography(
     title: TextStyle = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
-        letterSpacing = 0.25.sp
+        letterSpacing = 0.25.sp,
     ),
     content: TextStyle = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
-        letterSpacing = 0.25.sp
+        letterSpacing = 0.25.sp,
+        textAlign = TextAlign.Center,
     ),
     buttonCancel: TextStyle = TextStyle(
         fontWeight = FontWeight.Normal,
@@ -200,7 +253,7 @@ class FDialogMenuViewTypography(
 }
 
 class FDialogMenuViewShapes(
-    dialog: Shape = RoundedCornerShape(4.dp),
+    dialog: Shape = RoundedCornerShape(0.dp),
 ) {
     var dialog by mutableStateOf(dialog)
         private set
