@@ -78,15 +78,44 @@ class FDialogConfirm(activity: Activity) : FDialog(activity) {
 
 @Composable
 fun FDialogConfirmView(
+    /** 标题 */
     title: @Composable (() -> Unit)? = { Text(text = stringResource(id = R.string.lib_compose_dialog_view_confirm_text_title)) },
+    /** 取消按钮 */
     cancel: @Composable (() -> Unit)? = { Text(text = stringResource(id = R.string.lib_compose_dialog_view_confirm_text_cancel)) },
+    /** 确认按钮 */
     confirm: @Composable (() -> Unit)? = { Text(text = stringResource(id = R.string.lib_compose_dialog_view_confirm_text_confirm)) },
+    /** 是否显示分割线 */
     showDivider: Boolean = true,
+    /** 按钮 */
     buttons: @Composable (() -> Unit)? = null,
+    /** 点击取消 */
     onClickCancel: (() -> Unit)? = null,
+    /** 点击确认 */
     onClickConfirm: (() -> Unit)? = null,
+    /** 内容 */
     content: @Composable () -> Unit,
 ) {
+    val params = FDialogConfirmViewParams().apply {
+        this.title = title
+        this.cancel = cancel
+        this.confirm = confirm
+        this.showDivider = showDivider
+        this.buttons = buttons
+        this.onClickCancel = onClickCancel
+        this.onClickConfirm = onClickConfirm
+        this.content = content
+    }
+    FDialogConfirmViewDefaults.paramsHook?.invoke(params)
+
+    val title = params.title
+    val cancel = params.cancel
+    val confirm = params.confirm
+    val showDivider = params.showDivider
+    val buttons = params.buttons
+    val onClickCancel = params.onClickCancel
+    val onClickConfirm = params.onClickConfirm
+    val content = params.content
+
     Surface(
         shape = FDialogConfirmViewDefaults.shapes.dialog,
         color = FDialogConfirmViewDefaults.colors.background,
@@ -221,9 +250,33 @@ fun FDialogConfirmButtons(
 }
 
 object FDialogConfirmViewDefaults {
+    /** 颜色 */
     var colors by mutableStateOf(FDialogConfirmViewColors.light())
+    /** 字体 */
     var typography by mutableStateOf(FDialogConfirmViewTypography())
+    /** 形状 */
     var shapes by mutableStateOf(FDialogConfirmViewShapes())
+
+    var paramsHook: ((FDialogConfirmViewParams) -> Unit)? = null
+}
+
+class FDialogConfirmViewParams {
+    /** 标题 */
+    var title: @Composable (() -> Unit)? = null
+    /** 取消按钮 */
+    var cancel: @Composable (() -> Unit)? = null
+    /** 确认按钮 */
+    var confirm: @Composable (() -> Unit)? = null
+    /** 是否显示分割线 */
+    var showDivider: Boolean = true
+    /** 按钮 */
+    var buttons: @Composable (() -> Unit)? = null
+    /** 点击取消 */
+    var onClickCancel: (() -> Unit)? = null
+    /** 点击确认 */
+    var onClickConfirm: (() -> Unit)? = null
+    /** 内容 */
+    lateinit var content: @Composable () -> Unit
 }
 
 class FDialogConfirmViewColors(
