@@ -37,7 +37,20 @@ class MainActivity : ComponentActivity() {
             }
         }
 
+        val dialog = FDialogMenu<String>(this)
+        dialog.title = "title"
+        dialog.cancel = "cancel"
+        dialog.data.add("1")
+        dialog.data.add("2")
+        dialog.data.add("3")
+        dialog.onClickCancel = {
+            Toast.makeText(applicationContext, "cancel", Toast.LENGTH_SHORT).show()
+        }
+        dialog.show()
 
+        window.decorView.postDelayed({
+            dialog.title = "changed title"
+        }, 3000)
     }
 }
 

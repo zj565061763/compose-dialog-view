@@ -7,10 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,49 +24,65 @@ import com.sd.lib.dialog.IDialog
 import com.sd.lib.dialog.animator.SlideTopBottomCreator
 import com.sd.lib.dialog.impl.FDialog
 
-fun <T> fDialogMenu(
-    activity: Activity,
-    data: List<T>,
-    title: String? = null,
-    cancel: String? = activity.getString(R.string.lib_compose_dialog_view_menu_text_cancel),
-    onClickCancel: (IDialog) -> Unit = { it.dismiss() },
-    onClick: (index: Int, item: T, dialog: IDialog) -> Unit,
-): IDialog {
-    return FDialog(activity).apply {
-        setPadding(0, 0, 0, 0)
-        gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
-        animatorCreator = SlideTopBottomCreator()
+class FDialogMenu<T>(activity: Activity) : FDialog(activity) {
+    /** 数据 */
+    var data = mutableStateListOf<T>()
+    /** 每一行要显示的界面 */
+    var row: @Composable (RowScope.(index: Int, item: T) -> Unit)? = null
 
-        setContent { dialog ->
+    /** 标题 */
+    var title by mutableStateOf("")
+    /** 取消按钮 */
+    var cancel by mutableStateOf(activity.getString(R.string.lib_compose_dialog_view_menu_text_cancel))
+
+    /** 点击取消 */
+    var onClickCancel: ((IDialog) -> Unit)? = { dismiss() }
+    /** 点击某一行 */
+    var onClickRow: ((index: Int, item: T, dialog: IDialog) -> Unit)? = null
+
+    override fun onCreate() {
+        super.onCreate()
+        setContent {
             FDialogMenuView(
-                title = if (title.isNullOrEmpty()) null else {
+                title = if (title.isEmpty()) null else {
                     { Text(text = title) }
                 },
-                cancel = if (cancel.isNullOrEmpty()) null else {
+                cancel = if (cancel.isEmpty()) null else {
                     { Text(text = cancel) }
                 },
                 onClickCancel = {
-                    onClickCancel.invoke(dialog)
+                    onClickCancel?.invoke(this@FDialogMenu)
                 },
                 data = data,
-                onClick = { index, item ->
-                    onClick(index, item, dialog)
+                row = row,
+                onClickRow = { index, item ->
+                    onClickRow?.invoke(index, item, this@FDialogMenu)
                 },
             )
         }
+    }
+
+    init {
+        setPadding(0, 0, 0, 0)
+        gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
+        animatorCreator = SlideTopBottomCreator()
     }
 }
 
 @Composable
 fun <T> FDialogMenuView(
+    /** 数据 */
     data: List<T>,
-    content: @Composable RowScope.(index: Int, item: T) -> Unit = { index, item ->
-        Text(item.toString())
-    },
+    /** 每一行要显示的界面 */
+    row: @Composable (RowScope.(index: Int, item: T) -> Unit)? = null,
+    /** 标题 */
     title: @Composable (() -> Unit)? = null,
+    /** 取消按钮 */
     cancel: @Composable (() -> Unit)? = { Text(text = stringResource(id = R.string.lib_compose_dialog_view_menu_text_cancel)) },
+    /** 点击取消 */
     onClickCancel: (() -> Unit)? = null,
-    onClick: (index: Int, item: T) -> Unit,
+    /** 点击某一行 */
+    onClickRow: (index: Int, item: T) -> Unit,
 ) {
     Surface(
         shape = FDialogMenuViewDefaults.shapes.dialog,
@@ -112,7 +125,7 @@ fun <T> FDialogMenuView(
             ) {
                 items(count = data.size) { index ->
                     TextButton(
-                        onClick = { onClick(index, data[index]) },
+                        onClick = { onClickRow(index, data[index]) },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(40.dp),
@@ -124,7 +137,11 @@ fun <T> FDialogMenuView(
                         ),
                     ) {
                         ProvideTextStyle(FDialogMenuViewDefaults.typography.content) {
-                            content(index, data[index])
+                            if (row != null) {
+                                row(index, data[index])
+                            } else {
+                                Text(data[index].toString())
+                            }
                         }
                     }
                 }
