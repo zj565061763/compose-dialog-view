@@ -82,6 +82,7 @@ fun FDialogConfirmView(
     cancel: @Composable (() -> Unit)? = { Text(text = stringResource(id = R.string.lib_compose_dialog_view_confirm_text_cancel)) },
     confirm: @Composable (() -> Unit)? = { Text(text = stringResource(id = R.string.lib_compose_dialog_view_confirm_text_confirm)) },
     showDivider: Boolean = true,
+    buttons: @Composable (() -> Unit)? = null,
     onClickCancel: (() -> Unit)? = null,
     onClickConfirm: (() -> Unit)? = null,
     content: @Composable () -> Unit,
@@ -138,13 +139,17 @@ fun FDialogConfirmView(
             }
 
             // 按钮
-            FDialogConfirmButtons(
-                cancel = cancel,
-                confirm = confirm,
-                showDivider = showDivider,
-                onClickCancel = onClickCancel,
-                onClickConfirm = onClickConfirm,
-            )
+            if (buttons == null) {
+                FDialogConfirmButtons(
+                    cancel = cancel,
+                    confirm = confirm,
+                    showDivider = showDivider,
+                    onClickCancel = onClickCancel,
+                    onClickConfirm = onClickConfirm,
+                )
+            } else {
+                buttons()
+            }
         }
     }
 }
