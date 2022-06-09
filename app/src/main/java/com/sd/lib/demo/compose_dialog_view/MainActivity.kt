@@ -15,8 +15,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import com.sd.lib.compose.dialogview.DialogViewHook
 import com.sd.lib.compose.dialogview.FDialogConfirm
-import com.sd.lib.compose.dialogview.FDialogConfirmViewDefaults
 import com.sd.lib.compose.dialogview.FDialogMenu
 import com.sd.lib.demo.compose_dialog_view.ui.theme.ComposedialogviewTheme
 import com.sd.lib.dialog.animator.ScaleXYCreator
@@ -44,7 +44,7 @@ class MainActivity : ComponentActivity() {
  * 参数拦截
  */
 private fun hookParams() {
-    FDialogConfirmViewDefaults.paramsHook = {
+    DialogViewHook.confirmViewParamsHook = {
         val cancel = it.cancel
         val confirm = it.confirm
         if (cancel != null || confirm != null) {

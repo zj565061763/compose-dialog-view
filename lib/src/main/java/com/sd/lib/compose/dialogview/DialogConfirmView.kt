@@ -105,7 +105,7 @@ fun FDialogConfirmView(
         this.onClickConfirm = onClickConfirm
         this.content = content
     }
-    FDialogConfirmViewDefaults.paramsHook?.invoke(params)
+    DialogViewHook.confirmViewParamsHook?.invoke(params)
 
     val title = params.title
     val cancel = params.cancel
@@ -257,9 +257,6 @@ object FDialogConfirmViewDefaults {
     var typography by mutableStateOf(FDialogConfirmViewTypography())
     /** 形状 */
     var shapes by mutableStateOf(FDialogConfirmViewShapes())
-
-    /** 参数拦截 */
-    var paramsHook: ((FDialogConfirmViewParams) -> Unit)? = null
 }
 
 class FDialogConfirmViewParams {
