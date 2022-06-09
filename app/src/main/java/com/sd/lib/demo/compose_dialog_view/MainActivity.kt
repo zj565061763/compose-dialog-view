@@ -10,7 +10,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -84,9 +84,30 @@ private fun testHook() {
 @Composable
 fun MainView() {
     val activity = LocalContext.current as Activity
+
+    var isLight by remember { mutableStateOf(true) }
+    LaunchedEffect(isLight) {
+        if (isLight) {
+            FDialogConfirmViewDefaults.colors = FDialogConfirmViewColors.light()
+            FDialogMenuViewDefaults.colors = FDialogMenuViewColors.light()
+        } else {
+            FDialogConfirmViewDefaults.colors = FDialogConfirmViewColors.dark()
+            FDialogMenuViewDefaults.colors = FDialogMenuViewColors.dark()
+        }
+    }
+
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {
+        // Light or Dark
+        Button(
+            onClick = {
+                isLight = isLight.not()
+            },
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            Text(text = if (isLight) "Light" else "Dark")
+        }
 
         // Confirm
         Button(
