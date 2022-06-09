@@ -1,0 +1,7 @@
+<resources>
+
+    <!--          string          -->
+    <string name="lib_compose_dialog_view_menu_text_title">Tips</string>
+    <string name="lib_compose_dialog_view_menu_text_cancel">Cancel</string>
+
+</resources>

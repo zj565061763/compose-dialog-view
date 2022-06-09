@@ -194,6 +194,7 @@ class FDialogConfirmViewColors(
     buttonCancel: Color,
     buttonConfirm: Color,
     divider: Color,
+    isLight: Boolean,
 ) {
     var background by mutableStateOf(background)
         private set
@@ -213,6 +214,9 @@ class FDialogConfirmViewColors(
     var divider by mutableStateOf(divider)
         private set
 
+    var isLight by mutableStateOf(isLight)
+        internal set
+
     fun copy(
         background: Color = this.background,
         title: Color = this.title,
@@ -220,6 +224,7 @@ class FDialogConfirmViewColors(
         buttonCancel: Color = this.buttonCancel,
         buttonConfirm: Color = this.buttonConfirm,
         divider: Color = this.divider,
+        isLight: Boolean = this.isLight,
     ): FDialogConfirmViewColors = FDialogConfirmViewColors(
         background = background,
         title = title,
@@ -227,6 +232,7 @@ class FDialogConfirmViewColors(
         buttonCancel = buttonCancel,
         buttonConfirm = buttonConfirm,
         divider = divider,
+        isLight = isLight,
     )
 
     companion object {
@@ -237,6 +243,7 @@ class FDialogConfirmViewColors(
             buttonCancel = Color.Black.copy(alpha = 0.35f),
             buttonConfirm = Color.Black.copy(alpha = 0.5f),
             divider = Color.Black.copy(alpha = 0.2f),
+            isLight = true,
         )
 
         fun dark(): FDialogConfirmViewColors = FDialogConfirmViewColors(
@@ -246,6 +253,7 @@ class FDialogConfirmViewColors(
             buttonCancel = Color.White.copy(alpha = 0.35f),
             buttonConfirm = Color.White.copy(alpha = 0.5f),
             divider = Color.White.copy(alpha = 0.2f),
+            isLight = false,
         )
     }
 }
