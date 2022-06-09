@@ -131,8 +131,9 @@ fun <T> FDialogMenuView(
                     onClick = { onClickCancel?.invoke() },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .heightIn(min = 40.dp),
+                        .height(40.dp),
                     shape = RoundedCornerShape(0.dp),
+                    contentPadding = PaddingValues(0.dp),
                     colors = ButtonDefaults.textButtonColors(
                         backgroundColor = FDialogMenuViewDefaults.colors.background,
                         contentColor = FDialogMenuViewDefaults.colors.buttonCancel
