@@ -3,7 +3,6 @@ package com.sd.lib.compose.dialogview
 import android.app.Activity
 import android.view.Gravity
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -92,30 +91,27 @@ fun <T> FDialogMenuView(
             }
 
             // 内容
-            ProvideTextStyle(
-                FDialogMenuViewDefaults.typography.content.copy(
-                    color = FDialogMenuViewDefaults.colors.content
-                )
+            val maxHeight = LocalContext.current.resources.displayMetrics.heightPixels / 2f
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(max = with(LocalDensity.current) { maxHeight.toDp() }),
+                verticalArrangement = Arrangement.spacedBy((1f / LocalDensity.current.density).dp),
             ) {
-                val maxHeight = LocalContext.current.resources.displayMetrics.heightPixels / 2f
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .heightIn(max = with(LocalDensity.current) { maxHeight.toDp() }),
-                    verticalArrangement = Arrangement.spacedBy((1f / LocalDensity.current.density).dp),
-                ) {
-                    items(count = data.size) { index ->
-                        Row(
-                            modifier = Modifier
-                                .background(FDialogMenuViewDefaults.colors.background)
-                                .fillMaxWidth()
-                                .heightIn(min = 40.dp)
-                                .clickable {
-                                    onClick(index, data[index])
-                                },
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Center,
-                        ) {
+                items(count = data.size) { index ->
+                    TextButton(
+                        onClick = { onClick(index, data[index]) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(40.dp),
+                        shape = RoundedCornerShape(0.dp),
+                        contentPadding = PaddingValues(0.dp),
+                        colors = ButtonDefaults.textButtonColors(
+                            backgroundColor = FDialogMenuViewDefaults.colors.background,
+                            contentColor = FDialogMenuViewDefaults.colors.content
+                        ),
+                    ) {
+                        ProvideTextStyle(FDialogMenuViewDefaults.typography.content) {
                             content(index, data[index])
                         }
                     }
