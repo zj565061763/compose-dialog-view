@@ -30,6 +30,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         FDialogConfirmViewDefaults.colors = FDialogConfirmViewColors.light()
 
+        // 参数拦截
+        FDialogConfirmViewDefaults.paramsHook = {
+            it.title = {
+                Text(text = "我是拦截的title")
+            }
+        }
+
         setContent {
             ComposedialogviewTheme {
                 Surface(

@@ -198,7 +198,8 @@ fun FDialogConfirmButtons(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(40.dp),
+            .height(IntrinsicSize.Min)
+            .heightIn(min = 40.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (cancel != null) {
