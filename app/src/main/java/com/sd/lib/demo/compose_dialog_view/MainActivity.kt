@@ -83,22 +83,23 @@ fun MainView() {
 @Composable
 private fun confirmDialog(): IDialog {
     val context = LocalContext.current
-    return rememberFDialog(
-        apply = {
-            animatorCreator = ScaleXYCreator()
-        }
-    ) { dialog ->
-        FDialogConfirmView(
-            onCancel = {
-                Toast.makeText(context, "onCancel", Toast.LENGTH_SHORT).show()
-                dialog.dismiss()
-            },
-            onConfirm = {
-                Toast.makeText(context, "onConfirm", Toast.LENGTH_SHORT).show()
-                dialog.dismiss()
-            },
-        ) {
-            Text(text = "Confirm in Composable")
+    return rememberFDialog {
+        // 设置动画类型
+        animatorCreator = ScaleXYCreator()
+        // 设置显示内容
+        setContent {
+            FDialogConfirmView(
+                onCancel = {
+                    Toast.makeText(context, "onCancel", Toast.LENGTH_SHORT).show()
+                    dismiss()
+                },
+                onConfirm = {
+                    Toast.makeText(context, "onConfirm", Toast.LENGTH_SHORT).show()
+                    dismiss()
+                },
+            ) {
+                Text(text = "Confirm in Composable")
+            }
         }
     }
 }
@@ -118,7 +119,9 @@ private fun showConfirmDialog(activity: Activity) {
             Toast.makeText(activity, "onConfirm", Toast.LENGTH_SHORT).show()
             it.dismiss()
         }
-    ).apply { animatorCreator = ScaleXYCreator() }.show()
+    ).apply {
+        animatorCreator = ScaleXYCreator()
+    }.show()
 }
 
 /**
@@ -154,7 +157,7 @@ private fun showMenuDialog(activity: Activity) {
         data.addAll(list)
     }
 
-    dialog.onClickRow = { index, item, dialog ->
+    dialog.onClickRow = { index, item, _ ->
         dialog.dismiss()
         Toast.makeText(activity, item, Toast.LENGTH_SHORT).show()
     }
