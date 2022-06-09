@@ -24,17 +24,34 @@ import androidx.compose.ui.unit.sp
 import com.sd.lib.dialog.IDialog
 import com.sd.lib.dialog.impl.FDialog
 
-fun fDialogConfirm(
-    activity: Activity,
-    content: String,
-    title: String? = activity.getString(R.string.lib_compose_dialog_view_confirm_text_title),
-    cancel: String? = activity.getString(R.string.lib_compose_dialog_view_confirm_text_cancel),
-    confirm: String? = activity.getString(R.string.lib_compose_dialog_view_confirm_text_confirm),
-    onCancel: ((IDialog) -> Unit)? = { it.dismiss() },
-    onConfirm: ((IDialog) -> Unit)? = { it.dismiss() },
-): IDialog {
-    return FDialog(activity).apply {
-        setContent { dialog ->
+class FDialogConfirm(activity: Activity) : FDialog(activity) {
+    /** 标题 */
+    var title by mutableStateOf<String?>(
+        activity.getString(R.string.lib_compose_dialog_view_confirm_text_title)
+    )
+    /** 内容 */
+    lateinit var content: @Composable () -> Unit
+
+    /** 取消按钮 */
+    var cancel by mutableStateOf<String?>(
+        activity.getString(R.string.lib_compose_dialog_view_confirm_text_cancel)
+    )
+    /** 确认按钮 */
+    var confirm by mutableStateOf<String?>(
+        activity.getString(R.string.lib_compose_dialog_view_confirm_text_confirm)
+    )
+
+    /** 点击取消 */
+    var onClickCancel: ((IDialog) -> Unit)? = { it.dismiss() }
+    /** 点击确认 */
+    var onClickConfirm: ((IDialog) -> Unit)? = { it.dismiss() }
+
+    override fun onCreate() {
+        super.onCreate()
+        setContent {
+            val title = title
+            val cancel = cancel
+            val confirm = confirm
             FDialogConfirmView(
                 title = if (title.isNullOrEmpty()) null else {
                     { Text(text = title) }
@@ -45,15 +62,14 @@ fun fDialogConfirm(
                 confirm = if (confirm.isNullOrEmpty()) null else {
                     { Text(text = confirm) }
                 },
-                onCancel = {
-                    onCancel?.invoke(dialog)
+                onClickCancel = {
+                    onClickCancel?.invoke(this@FDialogConfirm)
                 },
-                onConfirm = {
-                    onConfirm?.invoke(dialog)
+                onClickConfirm = {
+                    onClickConfirm?.invoke(this@FDialogConfirm)
                 },
-            ) {
-                Text(text = content)
-            }
+                content = content
+            )
         }
     }
 }
@@ -63,8 +79,9 @@ fun FDialogConfirmView(
     title: @Composable (() -> Unit)? = { Text(text = stringResource(id = R.string.lib_compose_dialog_view_confirm_text_title)) },
     cancel: @Composable (() -> Unit)? = { Text(text = stringResource(id = R.string.lib_compose_dialog_view_confirm_text_cancel)) },
     confirm: @Composable (() -> Unit)? = { Text(text = stringResource(id = R.string.lib_compose_dialog_view_confirm_text_confirm)) },
-    onCancel: (() -> Unit)? = null,
-    onConfirm: (() -> Unit)? = null,
+    showDivider: Boolean = true,
+    onClickCancel: (() -> Unit)? = null,
+    onClickConfirm: (() -> Unit)? = null,
     content: @Composable () -> Unit,
 ) {
     Surface(
@@ -107,12 +124,24 @@ fun FDialogConfirmView(
                 }
             }
 
+            if (cancel != null || confirm != null) {
+                if (showDivider) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height((1f / LocalDensity.current.density).dp)
+                            .background(color = FDialogConfirmViewDefaults.colors.divider)
+                    )
+                }
+            }
+
             // 按钮
             FDialogConfirmButtons(
                 cancel = cancel,
                 confirm = confirm,
-                onCancel = onCancel,
-                onConfirm = onConfirm,
+                showDivider = showDivider,
+                onClickCancel = onClickCancel,
+                onClickConfirm = onClickConfirm,
             )
         }
     }
@@ -122,8 +151,9 @@ fun FDialogConfirmView(
 fun FDialogConfirmButtons(
     cancel: @Composable (() -> Unit)? = null,
     confirm: @Composable (() -> Unit)? = null,
-    onCancel: (() -> Unit)? = null,
-    onConfirm: (() -> Unit)? = null,
+    showDivider: Boolean = true,
+    onClickCancel: (() -> Unit)? = null,
+    onClickConfirm: (() -> Unit)? = null,
 ) {
     if (cancel == null && confirm == null) {
         return
@@ -137,7 +167,7 @@ fun FDialogConfirmButtons(
     ) {
         if (cancel != null) {
             TextButton(
-                onClick = { onCancel?.invoke() },
+                onClick = { onClickCancel?.invoke() },
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxHeight(),
@@ -153,17 +183,19 @@ fun FDialogConfirmButtons(
         }
 
         if (cancel != null && confirm != null) {
-            Box(
-                modifier = Modifier
-                    .fillMaxHeight(0.5f)
-                    .width((1f / LocalDensity.current.density).dp)
-                    .background(color = FDialogConfirmViewDefaults.colors.divider)
-            )
+            if (showDivider) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .width((1f / LocalDensity.current.density).dp)
+                        .background(color = FDialogConfirmViewDefaults.colors.divider)
+                )
+            }
         }
 
         if (confirm != null) {
             TextButton(
-                onClick = { onConfirm?.invoke() },
+                onClick = { onClickConfirm?.invoke() },
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxHeight(),

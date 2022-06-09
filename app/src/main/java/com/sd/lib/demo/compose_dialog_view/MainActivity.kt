@@ -89,11 +89,11 @@ private fun confirmDialog(): IDialog {
         // 设置显示内容
         setContent {
             FDialogConfirmView(
-                onCancel = {
+                onClickCancel = {
                     Toast.makeText(context, "onCancel", Toast.LENGTH_SHORT).show()
                     dismiss()
                 },
-                onConfirm = {
+                onClickConfirm = {
                     Toast.makeText(context, "onConfirm", Toast.LENGTH_SHORT).show()
                     dismiss()
                 },
@@ -108,20 +108,31 @@ private fun confirmDialog(): IDialog {
  * 确认窗口
  */
 private fun showConfirmDialog(activity: Activity) {
-    fDialogConfirm(
-        activity = activity,
-        content = "Confirm",
-        onCancel = {
+    val dialog = FDialogConfirm(activity).apply {
+        animatorCreator = ScaleXYCreator()
+        title = "title"
+        content = {
+            Text(text = "content")
+        }
+        cancel = "cancel"
+        confirm = "confirm"
+        onClickCancel = {
             Toast.makeText(activity, "onCancel", Toast.LENGTH_SHORT).show()
             it.dismiss()
-        },
-        onConfirm = {
+        }
+        onClickConfirm = {
             Toast.makeText(activity, "onConfirm", Toast.LENGTH_SHORT).show()
             it.dismiss()
         }
-    ).apply {
-        animatorCreator = ScaleXYCreator()
-    }.show()
+    }
+    dialog.show()
+
+    dialog.contentView?.postDelayed({
+        dialog.title = "changed title"
+        dialog.content = {
+            Text(text = "changed content")
+        }
+    }, 3000)
 }
 
 /**
