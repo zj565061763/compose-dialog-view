@@ -174,17 +174,26 @@ fun <T> FDialogMenuView(
 }
 
 object FDialogMenuViewDefaults {
+    /** 颜色 */
     var colors by mutableStateOf(FDialogMenuViewColors.light())
+    /** 字体 */
     var typography by mutableStateOf(FDialogMenuViewTypography())
+    /** 形状 */
     var shapes by mutableStateOf(FDialogMenuViewShapes())
 }
 
 class FDialogMenuViewColors(
+    /** 背景 */
     background: Color,
+    /** 标题 */
     title: Color,
+    /** 内容 */
     content: Color,
+    /** 取消按钮 */
     buttonCancel: Color,
+    /** 分割线 */
     divider: Color,
+    /** 是否亮色 */
     isLight: Boolean,
 ) {
     var background by mutableStateOf(background)
@@ -222,6 +231,9 @@ class FDialogMenuViewColors(
     )
 
     companion object {
+        /**
+         * 亮色
+         */
         fun light(): FDialogMenuViewColors = FDialogMenuViewColors(
             background = Color.White,
             title = Color.Black.copy(alpha = 0.8f),
@@ -231,6 +243,9 @@ class FDialogMenuViewColors(
             isLight = true,
         )
 
+        /**
+         * 暗色
+         */
         fun dark(): FDialogMenuViewColors = FDialogMenuViewColors(
             background = Color.Black,
             title = Color.White.copy(alpha = 0.8f),
@@ -243,17 +258,20 @@ class FDialogMenuViewColors(
 }
 
 class FDialogMenuViewTypography(
+    /** 标题 */
     title: TextStyle = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         letterSpacing = 0.25.sp,
     ),
+    /** 内容 */
     content: TextStyle = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
         letterSpacing = 0.25.sp,
         textAlign = TextAlign.Center,
     ),
+    /** 取消按钮 */
     buttonCancel: TextStyle = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
@@ -281,6 +299,7 @@ class FDialogMenuViewTypography(
 }
 
 class FDialogMenuViewShapes(
+    /** 窗口形状 */
     dialog: Shape = RoundedCornerShape(0.dp),
 ) {
     var dialog by mutableStateOf(dialog)
