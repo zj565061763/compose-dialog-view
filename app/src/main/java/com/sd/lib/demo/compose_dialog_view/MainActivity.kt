@@ -15,10 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import com.sd.lib.compose.dialogview.DialogViewHook
-import com.sd.lib.compose.dialogview.FDialogConfirm
-import com.sd.lib.compose.dialogview.FDialogMenu
-import com.sd.lib.compose.dialogview.setComposable
+import com.sd.lib.compose.dialogview.*
 import com.sd.lib.demo.compose_dialog_view.ui.theme.ComposedialogviewTheme
 import com.sd.lib.dialog.animator.ScaleXYCreator
 
@@ -27,6 +24,8 @@ private const val TAG = "MainActivity"
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        FDialogConfirmViewDefaults.colors = FDialogConfirmViewColors.dark()
+        FDialogMenuViewDefaults.colors = FDialogMenuViewColors.dark()
 //        testHook()
         setContent {
             ComposedialogviewTheme {

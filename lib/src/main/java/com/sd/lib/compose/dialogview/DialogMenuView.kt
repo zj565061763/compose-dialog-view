@@ -88,6 +88,7 @@ fun <T> FDialogMenuView(
 ) {
     Surface(
         shape = FDialogMenuViewDefaults.shapes.dialog,
+        color = FDialogMenuViewDefaults.colors.background,
     ) {
         Column(
             modifier = Modifier
