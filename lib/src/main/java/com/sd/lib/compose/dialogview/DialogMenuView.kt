@@ -31,9 +31,9 @@ class FDialogMenu<T>(activity: Activity) : FDialog(activity) {
     var row: @Composable (RowScope.(index: Int, item: T) -> Unit)? = null
 
     /** 标题 */
-    var title by mutableStateOf("")
+    var title by mutableStateOf<String?>(null)
     /** 取消按钮 */
-    var cancel by mutableStateOf(activity.getString(R.string.lib_compose_dialog_view_menu_text_cancel))
+    var cancel by mutableStateOf<String?>(activity.getString(R.string.lib_compose_dialog_view_menu_text_cancel))
 
     /** 点击取消 */
     var onClickCancel: ((IDialog) -> Unit)? = { it.dismiss() }
@@ -43,11 +43,13 @@ class FDialogMenu<T>(activity: Activity) : FDialog(activity) {
     override fun onCreate() {
         super.onCreate()
         setComposable {
+            val title = title
+            val cancel = cancel
             FDialogMenuView(
-                title = if (title.isEmpty()) null else {
+                title = if (title.isNullOrEmpty()) null else {
                     { Text(text = title) }
                 },
-                cancel = if (cancel.isEmpty()) null else {
+                cancel = if (cancel.isNullOrEmpty()) null else {
                     { Text(text = cancel) }
                 },
                 onClickCancel = {
