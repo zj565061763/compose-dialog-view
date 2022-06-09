@@ -33,7 +33,7 @@ fun <T> fDialogMenu(
     title: String? = null,
     cancel: String? = activity.getString(R.string.lib_compose_dialog_view_menu_text_cancel),
     onClickCancel: (IDialog) -> Unit = { it.dismiss() },
-    onClick: (index: Int, item: T) -> Unit,
+    onClick: (index: Int, item: T, dialog: IDialog) -> Unit,
 ): IDialog {
     return FDialog(activity).apply {
         setPadding(0, 0, 0, 0)
@@ -52,7 +52,9 @@ fun <T> fDialogMenu(
                     onClickCancel.invoke(dialog)
                 },
                 data = data,
-                onClick = onClick,
+                onClick = { index, item ->
+                    onClick(index, item, dialog)
+                },
             )
         }
     }
@@ -81,13 +83,23 @@ fun <T> FDialogMenuView(
 
             // 标题
             if (title != null) {
-                ProvideTextStyle(
-                    FDialogMenuViewDefaults.typography.title.copy(
-                        color = FDialogMenuViewDefaults.colors.title
-                    )
+                Row(
+                    modifier = Modifier
+                        .background(FDialogMenuViewDefaults.colors.background)
+                        .fillMaxWidth()
+                        .heightIn(40.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
                 ) {
-                    title()
+                    ProvideTextStyle(
+                        FDialogMenuViewDefaults.typography.title.copy(
+                            color = FDialogMenuViewDefaults.colors.title
+                        )
+                    ) {
+                        title()
+                    }
                 }
+                Spacer(modifier = Modifier.height((1f / LocalDensity.current.density).dp))
             }
 
             // 内容

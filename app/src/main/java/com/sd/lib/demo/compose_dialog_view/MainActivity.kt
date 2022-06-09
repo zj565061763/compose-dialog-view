@@ -151,13 +151,15 @@ private fun showMenuDialog(activity: Activity) {
     )
     fDialogMenu(
         activity = activity,
+        title = "title",
         data = data,
         onClickCancel = {
             Toast.makeText(activity, "onCancel", Toast.LENGTH_SHORT).show()
             it.dismiss()
         },
-    ) { index, item ->
+    ) { index, item, dialog ->
         Toast.makeText(activity, item, Toast.LENGTH_SHORT).show()
+        dialog.dismiss()
     }.show()
 }
 
