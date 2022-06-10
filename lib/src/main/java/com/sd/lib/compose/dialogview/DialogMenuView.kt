@@ -224,9 +224,9 @@ class FDialogMenuViewColors(
             return FDialogMenuViewColors(
                 background = background,
                 onBackground = onBackground,
-                title = onBackground.copy(alpha = 0.8f),
-                content = onBackground.copy(alpha = 0.6f),
-                buttonCancel = onBackground.copy(alpha = 0.35f),
+                title = onBackground.copy(alpha = 0.9f),
+                content = onBackground.copy(alpha = 0.65f),
+                buttonCancel = onBackground.copy(alpha = 0.4f),
                 divider = onBackground.copy(alpha = 0.1f),
                 isLight = true,
             )
@@ -241,9 +241,9 @@ class FDialogMenuViewColors(
             return FDialogMenuViewColors(
                 background = background,
                 onBackground = onBackground,
-                title = onBackground.copy(alpha = 0.8f),
-                content = onBackground.copy(alpha = 0.6f),
-                buttonCancel = onBackground.copy(alpha = 0.35f),
+                title = onBackground.copy(alpha = 0.9f),
+                content = onBackground.copy(alpha = 0.65f),
+                buttonCancel = onBackground.copy(alpha = 0.4f),
                 divider = onBackground.copy(alpha = 0.1f),
                 isLight = false,
             )
