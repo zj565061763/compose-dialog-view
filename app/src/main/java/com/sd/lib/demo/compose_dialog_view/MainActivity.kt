@@ -128,6 +128,16 @@ fun MainView() {
         ) {
             Text(text = "Menu")
         }
+
+        // Progress
+        Button(
+            onClick = {
+                showProgressDialog(activity, "加载中")
+            },
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            Text(text = "Progress")
+        }
     }
 }
 
@@ -202,6 +212,12 @@ private fun showMenuDialog(activity: Activity) {
         }
     }
     dialog.show()
+}
+
+private fun showProgressDialog(activity: Activity, text: String) {
+    FDialogProgress(activity).apply {
+        this.text = text
+    }.show()
 }
 
 @Preview(showBackground = true)
