@@ -89,6 +89,7 @@ fun <T> FDialogMenuView(
     Surface(
         shape = FDialogMenuViewDefaults.shapes.dialog,
         color = FDialogMenuViewDefaults.colors.background,
+        contentColor = FDialogMenuViewDefaults.colors.onBackground,
     ) {
         Column(
             modifier = Modifier
@@ -188,6 +189,8 @@ object FDialogMenuViewDefaults {
 class FDialogMenuViewColors(
     /** 背景 */
     background: Color,
+    /** 在背景上面内容颜色 */
+    onBackground: Color,
     /** 标题 */
     title: Color,
     /** 内容 */
@@ -200,6 +203,9 @@ class FDialogMenuViewColors(
     isLight: Boolean,
 ) {
     var background by mutableStateOf(background)
+        private set
+
+    var onBackground by mutableStateOf(onBackground)
         private set
 
     var title by mutableStateOf(title)
@@ -219,6 +225,7 @@ class FDialogMenuViewColors(
 
     fun copy(
         background: Color = this.background,
+        onBackground: Color = this.onBackground,
         title: Color = this.title,
         content: Color = this.content,
         buttonCancel: Color = this.buttonCancel,
@@ -226,6 +233,7 @@ class FDialogMenuViewColors(
         isLight: Boolean = this.isLight,
     ): FDialogMenuViewColors = FDialogMenuViewColors(
         background = background,
+        onBackground = onBackground,
         title = title,
         content = content,
         buttonCancel = buttonCancel,
@@ -237,26 +245,36 @@ class FDialogMenuViewColors(
         /**
          * 亮色
          */
-        fun light(): FDialogMenuViewColors = FDialogMenuViewColors(
-            background = Color.White,
-            title = Color.Black.copy(alpha = 0.8f),
-            content = Color.Black.copy(alpha = 0.6f),
-            buttonCancel = Color.Black.copy(alpha = 0.35f),
-            divider = Color.Black.copy(alpha = 0.1f),
-            isLight = true,
-        )
+        fun light(): FDialogMenuViewColors {
+            val background = Color.White
+            val onBackground = Color.Black
+            return FDialogMenuViewColors(
+                background = background,
+                onBackground = onBackground,
+                title = onBackground.copy(alpha = 0.8f),
+                content = onBackground.copy(alpha = 0.6f),
+                buttonCancel = onBackground.copy(alpha = 0.35f),
+                divider = onBackground.copy(alpha = 0.1f),
+                isLight = true,
+            )
+        }
 
         /**
          * 暗色
          */
-        fun dark(): FDialogMenuViewColors = FDialogMenuViewColors(
-            background = Color.Black,
-            title = Color.White.copy(alpha = 0.8f),
-            content = Color.White.copy(alpha = 0.6f),
-            buttonCancel = Color.White.copy(alpha = 0.35f),
-            divider = Color.White.copy(alpha = 0.1f),
-            isLight = false,
-        )
+        fun dark(): FDialogMenuViewColors {
+            val background = Color.Black
+            val onBackground = Color.White
+            return FDialogMenuViewColors(
+                background = background,
+                onBackground = onBackground,
+                title = onBackground.copy(alpha = 0.8f),
+                content = onBackground.copy(alpha = 0.6f),
+                buttonCancel = onBackground.copy(alpha = 0.35f),
+                divider = onBackground.copy(alpha = 0.1f),
+                isLight = false,
+            )
+        }
     }
 }
 
