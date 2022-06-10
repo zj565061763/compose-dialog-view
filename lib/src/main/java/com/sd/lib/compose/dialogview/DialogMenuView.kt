@@ -102,7 +102,9 @@ fun <T> FDialogMenuView(
             // 标题
             if (title != null) {
                 DialogButton(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(50.dp),
                     backgroundColor = FDialogMenuViewDefaults.colors.background,
                     contentColor = FDialogMenuViewDefaults.colors.title,
                     textStyle = FDialogMenuViewDefaults.typography.title,
@@ -141,7 +143,9 @@ fun <T> FDialogMenuView(
             if (cancel != null) {
                 Spacer(modifier = Modifier.height(10.dp))
                 DialogButton(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(50.dp),
                     backgroundColor = FDialogMenuViewDefaults.colors.background,
                     contentColor = FDialogMenuViewDefaults.colors.buttonCancel,
                     textStyle = FDialogMenuViewDefaults.typography.buttonCancel,
@@ -229,7 +233,7 @@ class FDialogMenuViewColors(
                 onBackground = onBackground,
                 title = onBackground.copy(alpha = 0.9f),
                 content = onBackground.copy(alpha = 0.7f),
-                buttonCancel = onBackground.copy(alpha = 0.4f),
+                buttonCancel = onBackground.copy(alpha = 0.5f),
                 divider = onBackground.copy(alpha = 0.1f),
                 isLight = true,
             )
@@ -246,7 +250,7 @@ class FDialogMenuViewColors(
                 onBackground = onBackground,
                 title = onBackground.copy(alpha = 0.9f),
                 content = onBackground.copy(alpha = 0.7f),
-                buttonCancel = onBackground.copy(alpha = 0.4f),
+                buttonCancel = onBackground.copy(alpha = 0.5f),
                 divider = onBackground.copy(alpha = 0.1f),
                 isLight = false,
             )
