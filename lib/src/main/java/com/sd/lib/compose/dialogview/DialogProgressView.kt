@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ProvideTextStyle
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -55,8 +54,8 @@ fun FDialogProgressView(
 ) {
     Row(
         modifier = modifier
-            .background(color = Color.Black.copy(alpha = 0.2f), shape = RoundedCornerShape(4.dp))
-            .padding(horizontal = 10.dp, vertical = 5.dp),
+            .background(color = Color.Black.copy(alpha = 0.3f), shape = RoundedCornerShape(4.dp))
+            .padding(10.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
     ) {
@@ -64,15 +63,15 @@ fun FDialogProgressView(
             progress()
         } else {
             CircularProgressIndicator(
-                modifier = modifier.size(15.dp),
-                color = MaterialTheme.colors.primary,
+                modifier = modifier.size(16.dp),
+                color = Color.White.copy(alpha = 0.9f),
                 strokeWidth = 2.dp,
             )
         }
 
-        ProvideTextStyle(TextStyle(color = Color.White.copy(alpha = 0.6f), fontSize = 12.sp)) {
+        ProvideTextStyle(TextStyle(color = Color.White.copy(alpha = 0.9f), fontSize = 12.sp)) {
             if (text != null) {
-                Spacer(modifier = Modifier.width(10.dp))
+                Spacer(modifier = Modifier.width(5.dp))
                 text()
             }
         }
