@@ -63,18 +63,17 @@ fun IDialog.setComposable(content: @Composable (IDialog) -> Unit) {
 
 @Composable
 internal fun DialogButton(
+    modifier: Modifier = Modifier,
     backgroundColor: Color,
     contentColor: Color,
     textStyle: TextStyle,
     onClick: (() -> Unit)? = null,
     content: @Composable RowScope.() -> Unit,
 ) {
-    var modifier = Modifier
-        .fillMaxWidth()
-        .heightIn(40.dp)
+    var finalModifier = modifier.heightIn(40.dp)
 
     if (onClick != null) {
-        modifier = modifier.clickable(
+        finalModifier = finalModifier.clickable(
             interactionSource = remember { MutableInteractionSource() },
             indication = rememberRipple(),
             role = Role.Button,
@@ -83,7 +82,7 @@ internal fun DialogButton(
     }
 
     Surface(
-        modifier = modifier,
+        modifier = finalModifier,
         color = backgroundColor,
         contentColor = contentColor,
     ) {

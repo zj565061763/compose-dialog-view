@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
+import androidx.compose.material.ProvideTextStyle
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -199,25 +201,18 @@ private fun FDialogConfirmButtons(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(IntrinsicSize.Min)
-            .heightIn(min = 40.dp),
+            .height(IntrinsicSize.Min),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (cancel != null) {
-            TextButton(
+            DialogButton(
+                modifier = Modifier.weight(1f),
+                backgroundColor = FDialogConfirmViewDefaults.colors.background,
+                contentColor = FDialogConfirmViewDefaults.colors.buttonCancel,
+                textStyle = FDialogConfirmViewDefaults.typography.buttonCancel,
                 onClick = { onClickCancel?.invoke() },
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight(),
-                shape = RoundedCornerShape(0.dp),
-                colors = ButtonDefaults.textButtonColors(
-                    contentColor = FDialogConfirmViewDefaults.colors.buttonCancel
-                ),
-            ) {
-                ProvideTextStyle(FDialogConfirmViewDefaults.typography.buttonCancel) {
-                    cancel()
-                }
-            }
+                content = { cancel() }
+            )
         }
 
         if (cancel != null && confirm != null) {
@@ -232,21 +227,14 @@ private fun FDialogConfirmButtons(
         }
 
         if (confirm != null) {
-            TextButton(
+            DialogButton(
+                modifier = Modifier.weight(1f),
+                backgroundColor = FDialogConfirmViewDefaults.colors.background,
+                contentColor = FDialogConfirmViewDefaults.colors.buttonConfirm,
+                textStyle = FDialogConfirmViewDefaults.typography.buttonConfirm,
                 onClick = { onClickConfirm?.invoke() },
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight(),
-                shape = RoundedCornerShape(0.dp),
-                colors = ButtonDefaults.textButtonColors(
-                    contentColor = FDialogConfirmViewDefaults.colors.buttonConfirm
-                ),
-                contentPadding = PaddingValues(0.dp),
-            ) {
-                ProvideTextStyle(FDialogConfirmViewDefaults.typography.buttonConfirm) {
-                    confirm()
-                }
-            }
+                content = { confirm() }
+            )
         }
     }
 }

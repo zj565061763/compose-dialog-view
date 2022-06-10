@@ -79,9 +79,9 @@ fun <T> FDialogMenuView(
     /** 每一行要显示的界面 */
     row: @Composable (RowScope.(index: Int, item: T) -> Unit)? = null,
     /** 标题 */
-    title: @Composable (RowScope.() -> Unit)? = null,
+    title: @Composable (() -> Unit)? = null,
     /** 取消按钮 */
-    cancel: @Composable (RowScope.() -> Unit)? = { Text(text = stringResource(id = R.string.lib_compose_dialog_view_menu_text_cancel)) },
+    cancel: @Composable (() -> Unit)? = { Text(text = stringResource(id = R.string.lib_compose_dialog_view_menu_text_cancel)) },
     /** 点击取消 */
     onClickCancel: (() -> Unit)? = null,
     /** 点击某一行 */
@@ -102,10 +102,11 @@ fun <T> FDialogMenuView(
             // 标题
             if (title != null) {
                 DialogButton(
+                    modifier = Modifier.fillMaxWidth(),
                     backgroundColor = FDialogMenuViewDefaults.colors.background,
                     contentColor = FDialogMenuViewDefaults.colors.title,
                     textStyle = FDialogMenuViewDefaults.typography.title,
-                    content = title
+                    content = { title() }
                 )
                 Spacer(modifier = Modifier.height((1f / LocalDensity.current.density).dp))
             }
@@ -120,6 +121,7 @@ fun <T> FDialogMenuView(
             ) {
                 items(count = data.size) { index ->
                     DialogButton(
+                        modifier = Modifier.fillMaxWidth(),
                         backgroundColor = FDialogMenuViewDefaults.colors.background,
                         contentColor = FDialogMenuViewDefaults.colors.content,
                         textStyle = FDialogMenuViewDefaults.typography.content,
@@ -139,11 +141,12 @@ fun <T> FDialogMenuView(
             if (cancel != null) {
                 Spacer(modifier = Modifier.height(10.dp))
                 DialogButton(
+                    modifier = Modifier.fillMaxWidth(),
                     backgroundColor = FDialogMenuViewDefaults.colors.background,
                     contentColor = FDialogMenuViewDefaults.colors.buttonCancel,
                     textStyle = FDialogMenuViewDefaults.typography.buttonCancel,
                     onClick = { onClickCancel?.invoke() },
-                    content = cancel
+                    content = { cancel() }
                 )
             }
         }
