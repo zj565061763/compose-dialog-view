@@ -300,7 +300,7 @@ class FDialogConfirmViewColors(
     var background by mutableStateOf(background)
         private set
 
-    var onBackground by mutableStateOf(background)
+    var onBackground by mutableStateOf(onBackground)
         private set
 
     var title by mutableStateOf(title)
