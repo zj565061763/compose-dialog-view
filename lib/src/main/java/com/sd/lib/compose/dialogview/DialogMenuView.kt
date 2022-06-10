@@ -3,13 +3,11 @@ package com.sd.lib.compose.dialogview
 import android.app.Activity
 import android.view.Gravity
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
-import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,7 +16,6 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -82,9 +79,9 @@ fun <T> FDialogMenuView(
     /** 每一行要显示的界面 */
     row: @Composable (RowScope.(index: Int, item: T) -> Unit)? = null,
     /** 标题 */
-    title: @Composable (() -> Unit)? = null,
+    title: @Composable (RowScope.() -> Unit)? = null,
     /** 取消按钮 */
-    cancel: @Composable (() -> Unit)? = { Text(text = stringResource(id = R.string.lib_compose_dialog_view_menu_text_cancel)) },
+    cancel: @Composable (RowScope.() -> Unit)? = { Text(text = stringResource(id = R.string.lib_compose_dialog_view_menu_text_cancel)) },
     /** 点击取消 */
     onClickCancel: (() -> Unit)? = null,
     /** 点击某一行 */
@@ -104,22 +101,12 @@ fun <T> FDialogMenuView(
 
             // 标题
             if (title != null) {
-                Row(
-                    modifier = Modifier
-                        .background(FDialogMenuViewDefaults.colors.background)
-                        .fillMaxWidth()
-                        .heightIn(40.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
-                ) {
-                    ProvideTextStyle(
-                        FDialogMenuViewDefaults.typography.title.copy(
-                            color = FDialogMenuViewDefaults.colors.title
-                        )
-                    ) {
-                        title()
-                    }
-                }
+                DialogButton(
+                    backgroundColor = FDialogMenuViewDefaults.colors.background,
+                    contentColor = FDialogMenuViewDefaults.colors.title,
+                    textStyle = FDialogMenuViewDefaults.typography.title,
+                    content = title
+                )
                 Spacer(modifier = Modifier.height((1f / LocalDensity.current.density).dp))
             }
 
@@ -132,57 +119,32 @@ fun <T> FDialogMenuView(
                 verticalArrangement = Arrangement.spacedBy((1f / LocalDensity.current.density).dp),
             ) {
                 items(count = data.size) { index ->
-                    TextButton(
-                        onClick = { onClickRow(index, data[index]) },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .heightIn(min = 40.dp),
-                        shape = RoundedCornerShape(0.dp),
-                        contentPadding = PaddingValues(0.dp),
-                        colors = ButtonDefaults.textButtonColors(
-                            backgroundColor = FDialogMenuViewDefaults.colors.background,
-                            contentColor = FDialogMenuViewDefaults.colors.content
-                        ),
-                    ) {
-                        ProvideTextStyle(FDialogMenuViewDefaults.typography.content) {
+                    DialogButton(
+                        backgroundColor = FDialogMenuViewDefaults.colors.background,
+                        contentColor = FDialogMenuViewDefaults.colors.content,
+                        textStyle = FDialogMenuViewDefaults.typography.content,
+                        onClick = { onClickRow.invoke(index, data[index]) },
+                        content = {
                             if (row != null) {
                                 row(index, data[index])
                             } else {
                                 Text(data[index].toString())
                             }
                         }
-                    }
+                    )
                 }
             }
 
             // 取消按钮
             if (cancel != null) {
-                Spacer(modifier = Modifier
-                    .height(10.dp))
-
-                Surface(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .heightIn(40.dp)
-                        .clickable(
-                            interactionSource = remember { MutableInteractionSource() },
-                            indication = rememberRipple(),
-                            role = Role.Button,
-                            onClick = { onClickCancel?.invoke() }
-                        ),
-                    color = FDialogMenuViewDefaults.colors.background,
+                Spacer(modifier = Modifier.height(10.dp))
+                DialogButton(
+                    backgroundColor = FDialogMenuViewDefaults.colors.background,
                     contentColor = FDialogMenuViewDefaults.colors.buttonCancel,
-                ) {
-                    ProvideTextStyle(FDialogMenuViewDefaults.typography.buttonCancel) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Center,
-                        ) {
-                            cancel()
-                        }
-                    }
-                }
+                    textStyle = FDialogMenuViewDefaults.typography.buttonCancel,
+                    onClick = { onClickCancel?.invoke() },
+                    content = cancel
+                )
             }
         }
     }

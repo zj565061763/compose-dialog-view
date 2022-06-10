@@ -1,11 +1,23 @@
 package com.sd.lib.compose.dialogview
 
 import android.app.Activity
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.ProvideTextStyle
+import androidx.compose.material.Surface
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.dp
 import com.sd.lib.dialog.IDialog
 import com.sd.lib.dialog.impl.FDialog
 
@@ -45,6 +57,43 @@ fun IDialog.setComposable(content: @Composable (IDialog) -> Unit) {
             content(this@setComposable)
         } else {
             hook(content, this@setComposable)
+        }
+    }
+}
+
+@Composable
+internal fun DialogButton(
+    backgroundColor: Color,
+    contentColor: Color,
+    textStyle: TextStyle,
+    onClick: (() -> Unit)? = null,
+    content: @Composable RowScope.() -> Unit,
+) {
+    var modifier = Modifier
+        .fillMaxWidth()
+        .heightIn(40.dp)
+
+    if (onClick != null) {
+        modifier = modifier.clickable(
+            interactionSource = remember { MutableInteractionSource() },
+            indication = rememberRipple(),
+            role = Role.Button,
+            onClick = onClick
+        )
+    }
+
+    Surface(
+        modifier = modifier,
+        color = backgroundColor,
+        contentColor = contentColor,
+    ) {
+        ProvideTextStyle(textStyle.copy(color = contentColor)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center,
+                content = content,
+            )
         }
     }
 }
