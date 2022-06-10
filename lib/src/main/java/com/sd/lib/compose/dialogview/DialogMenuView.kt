@@ -3,10 +3,13 @@ package com.sd.lib.compose.dialogview
 import android.app.Activity
 import android.view.Gravity
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,6 +18,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -156,20 +160,27 @@ fun <T> FDialogMenuView(
                 Spacer(modifier = Modifier
                     .height(10.dp))
 
-                TextButton(
-                    onClick = { onClickCancel?.invoke() },
+                Surface(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .heightIn(40.dp),
-                    shape = RoundedCornerShape(0.dp),
-                    contentPadding = PaddingValues(0.dp),
-                    colors = ButtonDefaults.textButtonColors(
-                        backgroundColor = FDialogMenuViewDefaults.colors.background,
-                        contentColor = FDialogMenuViewDefaults.colors.buttonCancel
-                    ),
+                        .heightIn(40.dp)
+                        .clickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = rememberRipple(),
+                            role = Role.Button,
+                            onClick = { onClickCancel?.invoke() }
+                        ),
+                    color = FDialogMenuViewDefaults.colors.background,
+                    contentColor = FDialogMenuViewDefaults.colors.buttonCancel,
                 ) {
                     ProvideTextStyle(FDialogMenuViewDefaults.typography.buttonCancel) {
-                        cancel()
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center,
+                        ) {
+                            cancel()
+                        }
                     }
                 }
             }
