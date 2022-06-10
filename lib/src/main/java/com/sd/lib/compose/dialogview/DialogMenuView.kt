@@ -131,7 +131,7 @@ fun <T> FDialogMenuView(
                         onClick = { onClickRow(index, data[index]) },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(40.dp),
+                            .heightIn(min = 40.dp),
                         shape = RoundedCornerShape(0.dp),
                         contentPadding = PaddingValues(0.dp),
                         colors = ButtonDefaults.textButtonColors(
@@ -150,7 +150,7 @@ fun <T> FDialogMenuView(
                 }
             }
 
-            // 按钮
+            // 取消按钮
             if (cancel != null) {
                 Spacer(modifier = Modifier
                     .height(10.dp))
@@ -159,7 +159,7 @@ fun <T> FDialogMenuView(
                     onClick = { onClickCancel?.invoke() },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(40.dp),
+                        .heightIn(40.dp),
                     shape = RoundedCornerShape(0.dp),
                     contentPadding = PaddingValues(0.dp),
                     colors = ButtonDefaults.textButtonColors(
