@@ -27,8 +27,28 @@ import com.sd.lib.dialog.impl.FDialog
 @Composable
 fun rememberFDialog(apply: IDialog.() -> Unit): IDialog {
     val context = LocalContext.current
-    val dialog: IDialog = remember {
+    val dialog = remember(context) {
         FDialog(context as Activity).apply {
+            setContentView(ComposeView(context))
+            apply(this)
+        }
+    }
+    DisposableEffect(dialog) {
+        onDispose {
+            dialog.dismiss()
+        }
+    }
+    return dialog
+}
+
+/**
+ * 确认窗口
+ */
+@Composable
+fun rememberFDialogConfirm(apply: FDialogConfirm.() -> Unit): FDialogConfirm {
+    val context = LocalContext.current
+    val dialog = remember(context) {
+        FDialogConfirm(context as Activity).apply {
             setContentView(ComposeView(context))
             apply(this)
         }
