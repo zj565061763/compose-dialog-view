@@ -12,14 +12,18 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.sd.lib.dialog.IDialog
+import com.sd.lib.dialog.ITargetDialog
 import com.sd.lib.dialog.impl.FDialog
+import com.sd.lib.vtrack.tracker.ViewTracker
 
 /**
  * 窗口
@@ -99,6 +103,29 @@ fun IDialog.setComposable(content: @Composable (IDialog) -> Unit) {
             hook(content, this@setComposable)
         }
     }
+}
+
+/**
+ * 设置目标的位置信息
+ */
+fun ITargetDialog.setLayoutCoordinates(layoutCoordinates: LayoutCoordinates) {
+    setTargetLocationInfo(object : ViewTracker.LocationInfo {
+
+        override val isReady: Boolean
+            get() = layoutCoordinates.isAttached
+
+        override val width: Int
+            get() = layoutCoordinates.size.width
+
+        override val height: Int
+            get() = layoutCoordinates.size.height
+
+        override fun getCoordinate(position: IntArray) {
+            val offset = layoutCoordinates.localToWindow(Offset.Zero)
+            position[0] = offset.x.toInt()
+            position[1] = offset.y.toInt()
+        }
+    })
 }
 
 @Composable
