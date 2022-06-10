@@ -62,6 +62,26 @@ fun rememberFDialogConfirm(apply: FDialogConfirm.() -> Unit): FDialogConfirm {
 }
 
 /**
+ * 确认窗口
+ */
+@Composable
+fun <T> rememberFDialogMenu(apply: FDialogMenu<T>.() -> Unit): FDialogMenu<T> {
+    val context = LocalContext.current
+    val dialog = remember(context) {
+        FDialogMenu<T>(context as Activity).apply {
+            setContentView(ComposeView(context))
+            apply(this)
+        }
+    }
+    DisposableEffect(dialog) {
+        onDispose {
+            dialog.dismiss()
+        }
+    }
+    return dialog
+}
+
+/**
  * 设置内容
  */
 fun IDialog.setComposable(content: @Composable (IDialog) -> Unit) {
