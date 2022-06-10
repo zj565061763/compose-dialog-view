@@ -255,7 +255,7 @@ class FDialogMenuViewTypography(
     /** 标题 */
     title: TextStyle = TextStyle(
         fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
+        fontSize = 18.sp,
         letterSpacing = 0.25.sp,
     ),
     /** 内容 */
