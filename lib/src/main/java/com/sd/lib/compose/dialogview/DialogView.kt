@@ -137,19 +137,20 @@ internal fun DialogButton(
     onClick: (() -> Unit)? = null,
     content: @Composable RowScope.() -> Unit,
 ) {
-    var finalModifier = modifier.heightIn(40.dp)
-
-    if (onClick != null) {
-        finalModifier = finalModifier.clickable(
-            interactionSource = remember { MutableInteractionSource() },
-            indication = rememberRipple(),
-            role = Role.Button,
-            onClick = onClick
-        )
-    }
-
     Surface(
-        modifier = finalModifier,
+        modifier = modifier.heightIn(40.dp)
+            .let {
+                if (onClick != null) {
+                    it.clickable(
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = rememberRipple(),
+                        role = Role.Button,
+                        onClick = onClick
+                    )
+                } else {
+                    it
+                }
+            },
         color = backgroundColor,
         contentColor = contentColor,
     ) {
