@@ -231,9 +231,9 @@ class FDialogMenuViewColors(
             return FDialogMenuViewColors(
                 background = background,
                 onBackground = onBackground,
-                title = onBackground.copy(alpha = 0.9f),
+                title = onBackground.copy(alpha = 0.3f),
                 content = onBackground.copy(alpha = 0.7f),
-                buttonCancel = onBackground.copy(alpha = 0.5f),
+                buttonCancel = onBackground.copy(alpha = 0.6f),
                 divider = onBackground.copy(alpha = 0.1f),
                 isLight = true,
             )
@@ -248,9 +248,9 @@ class FDialogMenuViewColors(
             return FDialogMenuViewColors(
                 background = background,
                 onBackground = onBackground,
-                title = onBackground.copy(alpha = 0.9f),
+                title = onBackground.copy(alpha = 0.3f),
                 content = onBackground.copy(alpha = 0.7f),
-                buttonCancel = onBackground.copy(alpha = 0.5f),
+                buttonCancel = onBackground.copy(alpha = 0.6f),
                 divider = onBackground.copy(alpha = 0.1f),
                 isLight = false,
             )
@@ -262,7 +262,7 @@ class FDialogMenuViewTypography(
     /** 标题 */
     title: TextStyle = TextStyle(
         fontWeight = FontWeight.Normal,
-        fontSize = 18.sp,
+        fontSize = 12.sp,
         letterSpacing = 0.25.sp,
     ),
     /** 内容 */
