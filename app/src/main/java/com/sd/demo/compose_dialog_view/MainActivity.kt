@@ -20,15 +20,18 @@ import com.sd.lib.vdialog.animator.scale.ScaleXYFactory
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        FDialogConfirmViewDefaults.colors = FDialogConfirmViewColors.dark()
-        FDialogMenuViewDefaults.colors = FDialogMenuViewColors.dark()
-//        testHook()
         setContent {
             AppTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     MainView()
                 }
             }
+        }
+    }
+
+    companion object {
+        init {
+//            testHook()
         }
     }
 }
