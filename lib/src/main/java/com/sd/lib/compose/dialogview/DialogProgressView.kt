@@ -19,24 +19,39 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sd.lib.vdialog.FDialog
 
-class FDialogProgress(activity: Activity) : FDialog(activity) {
+open class FDialogProgress(activity: Activity) : FDialog(activity) {
     /** 提示文字 */
-    var text by mutableStateOf<String?>(null)
-    /** 自定义提示文字，优先级高于[text] */
-    var composableText by mutableStateOf<@Composable (() -> Unit)?>(null)
+    var text by mutableStateOf<@Composable (() -> Unit)?>(null)
+
     /** 自定义进度框 */
-    var composableProgress by mutableStateOf<@Composable (() -> Unit)?>(null)
+    var progress by mutableStateOf<@Composable (() -> Unit)?>(null)
 
     override fun onCreate() {
         super.onCreate()
         setComposable {
-            val text = text
-            FDialogProgressView(
-                text = composableText ?: if (text.isNullOrEmpty()) null else {
-                    { Text(text = text) }
-                },
-                progress = composableProgress,
-            )
+            Content()
+        }
+    }
+
+    @Composable
+    protected open fun Content(
+        modifier: Modifier = Modifier,
+    ) {
+        FDialogProgressView(
+            modifier = modifier,
+            text = text,
+            progress = progress,
+        )
+    }
+
+    /**
+     * 设置文字
+     */
+    fun setText(text: String?) {
+        this.text = if (text == null) {
+            null
+        } else {
+            { Text(text = text) }
         }
     }
 

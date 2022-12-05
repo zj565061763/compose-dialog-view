@@ -207,6 +207,6 @@ private fun showMenuDialog(activity: Activity) {
 
 private fun showProgressDialog(activity: Activity, text: String) {
     FDialogProgress(activity).apply {
-        this.text = text
+        setText(text)
     }.show()
 }
