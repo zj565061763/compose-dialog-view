@@ -1,91 +1,15 @@
 package com.sd.lib.compose.dialogview
 
-import android.app.Activity
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.platform.LocalContext
-import com.sd.lib.vdialog.FDialog
 import com.sd.lib.vdialog.IDialog
 
-/**
- * 窗口
- */
-@Composable
-fun rememberFDialog(
-    dismissOnDispose: Boolean = true,
-    apply: IDialog.() -> Unit,
-): IDialog {
-    val dismissOnDisposeUpdated by rememberUpdatedState(dismissOnDispose)
+object DialogViewHook {
+    /** 确认View参数拦截 */
+    var confirmViewParamsHook: ((FDialogConfirmViewParams) -> Unit)? = null
 
-    val context = LocalContext.current
-    val dialog = remember(context) {
-        FDialog(context as Activity).apply {
-            apply(this)
-        }
-    }
-
-    DisposableEffect(dialog) {
-        onDispose {
-            if (dismissOnDisposeUpdated) {
-                dialog.dismiss()
-            }
-        }
-    }
-    return dialog
-}
-
-/**
- * 确认窗口
- */
-@Composable
-fun rememberFDialogConfirm(
-    dismissOnDispose: Boolean = true,
-    apply: FDialogConfirm.() -> Unit
-): FDialogConfirm {
-    val dismissOnDisposeUpdated by rememberUpdatedState(dismissOnDispose)
-
-    val context = LocalContext.current
-    val dialog = remember(context) {
-        FDialogConfirm(context as Activity).apply {
-            apply(this)
-        }
-    }
-
-    DisposableEffect(dialog) {
-        onDispose {
-            if (dismissOnDisposeUpdated) {
-                dialog.dismiss()
-            }
-        }
-    }
-    return dialog
-}
-
-/**
- * 确认窗口
- */
-@Composable
-fun <T> rememberFDialogMenu(
-    dismissOnDispose: Boolean = true,
-    apply: FDialogMenu<T>.() -> Unit
-): FDialogMenu<T> {
-    val dismissOnDisposeUpdated by rememberUpdatedState(dismissOnDispose)
-
-    val context = LocalContext.current
-    val dialog = remember(context) {
-        FDialogMenu<T>(context as Activity).apply {
-            apply(this)
-        }
-    }
-
-    DisposableEffect(dialog) {
-        onDispose {
-            if (dismissOnDisposeUpdated) {
-                dialog.dismiss()
-            }
-        }
-    }
-    return dialog
+    /** [setComposable]拦截 */
+    var setComposableHook: (@Composable (content: (@Composable () -> Unit), dialog: IDialog) -> Unit)? = null
 }
 
 /**
