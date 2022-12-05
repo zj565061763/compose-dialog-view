@@ -143,12 +143,7 @@ fun <T> FDialogMenuView(
                     textStyle = typography.title,
                     content = { title() }
                 )
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height((1f / LocalDensity.current.density).dp)
-                        .background(color = colors.divider)
-                )
+                FDialogDivider(color = colors.divider)
             }
 
             // 内容
@@ -175,12 +170,7 @@ fun <T> FDialogMenuView(
                             }
                         )
                         if (index != data.lastIndex) {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height((1f / LocalDensity.current.density).dp)
-                                    .background(color = colors.divider)
-                            )
+                            FDialogDivider(color = colors.divider)
                         }
                     }
                 }

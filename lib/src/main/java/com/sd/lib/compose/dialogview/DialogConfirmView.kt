@@ -1,7 +1,6 @@
 package com.sd.lib.compose.dialogview
 
 import android.app.Activity
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -15,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.isSpecified
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -220,12 +218,7 @@ fun FDialogConfirmView(
             // 分割线
             if (cancel != null || confirm != null || buttons != null) {
                 if (showDivider) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height((1f / LocalDensity.current.density).dp)
-                            .background(color = colors.divider)
-                    )
+                    FDialogDivider(color = colors.divider)
                 }
             }
 
@@ -294,11 +287,9 @@ private fun FDialogConfirmButtons(
 
         if (cancel != null && confirm != null) {
             if (showDivider) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .width((1f / LocalDensity.current.density).dp)
-                        .background(color = colors.divider)
+                FDialogDivider(
+                    color = colors.divider,
+                    horizontal = false,
                 )
             }
         }
