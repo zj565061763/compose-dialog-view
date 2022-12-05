@@ -342,7 +342,7 @@ data class FDialogConfirmViewColors(
                 title = onBackground.copy(alpha = 0.9f),
                 content = onBackground.copy(alpha = 0.7f),
                 buttonCancel = onBackground.copy(alpha = 0.45f),
-                buttonConfirm = onBackground.copy(alpha = 0.6f),
+                buttonConfirm = onBackground.copy(alpha = 0.7f),
                 divider = onBackground.copy(alpha = 0.2f),
                 isLight = true,
             )
@@ -357,7 +357,7 @@ data class FDialogConfirmViewColors(
                 title = onBackground.copy(alpha = 0.9f),
                 content = onBackground.copy(alpha = 0.7f),
                 buttonCancel = onBackground.copy(alpha = 0.45f),
-                buttonConfirm = onBackground.copy(alpha = 0.6f),
+                buttonConfirm = onBackground.copy(alpha = 0.7f),
                 divider = onBackground.copy(alpha = 0.2f),
                 isLight = false,
             )
