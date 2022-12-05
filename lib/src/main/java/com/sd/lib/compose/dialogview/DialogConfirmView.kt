@@ -290,7 +290,7 @@ class FDialogConfirmViewParams {
     /** 点击确认 */
     var onClickConfirm: (() -> Unit)? = null
     /** 内容 */
-    lateinit var content: @Composable () -> Unit
+    var content: @Composable () -> Unit = {}
 }
 
 class FDialogConfirmViewColors(
