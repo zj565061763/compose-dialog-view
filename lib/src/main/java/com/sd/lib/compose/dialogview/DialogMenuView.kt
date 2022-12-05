@@ -102,7 +102,7 @@ fun <T> FDialogMenuView(
 
             // 标题
             if (title != null) {
-                DialogButton(
+                FDialogButton(
                     modifier = Modifier
                         .fillMaxWidth()
                         .heightIn(50.dp),
@@ -123,7 +123,7 @@ fun <T> FDialogMenuView(
                 verticalArrangement = Arrangement.spacedBy((1f / LocalDensity.current.density).dp),
             ) {
                 items(count = data.size) { index ->
-                    DialogButton(
+                    FDialogButton(
                         modifier = Modifier.fillMaxWidth(),
                         backgroundColor = FDialogMenuViewDefaults.colors.background,
                         contentColor = FDialogMenuViewDefaults.colors.content,
@@ -143,7 +143,7 @@ fun <T> FDialogMenuView(
             // 取消按钮
             if (cancel != null) {
                 Spacer(modifier = Modifier.height(10.dp))
-                DialogButton(
+                FDialogButton(
                     modifier = Modifier
                         .fillMaxWidth()
                         .heightIn(50.dp),

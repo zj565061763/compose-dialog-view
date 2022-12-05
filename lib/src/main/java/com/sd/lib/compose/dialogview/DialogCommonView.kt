@@ -16,7 +16,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 
 @Composable
-internal fun DialogButton(
+internal fun FDialogButton(
     modifier: Modifier = Modifier,
     backgroundColor: Color,
     contentColor: Color,
@@ -41,7 +41,7 @@ internal fun DialogButton(
         color = backgroundColor,
         contentColor = contentColor,
     ) {
-        ProvideTextStyle(textStyle.copy(color = contentColor)) {
+        ProvideTextStyle(textStyle) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
