@@ -17,8 +17,6 @@ import com.sd.demo.compose_dialog_view.ui.theme.AppTheme
 import com.sd.lib.compose.dialogview.*
 import com.sd.lib.vdialog.animator.scale.ScaleXYFactory
 
-private const val TAG = "MainActivity"
-
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
