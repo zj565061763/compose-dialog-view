@@ -97,6 +97,12 @@ class FDialogMenu<T>(activity: Activity) : FDialog(activity) {
     }
 }
 
+private val LocalFDialogMenuViewColors = staticCompositionLocalOf<FDialogMenuViewColors?> { null }
+
+private val LocalFDialogMenuViewTypography = staticCompositionLocalOf<FDialogMenuViewTypography?> { null }
+
+private val LocalFDialogMenuViewShapes = staticCompositionLocalOf<FDialogMenuViewShapes?> { null }
+
 @Composable
 fun <T> FDialogMenuView(
     /** 数据 */
@@ -112,15 +118,17 @@ fun <T> FDialogMenuView(
     /** 点击某一行 */
     onClickRow: (index: Int, item: T) -> Unit,
 ) {
+    val shapes = LocalFDialogMenuViewShapes.current ?: FDialogMenuViewDefaults.shapes
+    val colors = LocalFDialogMenuViewColors.current ?: FDialogMenuViewDefaults.colors
+    val typography = LocalFDialogMenuViewTypography.current ?: FDialogMenuViewDefaults.typography
+
     Surface(
-        shape = FDialogMenuViewDefaults.shapes.dialog,
-        color = FDialogMenuViewDefaults.colors.background,
-        contentColor = FDialogMenuViewDefaults.colors.onBackground,
+        shape = shapes.dialog,
+        color = colors.background,
+        contentColor = colors.onBackground,
     ) {
         Column(
-            modifier = Modifier
-                .background(FDialogMenuViewDefaults.colors.divider)
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
@@ -130,12 +138,17 @@ fun <T> FDialogMenuView(
                     modifier = Modifier
                         .fillMaxWidth()
                         .heightIn(50.dp),
-                    backgroundColor = FDialogMenuViewDefaults.colors.background,
-                    contentColor = FDialogMenuViewDefaults.colors.title,
-                    textStyle = FDialogMenuViewDefaults.typography.title,
+                    backgroundColor = Color.Transparent,
+                    contentColor = colors.title,
+                    textStyle = typography.title,
                     content = { title() }
                 )
-                Spacer(modifier = Modifier.height((1f / LocalDensity.current.density).dp))
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height((1f / LocalDensity.current.density).dp)
+                        .background(color = colors.divider)
+                )
             }
 
             // 内容
@@ -144,36 +157,50 @@ fun <T> FDialogMenuView(
                 modifier = Modifier
                     .fillMaxWidth()
                     .heightIn(max = with(LocalDensity.current) { maxHeight.toDp() }),
-                verticalArrangement = Arrangement.spacedBy((1f / LocalDensity.current.density).dp),
             ) {
                 items(count = data.size) { index ->
-                    FDialogButton(
-                        modifier = Modifier.fillMaxWidth(),
-                        backgroundColor = FDialogMenuViewDefaults.colors.background,
-                        contentColor = FDialogMenuViewDefaults.colors.content,
-                        textStyle = FDialogMenuViewDefaults.typography.content,
-                        onClick = { onClickRow.invoke(index, data[index]) },
-                        content = {
-                            if (row != null) {
-                                row(index, data[index])
-                            } else {
-                                Text(data[index].toString())
+                    Column(modifier = Modifier.fillMaxWidth()) {
+                        FDialogButton(
+                            modifier = Modifier.fillMaxWidth(),
+                            backgroundColor = Color.Transparent,
+                            contentColor = colors.content,
+                            textStyle = typography.content,
+                            onClick = { onClickRow.invoke(index, data[index]) },
+                            content = {
+                                if (row != null) {
+                                    row(index, data[index])
+                                } else {
+                                    Text(data[index].toString())
+                                }
                             }
+                        )
+                        if (index != data.lastIndex) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height((1f / LocalDensity.current.density).dp)
+                                    .background(color = colors.divider)
+                            )
                         }
-                    )
+                    }
                 }
             }
 
             // 取消按钮
             if (cancel != null) {
-                Spacer(modifier = Modifier.height(10.dp))
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(10.dp)
+                        .background(color = colors.divider)
+                )
                 FDialogButton(
                     modifier = Modifier
                         .fillMaxWidth()
                         .heightIn(50.dp),
-                    backgroundColor = FDialogMenuViewDefaults.colors.background,
-                    contentColor = FDialogMenuViewDefaults.colors.buttonCancel,
-                    textStyle = FDialogMenuViewDefaults.typography.buttonCancel,
+                    backgroundColor = Color.Transparent,
+                    contentColor = colors.buttonCancel,
+                    textStyle = typography.buttonCancel,
                     onClick = { onClickCancel?.invoke() },
                     content = { cancel() }
                 )
