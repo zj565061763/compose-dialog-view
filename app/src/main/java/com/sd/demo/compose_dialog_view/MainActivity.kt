@@ -141,15 +141,10 @@ private fun showConfirmDialog(activity: Activity) {
     val dialog = FDialogConfirm(activity).apply {
         animatorFactory = ScaleXYFactory()
 
-        title = "title"
-
-        content = "我是 content"
-        composableContent = {
-            Text(text = "我是 content 我的优先级更高")
-        }
-
-        cancel = "cancel"
-        confirm = "confirm"
+        setTextTitle("Title")
+        setTextContent("Content")
+        setTextCancel("Cancel")
+        setTextConfirm("Confirm")
 
         onClickCancel = {
             Toast.makeText(activity, "onCancel", Toast.LENGTH_SHORT).show()
