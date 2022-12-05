@@ -23,6 +23,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.sd.lib.compose.dialog.R
 import com.sd.lib.dialog.IDialog
 import com.sd.lib.dialog.impl.FDialog
 
@@ -34,6 +35,7 @@ class FDialogConfirm(activity: Activity) : FDialog(activity) {
 
     /** 标题 */
     var title by mutableStateOf<String?>(
+
         activity.getString(R.string.lib_compose_dialog_view_confirm_text_title)
     )
     /** 取消按钮 */
