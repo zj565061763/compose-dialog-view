@@ -6,8 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.LocalContentColor
-import androidx.compose.material.LocalTextStyle
+import androidx.compose.material.ProvideTextStyle
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -15,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.isSpecified
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -177,18 +177,18 @@ fun FDialogConfirmView(
 
             // 标题
             if (title != null) {
-                CompositionLocalProvider(
-                    LocalContentColor provides colors.title,
-                    LocalTextStyle provides LocalTextStyle.current.merge(typography.title)
+                ProvideTextStyle(
+                    typography.title.takeIf { it.color.isSpecified }
+                        ?: typography.title.copy(color = colors.title)
                 ) {
                     title()
                 }
             }
 
             // 内容
-            CompositionLocalProvider(
-                LocalContentColor provides colors.content,
-                LocalTextStyle provides LocalTextStyle.current.merge(typography.content)
+            ProvideTextStyle(
+                typography.content.takeIf { it.color.isSpecified }
+                    ?: typography.content.copy(color = colors.content)
             ) {
                 Column(
                     modifier = Modifier
@@ -314,68 +314,24 @@ object FDialogConfirmViewDefaults {
 /**
  * 颜色
  */
-class FDialogConfirmViewColors(
+data class FDialogConfirmViewColors(
     /** 背景 */
-    background: Color,
+    val background: Color,
     /** 在背景上面内容颜色 */
-    onBackground: Color,
+    val onBackground: Color,
     /** 标题 */
-    title: Color,
+    val title: Color,
     /** 内容 */
-    content: Color,
+    val content: Color,
     /** 取消按钮 */
-    buttonCancel: Color,
+    val buttonCancel: Color,
     /** 确认按钮 */
-    buttonConfirm: Color,
+    val buttonConfirm: Color,
     /** 分割线 */
-    divider: Color,
+    val divider: Color,
     /** 是否亮色 */
-    isLight: Boolean,
+    val isLight: Boolean,
 ) {
-    var background by mutableStateOf(background)
-        private set
-
-    var onBackground by mutableStateOf(onBackground)
-        private set
-
-    var title by mutableStateOf(title)
-        private set
-
-    var content by mutableStateOf(content)
-        private set
-
-    var buttonCancel by mutableStateOf(buttonCancel)
-        private set
-
-    var buttonConfirm by mutableStateOf(buttonConfirm)
-        private set
-
-    var divider by mutableStateOf(divider)
-        private set
-
-    var isLight by mutableStateOf(isLight)
-        internal set
-
-    fun copy(
-        background: Color = this.background,
-        onBackground: Color = this.onBackground,
-        title: Color = this.title,
-        content: Color = this.content,
-        buttonCancel: Color = this.buttonCancel,
-        buttonConfirm: Color = this.buttonConfirm,
-        divider: Color = this.divider,
-        isLight: Boolean = this.isLight,
-    ): FDialogConfirmViewColors = FDialogConfirmViewColors(
-        background = background,
-        onBackground = onBackground,
-        title = title,
-        content = content,
-        buttonCancel = buttonCancel,
-        buttonConfirm = buttonConfirm,
-        divider = divider,
-        isLight = isLight,
-    )
-
     companion object {
         fun light(): FDialogConfirmViewColors {
             val background = Color.White
@@ -412,70 +368,37 @@ class FDialogConfirmViewColors(
 /**
  * 字体
  */
-class FDialogConfirmViewTypography(
+data class FDialogConfirmViewTypography(
     /** 标题 */
-    title: TextStyle = TextStyle(
+    val title: TextStyle = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 18.sp,
         letterSpacing = 0.25.sp
     ),
     /** 内容 */
-    content: TextStyle = TextStyle(
+    val content: TextStyle = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
         letterSpacing = 0.25.sp
     ),
     /** 取消按钮 */
-    buttonCancel: TextStyle = TextStyle(
+    val buttonCancel: TextStyle = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
         letterSpacing = 0.25.sp,
     ),
     /** 确认按钮 */
-    buttonConfirm: TextStyle = TextStyle(
+    val buttonConfirm: TextStyle = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
         letterSpacing = 0.25.sp,
     ),
-) {
-    var title by mutableStateOf(title)
-        private set
-
-    var content by mutableStateOf(content)
-        private set
-
-    var buttonCancel by mutableStateOf(buttonCancel)
-        private set
-
-    var buttonConfirm by mutableStateOf(buttonConfirm)
-        private set
-
-    fun copy(
-        title: TextStyle = this.title,
-        content: TextStyle = this.content,
-        buttonCancel: TextStyle = this.buttonCancel,
-        buttonConfirm: TextStyle = this.buttonConfirm,
-    ): FDialogConfirmViewTypography = FDialogConfirmViewTypography(
-        title = title,
-        content = content,
-        buttonCancel = buttonCancel,
-        buttonConfirm = buttonConfirm,
-    )
-}
+)
 
 /**
  * 形状
  */
-class FDialogConfirmViewShapes(
+data class FDialogConfirmViewShapes(
     /** 窗口形状 */
-    dialog: Shape = RoundedCornerShape(8.dp),
-) {
-    var dialog by mutableStateOf(dialog)
-        private set
-
-    fun copy(
-        dialog: Shape = this.dialog,
-    ): FDialogConfirmViewShapes = FDialogConfirmViewShapes(
-        dialog = dialog,
-    )
-}
+    val dialog: Shape = RoundedCornerShape(8.dp),
+)
