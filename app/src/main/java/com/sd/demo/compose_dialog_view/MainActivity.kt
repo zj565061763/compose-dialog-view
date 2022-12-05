@@ -128,7 +128,9 @@ fun MainView() {
         // Progress
         Button(
             onClick = {
-                showProgressDialog(activity, "加载中")
+                FDialogProgress(activity).apply {
+                    setText("加载中")
+                }.show()
             },
             modifier = Modifier.fillMaxWidth(),
         ) {
@@ -184,8 +186,9 @@ private fun showMenuDialog(activity: Activity) {
     )
 
     val dialog = FDialogMenu<String>(activity).apply {
-        title = "title"
-        cancel = "cancel"
+        setTextTitle("Title")
+        setTextCancel("Cancel")
+
         data.addAll(list)
 
         // 自定义每一行的样式
@@ -203,10 +206,4 @@ private fun showMenuDialog(activity: Activity) {
         }
     }
     dialog.show()
-}
-
-private fun showProgressDialog(activity: Activity, text: String) {
-    FDialogProgress(activity).apply {
-        setText(text)
-    }.show()
 }

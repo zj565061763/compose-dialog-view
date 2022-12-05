@@ -1,7 +1,6 @@
 <resources>
 
     <!--          string          -->
-    <string name="lib_compose_dialog_view_menu_text_title">提示</string>
     <string name="lib_compose_dialog_view_menu_text_cancel">取消</string>
 
 </resources>

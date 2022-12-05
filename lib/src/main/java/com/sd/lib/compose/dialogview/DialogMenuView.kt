@@ -28,19 +28,21 @@ import com.sd.lib.vdialog.animator.slide.SlideUpDownRItselfFactory
 
 class FDialogMenu<T>(activity: Activity) : FDialog(activity) {
     /** 数据 */
-    var data = mutableStateListOf<T>()
+    val data = mutableStateListOf<T>()
+
     /** 自定义每一行的样式 */
     var row: @Composable (RowScope.(index: Int, item: T) -> Unit)? = null
 
     /** 标题 */
-    var title by mutableStateOf<String?>(null)
-    /** 取消按钮 */
-    var cancel by mutableStateOf<String?>(activity.getString(R.string.lib_compose_dialog_view_menu_text_cancel))
+    var title by mutableStateOf<@Composable (() -> Unit)?>(null)
 
-    /** 点击取消 */
-    var onClickCancel: ((IDialog) -> Unit)? = { it.dismiss() }
+    /** 取消按钮 */
+    var cancel by mutableStateOf<@Composable (() -> Unit)?>(null)
+
     /** 点击某一行 */
     lateinit var onClickRow: (index: Int, item: T, dialog: IDialog) -> Unit
+    /** 点击取消 */
+    var onClickCancel: ((IDialog) -> Unit)? = { it.dismiss() }
 
     override fun onCreate() {
         super.onCreate()
@@ -48,17 +50,13 @@ class FDialogMenu<T>(activity: Activity) : FDialog(activity) {
             val title = title
             val cancel = cancel
             FDialogMenuView(
-                title = if (title.isNullOrEmpty()) null else {
-                    { Text(text = title) }
-                },
-                cancel = if (cancel.isNullOrEmpty()) null else {
-                    { Text(text = cancel) }
-                },
+                data = data,
+                row = row,
+                title = title,
+                cancel = cancel,
                 onClickCancel = {
                     onClickCancel?.invoke(this@FDialogMenu)
                 },
-                data = data,
-                row = row,
                 onClickRow = { index, item ->
                     onClickRow.invoke(index, item, this@FDialogMenu)
                 },
@@ -66,10 +64,36 @@ class FDialogMenu<T>(activity: Activity) : FDialog(activity) {
         }
     }
 
+    /**
+     * 设置标题文字
+     */
+    fun setTextTitle(text: String?) {
+        this.title = if (text == null) {
+            null
+        } else {
+            { Text(text = text) }
+        }
+    }
+
+    /**
+     * 设置取消按钮的文字
+     */
+    fun setTextCancel(text: String?) {
+        this.cancel = if (text == null) {
+            null
+        } else {
+            { Text(text = text) }
+        }
+    }
+
     init {
         padding.set(0, 0, 0, 0)
         gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
         animatorFactory = SlideUpDownRItselfFactory()
+
+        cancel = {
+            Text(text = stringResource(id = R.string.lib_compose_dialog_view_menu_text_cancel))
+        }
     }
 }
 
@@ -169,59 +193,20 @@ object FDialogMenuViewDefaults {
 
 class FDialogMenuViewColors(
     /** 背景 */
-    background: Color,
+    val background: Color,
     /** 在背景上面内容颜色 */
-    onBackground: Color,
+    val onBackground: Color,
     /** 标题 */
-    title: Color,
+    val title: Color,
     /** 内容 */
-    content: Color,
+    val content: Color,
     /** 取消按钮 */
-    buttonCancel: Color,
+    val buttonCancel: Color,
     /** 分割线 */
-    divider: Color,
+    val divider: Color,
     /** 是否亮色 */
-    isLight: Boolean,
+    val isLight: Boolean,
 ) {
-    var background by mutableStateOf(background)
-        private set
-
-    var onBackground by mutableStateOf(onBackground)
-        private set
-
-    var title by mutableStateOf(title)
-        private set
-
-    var content by mutableStateOf(content)
-        private set
-
-    var buttonCancel by mutableStateOf(buttonCancel)
-        private set
-
-    var divider by mutableStateOf(divider)
-        private set
-
-    var isLight by mutableStateOf(isLight)
-        internal set
-
-    fun copy(
-        background: Color = this.background,
-        onBackground: Color = this.onBackground,
-        title: Color = this.title,
-        content: Color = this.content,
-        buttonCancel: Color = this.buttonCancel,
-        divider: Color = this.divider,
-        isLight: Boolean = this.isLight,
-    ): FDialogMenuViewColors = FDialogMenuViewColors(
-        background = background,
-        onBackground = onBackground,
-        title = title,
-        content = content,
-        buttonCancel = buttonCancel,
-        divider = divider,
-        isLight = isLight,
-    )
-
     companion object {
         /**
          * 亮色
@@ -261,55 +246,27 @@ class FDialogMenuViewColors(
 
 class FDialogMenuViewTypography(
     /** 标题 */
-    title: TextStyle = TextStyle(
+    val title: TextStyle = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 12.sp,
         letterSpacing = 0.25.sp,
     ),
     /** 内容 */
-    content: TextStyle = TextStyle(
+    val content: TextStyle = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
         letterSpacing = 0.25.sp,
         textAlign = TextAlign.Center,
     ),
     /** 取消按钮 */
-    buttonCancel: TextStyle = TextStyle(
+    val buttonCancel: TextStyle = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
         letterSpacing = 0.25.sp,
     ),
-) {
-    var title by mutableStateOf(title)
-        private set
-
-    var content by mutableStateOf(content)
-        private set
-
-    var buttonCancel by mutableStateOf(buttonCancel)
-        private set
-
-    fun copy(
-        title: TextStyle = this.title,
-        content: TextStyle = this.content,
-        buttonCancel: TextStyle = this.buttonCancel,
-    ): FDialogMenuViewTypography = FDialogMenuViewTypography(
-        title = title,
-        content = content,
-        buttonCancel = buttonCancel,
-    )
-}
+)
 
 class FDialogMenuViewShapes(
     /** 窗口形状 */
-    dialog: Shape = RoundedCornerShape(0.dp),
-) {
-    var dialog by mutableStateOf(dialog)
-        private set
-
-    fun copy(
-        dialog: Shape = this.dialog,
-    ): FDialogMenuViewShapes = FDialogMenuViewShapes(
-        dialog = dialog,
-    )
-}
+    val dialog: Shape = RoundedCornerShape(0.dp),
+)
