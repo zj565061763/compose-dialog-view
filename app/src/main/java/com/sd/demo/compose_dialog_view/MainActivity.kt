@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.sd.demo.compose_dialog_view.ui.theme.AppTheme
 import com.sd.lib.compose.dialogview.*
-import com.sd.lib.dialog.animator.ScaleXYCreator
+import com.sd.lib.vdialog.animator.scale.ScaleXYFactory
 
 private const val TAG = "MainActivity"
 
@@ -70,7 +70,7 @@ private fun testHook() {
         AppTheme {
             Column {
                 Text(text = "setComposableHook")
-                content(dialog)
+                content()
             }
         }
     }
@@ -141,7 +141,7 @@ fun MainView() {
  */
 private fun showConfirmDialog(activity: Activity) {
     val dialog = FDialogConfirm(activity).apply {
-        animatorCreator = ScaleXYCreator()
+        animatorFactory = ScaleXYFactory()
 
         title = "title"
 

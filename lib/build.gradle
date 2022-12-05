@@ -42,7 +42,7 @@ dependencies {
     implementation "androidx.compose.ui:ui:$compose_version"
     implementation "androidx.compose.foundation:foundation:$compose_version"
     implementation "androidx.compose.material:material:$compose_version"
-    api "com.github.zj565061763:dialogv:1.0.+"
+    api 'com.github.zj565061763:view-dialog:latest.release'
 }
 
 task generateSourcesJar(type: Jar) {

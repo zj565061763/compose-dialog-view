@@ -24,8 +24,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sd.lib.compose.dialog.R
-import com.sd.lib.dialog.IDialog
-import com.sd.lib.dialog.impl.FDialog
+import com.sd.lib.vdialog.FDialog
+import com.sd.lib.vdialog.IDialog
 
 class FDialogConfirm(activity: Activity) : FDialog(activity) {
     /** 内容 */

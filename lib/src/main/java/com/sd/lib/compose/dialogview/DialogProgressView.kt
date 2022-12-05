@@ -17,7 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sd.lib.dialog.impl.FDialog
+import com.sd.lib.vdialog.FDialog
 
 class FDialogProgress(activity: Activity) : FDialog(activity) {
     /** 提示文字 */
@@ -41,7 +41,7 @@ class FDialogProgress(activity: Activity) : FDialog(activity) {
     }
 
     init {
-        setPadding(0, 0, 0, 0)
+        padding.set(0, 0, 0, 0)
         setCanceledOnTouchOutside(false)
     }
 }
