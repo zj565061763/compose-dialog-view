@@ -212,6 +212,25 @@ fun FDialogConfirmView(
     }
 }
 
+class FDialogConfirmViewParams {
+    /** 标题 */
+    var title: @Composable (() -> Unit)? = null
+    /** 取消按钮 */
+    var cancel: @Composable (() -> Unit)? = null
+    /** 确认按钮 */
+    var confirm: @Composable (() -> Unit)? = null
+    /** 是否显示分割线 */
+    var showDivider: Boolean = true
+    /** 按钮 */
+    var buttons: @Composable (() -> Unit)? = null
+    /** 点击取消 */
+    var onClickCancel: (() -> Unit)? = null
+    /** 点击确认 */
+    var onClickConfirm: (() -> Unit)? = null
+    /** 内容 */
+    var content: @Composable () -> Unit = {}
+}
+
 @Composable
 private fun FDialogConfirmButtons(
     cancel: @Composable (() -> Unit)? = null,
@@ -274,24 +293,6 @@ object FDialogConfirmViewDefaults {
     var shapes by mutableStateOf(FDialogConfirmViewShapes())
 }
 
-class FDialogConfirmViewParams {
-    /** 标题 */
-    var title: @Composable (() -> Unit)? = null
-    /** 取消按钮 */
-    var cancel: @Composable (() -> Unit)? = null
-    /** 确认按钮 */
-    var confirm: @Composable (() -> Unit)? = null
-    /** 是否显示分割线 */
-    var showDivider: Boolean = true
-    /** 按钮 */
-    var buttons: @Composable (() -> Unit)? = null
-    /** 点击取消 */
-    var onClickCancel: (() -> Unit)? = null
-    /** 点击确认 */
-    var onClickConfirm: (() -> Unit)? = null
-    /** 内容 */
-    var content: @Composable () -> Unit = {}
-}
 
 class FDialogConfirmViewColors(
     /** 背景 */
