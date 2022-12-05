@@ -110,11 +110,11 @@ open class FDialogConfirm(activity: Activity) : FDialog(activity) {
     }
 }
 
-val LocalFDialogConfirmViewColors = staticCompositionLocalOf { FDialogConfirmViewDefaults.colors }
+val LocalFDialogConfirmViewColors = staticCompositionLocalOf<FDialogConfirmViewColors?> { null }
 
-val LocalFDialogConfirmViewTypography = staticCompositionLocalOf { FDialogConfirmViewDefaults.typography }
+val LocalFDialogConfirmViewTypography = staticCompositionLocalOf<FDialogConfirmViewTypography?> { null }
 
-val LocalFDialogConfirmViewShapes = staticCompositionLocalOf { FDialogConfirmViewDefaults.shapes }
+val LocalFDialogConfirmViewShapes = staticCompositionLocalOf<FDialogConfirmViewShapes?> { null }
 
 @Composable
 fun FDialogConfirmView(
@@ -157,9 +157,9 @@ fun FDialogConfirmView(
     val onClickConfirm = params.onClickConfirm
     val content = params.content
 
-    val shapes = LocalFDialogConfirmViewShapes.current
-    val colors = LocalFDialogConfirmViewColors.current
-    val typography = LocalFDialogConfirmViewTypography.current
+    val shapes = LocalFDialogConfirmViewShapes.current ?: FDialogConfirmViewDefaults.shapes
+    val colors = LocalFDialogConfirmViewColors.current ?: FDialogConfirmViewDefaults.colors
+    val typography = LocalFDialogConfirmViewTypography.current ?: FDialogConfirmViewDefaults.typography
 
     Surface(
         shape = shapes.dialog,
@@ -256,8 +256,8 @@ private fun FDialogConfirmButtons(
     onClickCancel: (() -> Unit)? = null,
     onClickConfirm: (() -> Unit)? = null,
 ) {
-    val colors = LocalFDialogConfirmViewColors.current
-    val typography = LocalFDialogConfirmViewTypography.current
+    val colors = LocalFDialogConfirmViewColors.current ?: FDialogConfirmViewDefaults.colors
+    val typography = LocalFDialogConfirmViewTypography.current ?: FDialogConfirmViewDefaults.typography
 
     Row(
         modifier = Modifier
