@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sd.lib.vdialog.FDialog
 
-open class FDialogProgress(activity: Activity) : FDialog(activity) {
+class FDialogProgress(activity: Activity) : FDialog(activity) {
     /** 提示文字 */
     var text by mutableStateOf<@Composable (() -> Unit)?>(null)
 
@@ -29,19 +29,11 @@ open class FDialogProgress(activity: Activity) : FDialog(activity) {
     override fun onCreate() {
         super.onCreate()
         setComposable {
-            Content()
+            FDialogProgressView(
+                text = text,
+                progress = progress,
+            )
         }
-    }
-
-    @Composable
-    protected open fun Content(
-        modifier: Modifier = Modifier,
-    ) {
-        FDialogProgressView(
-            modifier = modifier,
-            text = text,
-            progress = progress,
-        )
     }
 
     /**
@@ -84,9 +76,9 @@ fun FDialogProgressView(
             )
         }
 
-        ProvideTextStyle(TextStyle(color = Color.White.copy(alpha = 0.9f), fontSize = 12.sp)) {
-            if (text != null) {
-                Spacer(modifier = Modifier.width(5.dp))
+        if (text != null) {
+            Spacer(modifier = Modifier.width(5.dp))
+            ProvideTextStyle(TextStyle(color = Color.White.copy(alpha = 0.9f), fontSize = 12.sp)) {
                 text()
             }
         }
