@@ -72,29 +72,45 @@ open class FDialogConfirm(activity: Activity) : FDialog(activity) {
     /**
      * 设置标题文字
      */
-    fun setTextTitle(text: String) {
-        this.title = { Text(text = text) }
+    fun setTextTitle(text: String?) {
+        this.title = if (text == null) {
+            null
+        } else {
+            { Text(text = text) }
+        }
     }
 
     /**
      * 设置内容文字
      */
-    fun setTextContent(text: String) {
-        this.content = { Text(text = text) }
+    fun setTextContent(text: String?) {
+        this.content = if (text == null) {
+            null
+        } else {
+            { Text(text = text) }
+        }
     }
 
     /**
      * 设置取消按钮的文字
      */
-    fun setTextCancel(text: String) {
-        this.cancel = { Text(text = text) }
+    fun setTextCancel(text: String?) {
+        this.cancel = if (text == null) {
+            null
+        } else {
+            { Text(text = text) }
+        }
     }
 
     /**
      * 设置确认按钮的文字
      */
-    fun setTextConfirm(text: String) {
-        this.confirm = { Text(text = text) }
+    fun setTextConfirm(text: String?) {
+        this.confirm = if (text == null) {
+            null
+        } else {
+            { Text(text = text) }
+        }
     }
 
     init {
