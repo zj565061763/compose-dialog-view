@@ -26,7 +26,7 @@ import com.sd.lib.vdialog.FDialog
 import com.sd.lib.vdialog.IDialog
 import com.sd.lib.vdialog.animator.slide.SlideUpDownRItselfFactory
 
-class FDialogMenu<T>(activity: Activity) : FDialog(activity) {
+open class FDialogMenu<T>(activity: Activity) : FDialog(activity) {
     /** 数据 */
     val data = mutableStateListOf<T>()
 
@@ -47,21 +47,27 @@ class FDialogMenu<T>(activity: Activity) : FDialog(activity) {
     override fun onCreate() {
         super.onCreate()
         setComposable {
-            val title = title
-            val cancel = cancel
-            FDialogMenuView(
-                data = data,
-                row = row,
-                title = title,
-                cancel = cancel,
-                onClickCancel = {
-                    onClickCancel?.invoke(this@FDialogMenu)
-                },
-                onClickRow = { index, item ->
-                    onClickRow.invoke(index, item, this@FDialogMenu)
-                },
-            )
+            Content()
         }
+    }
+
+    @Composable
+    protected open fun Content(
+        modifier: Modifier = Modifier,
+    ) {
+        FDialogMenuView(
+            modifier = modifier,
+            data = data,
+            row = row,
+            title = title,
+            cancel = cancel,
+            onClickCancel = {
+                onClickCancel?.invoke(this@FDialogMenu)
+            },
+            onClickRow = { index, item ->
+                onClickRow.invoke(index, item, this@FDialogMenu)
+            },
+        )
     }
 
     /**
@@ -105,6 +111,7 @@ private val LocalFDialogMenuViewShapes = staticCompositionLocalOf<FDialogMenuVie
 
 @Composable
 fun <T> FDialogMenuView(
+    modifier: Modifier = Modifier,
     /** 数据 */
     data: List<T>,
     /** 每一行要显示的界面 */
@@ -126,6 +133,7 @@ fun <T> FDialogMenuView(
         shape = shapes.dialog,
         color = colors.background,
         contentColor = colors.onBackground,
+        modifier = modifier,
     ) {
         Column(
             modifier = Modifier.fillMaxWidth(),
