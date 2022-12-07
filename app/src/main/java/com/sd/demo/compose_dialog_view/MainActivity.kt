@@ -200,7 +200,7 @@ private fun showMenuDialog(activity: Activity) {
             dismiss()
             Toast.makeText(activity, "onCancel", Toast.LENGTH_SHORT).show()
         }
-        onClickRow { index, item, _ ->
+        onClickRow { index, item, dialog ->
             dismiss()
             Toast.makeText(activity, item, Toast.LENGTH_SHORT).show()
         }
