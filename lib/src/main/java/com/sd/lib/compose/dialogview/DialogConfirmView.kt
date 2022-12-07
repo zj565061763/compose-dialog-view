@@ -25,21 +25,21 @@ import com.sd.lib.vdialog.IDialog
 
 open class FDialogConfirm(activity: Activity) : FDialog(activity) {
     /** 标题 */
-    var title by mutableStateOf<@Composable (() -> Unit)?>(null)
+    internal var title by mutableStateOf<@Composable (() -> Unit)?>(null)
 
     /** 内容 */
-    var content by mutableStateOf<@Composable (() -> Unit)?>(null)
+    internal var content by mutableStateOf<@Composable (() -> Unit)?>(null)
 
     /** 取消按钮 */
-    var cancel by mutableStateOf<@Composable (() -> Unit)?>(null)
+    internal var cancel by mutableStateOf<@Composable (() -> Unit)?>(null)
 
     /** 确认按钮 */
-    var confirm by mutableStateOf<@Composable (() -> Unit)?>(null)
+    internal var confirm by mutableStateOf<@Composable (() -> Unit)?>(null)
 
     /** 点击取消 */
-    var onClickCancel: ((IDialog) -> Unit)? = { it.dismiss() }
+    private var _onClickCancel: ((IDialog) -> Unit)? = { it.dismiss() }
     /** 点击确认 */
-    var onClickConfirm: ((IDialog) -> Unit)? = { it.dismiss() }
+    private var _onClickConfirm: ((IDialog) -> Unit)? = { it.dismiss() }
 
     override fun onCreate() {
         super.onCreate()
@@ -59,12 +59,26 @@ open class FDialogConfirm(activity: Activity) : FDialog(activity) {
             cancel = cancel,
             confirm = confirm,
             onClickCancel = {
-                onClickCancel?.invoke(this@FDialogConfirm)
+                _onClickCancel?.invoke(this@FDialogConfirm)
             },
             onClickConfirm = {
-                onClickConfirm?.invoke(this@FDialogConfirm)
+                _onClickConfirm?.invoke(this@FDialogConfirm)
             },
         )
+    }
+
+    /**
+     * 点击取消
+     */
+    fun onClickCancel(callback: ((IDialog) -> Unit)?) {
+        _onClickCancel = callback
+    }
+
+    /**
+     * 点击确认
+     */
+    fun onClickConfirm(callback: ((IDialog) -> Unit)?) {
+        _onClickConfirm = callback
     }
 
     /**
@@ -122,6 +136,34 @@ open class FDialogConfirm(activity: Activity) : FDialog(activity) {
             Text(text = stringResource(id = R.string.lib_compose_dialog_view_confirm_text_confirm))
         }
     }
+}
+
+/**
+ * 设置标题
+ */
+fun FDialogConfirm.setTitle(block: @Composable (() -> Unit)?) {
+    this.title = block
+}
+
+/**
+ * 设置内容
+ */
+fun FDialogConfirm.setContent(block: @Composable (() -> Unit)?) {
+    this.content = block
+}
+
+/**
+ * 设置取消按钮
+ */
+fun FDialogConfirm.setCancel(block: @Composable (() -> Unit)?) {
+    this.cancel = block
+}
+
+/**
+ * 设置确认按钮
+ */
+fun FDialogConfirm.setConfirm(block: @Composable (() -> Unit)?) {
+    this.confirm = block
 }
 
 val LocalFDialogConfirmViewColors = staticCompositionLocalOf<FDialogConfirmViewColors?> { null }
