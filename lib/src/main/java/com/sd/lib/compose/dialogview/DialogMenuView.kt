@@ -40,9 +40,9 @@ open class FDialogMenu<T>(activity: Activity) : FDialog(activity) {
     var cancel by mutableStateOf<@Composable (() -> Unit)?>(null)
 
     /** 点击某一行 */
-    lateinit var onClickRow: (index: Int, item: T, dialog: IDialog) -> Unit
+    private var _onClickRow: ((index: Int, item: T, dialog: IDialog) -> Unit)? = null
     /** 点击取消 */
-    var onClickCancel: ((IDialog) -> Unit)? = { it.dismiss() }
+    private var _onClickCancel: ((IDialog) -> Unit)? = { it.dismiss() }
 
     override fun onCreate() {
         super.onCreate()
@@ -62,12 +62,26 @@ open class FDialogMenu<T>(activity: Activity) : FDialog(activity) {
             title = title,
             cancel = cancel,
             onClickCancel = {
-                onClickCancel?.invoke(this@FDialogMenu)
+                _onClickCancel?.invoke(this@FDialogMenu)
             },
             onClickRow = { index, item ->
-                onClickRow.invoke(index, item, this@FDialogMenu)
+                _onClickRow?.invoke(index, item, this@FDialogMenu)
             },
         )
+    }
+
+    /**
+     * 点击取消
+     */
+    fun onClickCancel(callback: ((IDialog) -> Unit)?) {
+        _onClickCancel = callback
+    }
+
+    /**
+     * 点击某一行
+     */
+    fun onClickRow(callback: ((index: Int, item: T, dialog: IDialog) -> Unit)?) {
+        _onClickRow = callback
     }
 
     /**
