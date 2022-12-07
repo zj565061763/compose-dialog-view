@@ -20,17 +20,17 @@ import androidx.compose.ui.unit.sp
 import com.sd.lib.vdialog.FDialog
 
 class FDialogProgress(activity: Activity) : FDialog(activity) {
-    /** 提示文字 */
-    var text by mutableStateOf<@Composable (() -> Unit)?>(null)
+    /** 文字 */
+    internal var msg by mutableStateOf<@Composable (() -> Unit)?>(null)
 
-    /** 自定义进度框 */
-    var progress by mutableStateOf<@Composable (() -> Unit)?>(null)
+    /** 进度框 */
+    internal var progress by mutableStateOf<@Composable (() -> Unit)?>(null)
 
     override fun onCreate() {
         super.onCreate()
         setComposable {
             FDialogProgressView(
-                text = text,
+                msg = msg,
                 progress = progress,
             )
         }
@@ -39,8 +39,8 @@ class FDialogProgress(activity: Activity) : FDialog(activity) {
     /**
      * 设置文字
      */
-    fun setText(text: String?) {
-        this.text = if (text == null) {
+    fun setTextMsg(text: String?) {
+        this.msg = if (text == null) {
             null
         } else {
             { Text(text = text) }
@@ -53,10 +53,24 @@ class FDialogProgress(activity: Activity) : FDialog(activity) {
     }
 }
 
+/**
+ * 设置文字
+ */
+fun FDialogProgress.setMsg(block: @Composable (() -> Unit)?) {
+    this.msg = block
+}
+
+/**
+ * 设置进度框
+ */
+fun FDialogProgress.setProgress(block: @Composable (() -> Unit)?) {
+    this.progress = block
+}
+
 @Composable
 fun FDialogProgressView(
     modifier: Modifier = Modifier,
-    text: (@Composable () -> Unit)? = null,
+    msg: (@Composable () -> Unit)? = null,
     progress: (@Composable () -> Unit)? = null,
 ) {
     Row(
@@ -76,10 +90,10 @@ fun FDialogProgressView(
             )
         }
 
-        if (text != null) {
+        if (msg != null) {
             Spacer(modifier = Modifier.width(5.dp))
             ProvideTextStyle(TextStyle(color = Color.White.copy(alpha = 0.9f), fontSize = 12.sp)) {
-                text()
+                msg()
             }
         }
     }

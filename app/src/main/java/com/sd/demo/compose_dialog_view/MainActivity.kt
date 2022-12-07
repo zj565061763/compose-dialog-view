@@ -129,7 +129,7 @@ fun MainView() {
         Button(
             onClick = {
                 FDialogProgress(activity).apply {
-                    setText("加载中")
+                    setTextMsg("加载中")
                 }.show()
             },
             modifier = Modifier.fillMaxWidth(),
