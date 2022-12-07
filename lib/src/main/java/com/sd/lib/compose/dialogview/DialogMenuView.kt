@@ -30,14 +30,14 @@ open class FDialogMenu<T>(activity: Activity) : FDialog(activity) {
     /** 数据 */
     val data = mutableStateListOf<T>()
 
-    /** 自定义每一行的样式 */
-    var row: @Composable (RowScope.(index: Int, item: T) -> Unit)? = null
+    /** 每一行的布局 */
+    internal var row by mutableStateOf<@Composable (RowScope.(index: Int, item: T) -> Unit)?>(null)
 
     /** 标题 */
-    var title by mutableStateOf<@Composable (() -> Unit)?>(null)
+    internal var title by mutableStateOf<@Composable (() -> Unit)?>(null)
 
     /** 取消按钮 */
-    var cancel by mutableStateOf<@Composable (() -> Unit)?>(null)
+    internal var cancel by mutableStateOf<@Composable (() -> Unit)?>(null)
 
     /** 点击某一行 */
     private var _onClickRow: ((index: Int, item: T, dialog: IDialog) -> Unit)? = null
@@ -115,6 +115,27 @@ open class FDialogMenu<T>(activity: Activity) : FDialog(activity) {
             Text(text = stringResource(id = R.string.lib_compose_dialog_view_menu_text_cancel))
         }
     }
+}
+
+/**
+ * 设置每一行的布局
+ */
+fun <T> FDialogMenu<T>.setRow(block: @Composable (RowScope.(index: Int, item: T) -> Unit)?) {
+    this.row = block
+}
+
+/**
+ * 设置标题
+ */
+fun <T> FDialogMenu<T>.setTitle(block: @Composable (() -> Unit)?) {
+    this.title = block
+}
+
+/**
+ * 设置取消按钮
+ */
+fun <T> FDialogMenu<T>.setCancel(block: @Composable (() -> Unit)?) {
+    this.cancel = block
 }
 
 private val LocalFDialogMenuViewColors = staticCompositionLocalOf<FDialogMenuViewColors?> { null }
