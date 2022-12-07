@@ -151,11 +151,11 @@ private fun showConfirmDialog(activity: Activity) {
         setTextCancel("Cancel")
         setTextConfirm("Confirm")
 
-        onClickCancel = {
+        onClickCancel {
             Toast.makeText(activity, "onCancel", Toast.LENGTH_SHORT).show()
             dismiss()
         }
-        onClickConfirm = {
+        onClickConfirm {
             Toast.makeText(activity, "onConfirm", Toast.LENGTH_SHORT).show()
             dismiss()
         }
