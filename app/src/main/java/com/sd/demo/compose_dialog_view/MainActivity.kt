@@ -192,7 +192,7 @@ private fun showMenuDialog(activity: Activity) {
         data.addAll(list)
 
         // 自定义每一行的样式
-//        row = { index, item ->
+//        setRow { index, item ->
 //            Text(text = "I'm row $item")
 //        }
 
