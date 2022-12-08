@@ -15,7 +15,7 @@ object DialogViewHook {
 /**
  * 设置内容
  */
-fun IDialog.setComposable(content: @Composable (IDialog) -> Unit) {
+fun IDialog.setComposable(content: @Composable () -> Unit) {
     val view = contentView
     val composeView = if (view is ComposeView) {
         view
@@ -28,9 +28,9 @@ fun IDialog.setComposable(content: @Composable (IDialog) -> Unit) {
     composeView.setContent {
         val hook = DialogViewHook.setComposableHook
         if (hook == null) {
-            content(this@setComposable)
+            content()
         } else {
-            hook({ content(this@setComposable) }, this@setComposable)
+            hook(content, this@setComposable)
         }
     }
 }
