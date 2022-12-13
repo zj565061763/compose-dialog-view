@@ -1,6 +1,7 @@
 package com.sd.demo.compose_dialog_view
 
 import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -79,7 +80,7 @@ private fun testHook() {
 
 @Composable
 fun MainView() {
-    val activity = LocalContext.current as Activity
+    val context = LocalContext.current as Activity
 
     var isLight by remember { mutableStateOf(true) }
     LaunchedEffect(isLight) {
@@ -108,7 +109,7 @@ fun MainView() {
         // Confirm
         Button(
             onClick = {
-                showConfirmDialog(activity)
+                showConfirmDialog(context)
             },
             modifier = Modifier.fillMaxWidth(),
         ) {
@@ -118,7 +119,7 @@ fun MainView() {
         // Menu
         Button(
             onClick = {
-                showMenuDialog(activity)
+                showMenuDialog(context)
             },
             modifier = Modifier.fillMaxWidth(),
         ) {
@@ -128,7 +129,7 @@ fun MainView() {
         // Progress
         Button(
             onClick = {
-                FDialogProgress(activity).apply {
+                FDialogProgress(context).apply {
                     setTextMsg("加载中")
                 }.show()
             },
@@ -142,8 +143,8 @@ fun MainView() {
 /**
  * 确认窗口
  */
-private fun showConfirmDialog(activity: Activity) {
-    val dialog = FDialogConfirm(activity).apply {
+private fun showConfirmDialog(context: Context) {
+    val dialog = FDialogConfirm(context).apply {
         animatorFactory = ScaleXYFactory()
 
         setTextTitle("Title")
@@ -152,11 +153,11 @@ private fun showConfirmDialog(activity: Activity) {
         setTextConfirm("Confirm")
 
         onClickCancel {
-            Toast.makeText(activity, "onCancel", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "onCancel", Toast.LENGTH_SHORT).show()
             dismiss()
         }
         onClickConfirm {
-            Toast.makeText(activity, "onConfirm", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "onConfirm", Toast.LENGTH_SHORT).show()
             dismiss()
         }
     }
@@ -166,7 +167,7 @@ private fun showConfirmDialog(activity: Activity) {
 /**
  * 菜单窗口
  */
-private fun showMenuDialog(activity: Activity) {
+private fun showMenuDialog(context: Context) {
     val list = listOf(
         "Kotlin",
         "Java",
@@ -185,7 +186,7 @@ private fun showMenuDialog(activity: Activity) {
         "CSS",
     )
 
-    val dialog = FDialogMenu<String>(activity).apply {
+    val dialog = FDialogMenu<String>(context).apply {
         setTextTitle("Title")
         setTextCancel("Cancel")
 
@@ -198,11 +199,11 @@ private fun showMenuDialog(activity: Activity) {
 
         onClickCancel {
             dismiss()
-            Toast.makeText(activity, "onCancel", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "onCancel", Toast.LENGTH_SHORT).show()
         }
         onClickRow { index, item, dialog ->
             dismiss()
-            Toast.makeText(activity, item, Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, item, Toast.LENGTH_SHORT).show()
         }
     }
     dialog.show()

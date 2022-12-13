@@ -1,6 +1,6 @@
 package com.sd.lib.compose.dialogview
 
-import android.app.Activity
+import android.content.Context
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -23,7 +23,7 @@ import com.sd.lib.compose.dialog.R
 import com.sd.lib.vdialog.FDialog
 import com.sd.lib.vdialog.IDialog
 
-open class FDialogConfirm(activity: Activity) : FDialog(activity) {
+open class FDialogConfirm(context: Context) : FDialog(context) {
     /** 标题 */
     internal var title by mutableStateOf<@Composable (() -> Unit)?>(null)
 

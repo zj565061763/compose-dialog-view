@@ -1,6 +1,6 @@
 package com.sd.lib.compose.dialogview
 
-import android.app.Activity
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sd.lib.vdialog.FDialog
 
-class FDialogProgress(activity: Activity) : FDialog(activity) {
+class FDialogProgress(context: Context) : FDialog(context) {
     /** 文字 */
     internal var msg by mutableStateOf<@Composable (() -> Unit)?>(null)
 

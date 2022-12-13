@@ -1,6 +1,6 @@
 package com.sd.lib.compose.dialogview
 
-import android.app.Activity
+import android.content.Context
 import android.view.Gravity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -26,7 +26,7 @@ import com.sd.lib.vdialog.FDialog
 import com.sd.lib.vdialog.IDialog
 import com.sd.lib.vdialog.animator.slide.SlideUpDownRItselfFactory
 
-open class FDialogMenu<T>(activity: Activity) : FDialog(activity) {
+open class FDialogMenu<T>(context: Context) : FDialog(context) {
     /** 数据 */
     val data = mutableStateListOf<T>()
 
