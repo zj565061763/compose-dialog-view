@@ -51,6 +51,9 @@ fun <T> FDialogMenuView(
     cancel: @Composable (() -> Unit)? = { Text(text = stringResource(id = R.string.lib_compose_dialog_view_menu_text_cancel)) },
     /** 每一行要显示的界面 */
     row: @Composable (RowScope.(index: Int, item: T) -> Unit)? = null,
+    /** 行内容 */
+    text: (index: Int, item: T) -> String = { _, item -> item.toString() },
+
     key: ((index: Int, item: T) -> Any)? = null,
     contentType: (index: Int, item: T) -> Any? = { _, _ -> null },
 
@@ -58,9 +61,6 @@ fun <T> FDialogMenuView(
     onClickCancel: (() -> Unit)? = null,
     /** 点击某一行 */
     onClickRow: (index: Int, item: T) -> Unit,
-
-    /** 行内容 */
-    text: (index: Int, item: T) -> String,
 ) {
     FDialogMenuView(
         modifier = modifier,
@@ -86,7 +86,7 @@ fun <T> FDialogMenuView(
                         if (row != null) {
                             row(index, item)
                         } else {
-                            text(index, item)
+                            Text(text = text(index, item))
                         }
                     }
                 )

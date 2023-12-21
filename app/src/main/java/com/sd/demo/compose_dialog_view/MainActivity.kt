@@ -109,7 +109,7 @@ private fun showConfirmDialog() {
             onClickConfirm = {
                 Toast.makeText(context, "onConfirm", Toast.LENGTH_SHORT).show()
                 dismiss()
-            }
+            },
         ) {
             Text(text = "Content")
         }
@@ -141,6 +141,9 @@ private fun showMenuDialog() {
     fDialogCompose {
         FDialogMenuView(
             data = list,
+            text = { _, item ->
+                item
+            },
             onClickCancel = {
                 dismiss()
                 Toast.makeText(context, "onCancel", Toast.LENGTH_SHORT).show()
@@ -149,9 +152,6 @@ private fun showMenuDialog() {
                 dismiss()
                 Toast.makeText(context, item, Toast.LENGTH_SHORT).show()
             },
-            text = { _, item ->
-                item
-            }
         )
     }.beMenu()
 }
