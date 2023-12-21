@@ -8,9 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -189,41 +187,35 @@ private fun DialogConfirmView(
     val content = params.content
 
     Surface(
+        modifier = modifier,
         shape = shapes.dialog,
         color = colors.background,
         contentColor = colors.onBackground,
-        modifier = modifier,
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 15.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-
-            // 标题
-            if (title != null) {
-                ProvideTextStyle(
-                    typography.title.takeIf { it.color.isSpecified }
-                        ?: typography.title.copy(color = colors.title)
-                ) {
-                    Spacer(modifier = Modifier.height(5.dp))
-                    title()
-                }
-            }
-
-            // 内容
-            ProvideTextStyle(
-                typography.content.takeIf { it.color.isSpecified }
-                    ?: typography.content.copy(color = colors.content)
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(15.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 15.dp)
-                        .padding(top = 10.dp, bottom = 15.dp)
-                        .verticalScroll(rememberScrollState()),
-                    horizontalAlignment = Alignment.CenterHorizontally,
+                // 标题
+                if (title != null) {
+                    ProvideTextStyle(
+                        typography.title.takeIf { it.color.isSpecified }
+                            ?: typography.title.copy(color = colors.title)
+                    ) {
+                        title()
+                        Spacer(modifier = Modifier.height(15.dp))
+                    }
+                }
+
+                // 内容
+                ProvideTextStyle(
+                    typography.content.takeIf { it.color.isSpecified }
+                        ?: typography.content.copy(color = colors.content)
                 ) {
                     content()
                 }
@@ -237,7 +229,9 @@ private fun DialogConfirmView(
             }
 
             // 按钮
-            if (buttons == null) {
+            if (buttons != null) {
+                buttons()
+            } else {
                 FDialogConfirmButtons(
                     colors = colors,
                     typography = typography,
@@ -247,8 +241,6 @@ private fun DialogConfirmView(
                     onClickCancel = onClickCancel,
                     onClickConfirm = onClickConfirm,
                 )
-            } else {
-                buttons()
             }
         }
     }
