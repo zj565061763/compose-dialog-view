@@ -51,9 +51,9 @@ fun FDialogConfirmView(
     buttons: @Composable (() -> Unit)? = null,
 
     /** 点击取消 */
-    onClickCancel: () -> Unit,
+    onClickCancel: (() -> Unit)? = null,
     /** 点击确认 */
-    onClickConfirm: () -> Unit,
+    onClickConfirm: (() -> Unit)? = null,
 
     /** 内容 */
     content: @Composable () -> Unit,
