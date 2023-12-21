@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -114,7 +116,6 @@ class FDialogMenu<T>(context: Context) : FDialog(context) {
     }
 }
 
-
 @Composable
 fun <T> FDialogMenuView(
     /** 数据 */
@@ -130,15 +131,74 @@ fun <T> FDialogMenuView(
 
     /** 标题 */
     title: @Composable (() -> Unit)? = null,
-    /** 每一行要显示的界面 */
-    row: @Composable (RowScope.(index: Int, item: T) -> Unit)? = null,
     /** 取消按钮 */
     cancel: @Composable (() -> Unit)? = { Text(text = stringResource(id = R.string.lib_compose_dialog_view_menu_text_cancel)) },
+    /** 每一行要显示的界面 */
+    row: @Composable (RowScope.(index: Int, item: T) -> Unit)? = null,
+    key: ((index: Int, item: T) -> Any)? = null,
+    contentType: (index: Int, item: T) -> Any? = { _, _ -> null },
 
     /** 点击取消 */
     onClickCancel: (() -> Unit)? = null,
     /** 点击某一行 */
     onClickRow: (index: Int, item: T) -> Unit,
+) {
+    FDialogMenuView(
+        modifier = modifier,
+        shapes = shapes,
+        colors = colors,
+        typography = typography,
+        title = title,
+        cancel = cancel,
+        onClickCancel = onClickCancel,
+    ) {
+        itemsIndexed(
+            items = data,
+            key = key,
+            contentType = contentType,
+        ) { index, item ->
+            Column {
+                LibDialogButton(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentColor = colors.content,
+                    textStyle = typography.content,
+                    onClick = { onClickRow.invoke(index, data[index]) },
+                    content = {
+                        if (row != null) {
+                            row(index, item)
+                        } else {
+                            Text(data[index].toString())
+                        }
+                    }
+                )
+                if (index != data.lastIndex) {
+                    LibDialogDivider(color = colors.divider)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun FDialogMenuView(
+    modifier: Modifier = Modifier,
+    /** 形状 */
+    shapes: FDialogMenuViewShapes = FDialogMenuViewDefaults.shapes,
+    /** 颜色 */
+    colors: FDialogMenuViewColors = FDialogMenuViewDefaults.colors,
+    /** 字体 */
+    typography: FDialogMenuViewTypography = FDialogMenuViewDefaults.typography,
+
+    /** 标题 */
+    title: @Composable (() -> Unit)? = null,
+    /** 取消按钮 */
+    cancel: @Composable (() -> Unit)? = { Text(text = stringResource(id = R.string.lib_compose_dialog_view_menu_text_cancel)) },
+
+    /** 点击取消 */
+    onClickCancel: (() -> Unit)? = null,
+
+    /** 列表项 */
+    items: LazyListScope.() -> Unit,
 ) {
     Surface(
         modifier = modifier,
@@ -169,28 +229,8 @@ fun <T> FDialogMenuView(
                 modifier = Modifier
                     .fillMaxWidth()
                     .heightIn(max = with(LocalDensity.current) { maxHeight.toDp() }),
-            ) {
-                items(count = data.size) { index ->
-                    Column(modifier = Modifier.fillMaxWidth()) {
-                        LibDialogButton(
-                            modifier = Modifier.fillMaxWidth(),
-                            contentColor = colors.content,
-                            textStyle = typography.content,
-                            onClick = { onClickRow.invoke(index, data[index]) },
-                            content = {
-                                if (row != null) {
-                                    row(index, data[index])
-                                } else {
-                                    Text(data[index].toString())
-                                }
-                            }
-                        )
-                        if (index != data.lastIndex) {
-                            LibDialogDivider(color = colors.divider)
-                        }
-                    }
-                }
-            }
+                content = items
+            )
 
             // 取消按钮
             if (cancel != null) {
