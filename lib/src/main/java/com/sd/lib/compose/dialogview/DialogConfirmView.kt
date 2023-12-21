@@ -133,18 +133,22 @@ fun FDialogConfirmView(
 
     /** 标题 */
     title: @Composable (() -> Unit)? = { Text(text = stringResource(id = R.string.lib_compose_dialog_view_confirm_text_title)) },
+
     /** 取消按钮 */
     cancel: @Composable (() -> Unit)? = { Text(text = stringResource(id = R.string.lib_compose_dialog_view_confirm_text_cancel)) },
     /** 确认按钮 */
     confirm: @Composable (() -> Unit)? = { Text(text = stringResource(id = R.string.lib_compose_dialog_view_confirm_text_confirm)) },
+
     /** 是否显示分割线 */
     showDivider: Boolean = true,
     /** 按钮 */
     buttons: @Composable (() -> Unit)? = null,
+
     /** 点击取消 */
     onClickCancel: (() -> Unit)? = null,
     /** 点击确认 */
     onClickConfirm: (() -> Unit)? = null,
+
     /** 内容 */
     content: @Composable () -> Unit,
 ) {
