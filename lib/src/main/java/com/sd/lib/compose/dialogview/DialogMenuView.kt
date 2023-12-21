@@ -52,7 +52,7 @@ class FDialogMenu<T>(context: Context) : FDialog(context) {
     private var _onClickRow: ((index: Int, item: T, dialog: IDialog) -> Unit)? = null
 
     /** 点击取消 */
-    private var _onClickCancel: ((IDialog) -> Unit)? = { it.dismiss() }
+    private var _onClickCancel: ((IDialog) -> Unit)? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -104,7 +104,7 @@ class FDialogMenu<T>(context: Context) : FDialog(context) {
      * 点击取消
      */
     fun onClickCancel(callback: ((IDialog) -> Unit)?) {
-        _onClickCancel = callback ?: { it.dismiss() }
+        _onClickCancel = callback ?: { dismiss() }
     }
 
     init {
@@ -112,6 +112,7 @@ class FDialogMenu<T>(context: Context) : FDialog(context) {
         gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
         animatorFactory = SlideUpDownRItselfFactory()
         setCancel { Text(text = stringResource(id = R.string.lib_compose_dialog_view_menu_text_cancel)) }
+        onClickCancel { dismiss() }
     }
 }
 
