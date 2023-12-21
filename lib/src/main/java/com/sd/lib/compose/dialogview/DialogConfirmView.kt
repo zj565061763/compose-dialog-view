@@ -260,7 +260,7 @@ fun FDialogConfirmView(
             // 分割线
             if (cancel != null || confirm != null || buttons != null) {
                 if (showDivider) {
-                    FDialogDivider(color = colors.divider)
+                    LibDialogDivider(color = colors.divider)
                 }
             }
 
@@ -317,7 +317,7 @@ private fun FDialogConfirmButtons(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (cancel != null) {
-            FDialogButton(
+            LibDialogButton(
                 modifier = Modifier.weight(1f),
                 backgroundColor = Color.Transparent,
                 contentColor = colors.buttonCancel,
@@ -329,7 +329,7 @@ private fun FDialogConfirmButtons(
 
         if (cancel != null && confirm != null) {
             if (showDivider) {
-                FDialogDivider(
+                LibDialogDivider(
                     color = colors.divider,
                     horizontal = false,
                 )
@@ -337,7 +337,7 @@ private fun FDialogConfirmButtons(
         }
 
         if (confirm != null) {
-            FDialogButton(
+            LibDialogButton(
                 modifier = Modifier.weight(1f),
                 backgroundColor = Color.Transparent,
                 contentColor = colors.buttonConfirm,

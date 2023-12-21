@@ -177,7 +177,7 @@ fun <T> FDialogMenuView(
 
             // 标题
             if (title != null) {
-                FDialogButton(
+                LibDialogButton(
                     modifier = Modifier
                         .fillMaxWidth()
                         .heightIn(50.dp),
@@ -186,7 +186,7 @@ fun <T> FDialogMenuView(
                     textStyle = typography.title,
                     content = { title() }
                 )
-                FDialogDivider(color = colors.divider)
+                LibDialogDivider(color = colors.divider)
             }
 
             // 内容
@@ -198,7 +198,7 @@ fun <T> FDialogMenuView(
             ) {
                 items(count = data.size) { index ->
                     Column(modifier = Modifier.fillMaxWidth()) {
-                        FDialogButton(
+                        LibDialogButton(
                             modifier = Modifier.fillMaxWidth(),
                             backgroundColor = Color.Transparent,
                             contentColor = colors.content,
@@ -213,7 +213,7 @@ fun <T> FDialogMenuView(
                             }
                         )
                         if (index != data.lastIndex) {
-                            FDialogDivider(color = colors.divider)
+                            LibDialogDivider(color = colors.divider)
                         }
                     }
                 }
@@ -227,7 +227,7 @@ fun <T> FDialogMenuView(
                         .height(10.dp)
                         .background(color = colors.divider)
                 )
-                FDialogButton(
+                LibDialogButton(
                     modifier = Modifier
                         .fillMaxWidth()
                         .heightIn(50.dp),
