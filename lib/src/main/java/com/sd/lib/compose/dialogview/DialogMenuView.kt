@@ -288,7 +288,8 @@ data class FDialogMenuViewColors(
     }
 }
 
-class FDialogMenuViewTypography(
+@Immutable
+data class FDialogMenuViewTypography(
     /** 标题 */
     val title: TextStyle = TextStyle(
         fontWeight = FontWeight.Normal,
@@ -312,7 +313,8 @@ class FDialogMenuViewTypography(
     ),
 )
 
-class FDialogMenuViewShapes(
+@Immutable
+data class FDialogMenuViewShapes(
     /** 窗口形状 */
     val dialog: Shape = RoundedCornerShape(0.dp),
 )
