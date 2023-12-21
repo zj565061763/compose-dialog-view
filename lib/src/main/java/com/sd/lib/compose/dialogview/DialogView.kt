@@ -28,8 +28,6 @@ fun IDialog.setComposable(content: @Composable () -> Unit) {
     }
 
     composeView.setContent {
-        DialogHook.hook {
-            content()
-        }
+        DialogHook.hook(content)
     }
 }
