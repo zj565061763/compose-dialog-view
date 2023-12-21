@@ -12,7 +12,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ProvideTextStyle
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,17 +25,17 @@ import com.sd.lib.vdialog.FDialog
 
 class FDialogProgress(context: Context) : FDialog(context) {
     /** 文字 */
-    internal var msg by mutableStateOf<@Composable (() -> Unit)?>(null)
+    private var _msg by mutableStateOf<@Composable (() -> Unit)?>(null)
 
     /** 进度框 */
-    internal var progress by mutableStateOf<@Composable (() -> Unit)?>(null)
+    private var _progress by mutableStateOf<@Composable (() -> Unit)?>(null)
 
     override fun onCreate() {
         super.onCreate()
         setComposable {
             FDialogProgressView(
-                msg = msg,
-                progress = progress,
+                msg = _msg,
+                progress = _progress,
             )
         }
     }
@@ -44,32 +43,21 @@ class FDialogProgress(context: Context) : FDialog(context) {
     /**
      * 设置文字
      */
-    fun setTextMsg(text: String?) {
-        this.msg = if (text == null) {
-            null
-        } else {
-            { Text(text = text) }
-        }
+    fun setMsg(block: @Composable (() -> Unit)?) {
+        this._msg = block
+    }
+
+    /**
+     * 设置进度框
+     */
+    fun setProgress(block: @Composable (() -> Unit)?) {
+        this._progress = block
     }
 
     init {
         padding.set(0, 0, 0, 0)
         setCanceledOnTouchOutside(false)
     }
-}
-
-/**
- * 设置文字
- */
-fun FDialogProgress.setMsg(block: @Composable (() -> Unit)?) {
-    this.msg = block
-}
-
-/**
- * 设置进度框
- */
-fun FDialogProgress.setProgress(block: @Composable (() -> Unit)?) {
-    this.progress = block
 }
 
 @Composable
