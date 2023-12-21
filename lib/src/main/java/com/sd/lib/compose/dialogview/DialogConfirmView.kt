@@ -118,11 +118,9 @@ class FDialogConfirm(context: Context) : FDialog(context) {
     }
 }
 
-val LocalFDialogConfirmViewColors = staticCompositionLocalOf<FDialogConfirmViewColors?> { null }
-
-val LocalFDialogConfirmViewTypography = staticCompositionLocalOf<FDialogConfirmViewTypography?> { null }
-
 val LocalFDialogConfirmViewShapes = staticCompositionLocalOf<FDialogConfirmViewShapes?> { null }
+val LocalFDialogConfirmViewColors = staticCompositionLocalOf<FDialogConfirmViewColors?> { null }
+val LocalFDialogConfirmViewTypography = staticCompositionLocalOf<FDialogConfirmViewTypography?> { null }
 
 @Composable
 fun FDialogConfirmView(
