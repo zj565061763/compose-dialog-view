@@ -141,9 +141,7 @@ private fun showMenuDialog() {
     fDialogCompose {
         FDialogMenuView(
             data = list,
-            text = { _, item ->
-                item
-            },
+            title = { Text(text = "Select Language") },
             onClickCancel = {
                 dismiss()
                 Toast.makeText(context, "onCancel", Toast.LENGTH_SHORT).show()
