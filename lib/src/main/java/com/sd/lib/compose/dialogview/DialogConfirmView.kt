@@ -1,14 +1,23 @@
 package com.sd.lib.compose.dialogview
 
 import android.content.Context
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,6 +47,7 @@ open class FDialogConfirm(context: Context) : FDialog(context) {
 
     /** 点击取消 */
     private var _onClickCancel: ((IDialog) -> Unit)? = { it.dismiss() }
+
     /** 点击确认 */
     private var _onClickConfirm: ((IDialog) -> Unit)? = { it.dismiss() }
 
@@ -126,15 +136,9 @@ open class FDialogConfirm(context: Context) : FDialog(context) {
     }
 
     init {
-        title = {
-            Text(text = stringResource(id = R.string.lib_compose_dialog_view_confirm_text_title))
-        }
-        cancel = {
-            Text(text = stringResource(id = R.string.lib_compose_dialog_view_confirm_text_cancel))
-        }
-        confirm = {
-            Text(text = stringResource(id = R.string.lib_compose_dialog_view_confirm_text_confirm))
-        }
+        setTitle { Text(text = stringResource(id = R.string.lib_compose_dialog_view_confirm_text_title)) }
+        setCancel { Text(text = stringResource(id = R.string.lib_compose_dialog_view_confirm_text_cancel)) }
+        setConfirm { Text(text = stringResource(id = R.string.lib_compose_dialog_view_confirm_text_confirm)) }
     }
 }
 
@@ -283,18 +287,25 @@ fun FDialogConfirmView(
 class FDialogConfirmViewParams {
     /** 标题 */
     var title: @Composable (() -> Unit)? = null
+
     /** 取消按钮 */
     var cancel: @Composable (() -> Unit)? = null
+
     /** 确认按钮 */
     var confirm: @Composable (() -> Unit)? = null
+
     /** 是否显示分割线 */
     var showDivider: Boolean = true
+
     /** 按钮 */
     var buttons: @Composable (() -> Unit)? = null
+
     /** 点击取消 */
     var onClickCancel: (() -> Unit)? = null
+
     /** 点击确认 */
     var onClickConfirm: (() -> Unit)? = null
+
     /** 内容 */
     var content: @Composable () -> Unit = {}
 }
