@@ -198,7 +198,7 @@ fun FDialogMenuView(
     onClickCancel: () -> Unit,
 
     /** 列表项 */
-    items: LazyListScope.() -> Unit,
+    content: LazyListScope.() -> Unit,
 ) {
     Surface(
         modifier = modifier,
@@ -230,7 +230,7 @@ fun FDialogMenuView(
                 modifier = Modifier
                     .fillMaxWidth()
                     .heightIn(max = with(LocalDensity.current) { maxHeight.toDp() }),
-                content = items
+                content = content,
             )
 
             // 取消按钮
@@ -246,7 +246,7 @@ fun FDialogMenuView(
                     contentColor = colors.cancel,
                     textStyle = typography.cancel,
                     onClick = { onClickCancel() },
-                    content = { cancel() }
+                    content = { cancel() },
                 )
             }
         }
