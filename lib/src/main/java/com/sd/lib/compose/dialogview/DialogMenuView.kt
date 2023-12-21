@@ -81,7 +81,7 @@ fun <T> FDialogMenuView(
                     modifier = Modifier.fillMaxWidth(),
                     contentColor = colors.content,
                     textStyle = typography.content,
-                    onClick = { onClickRow.invoke(index, data[index]) },
+                    onClick = { onClickRow(index, item) },
                     content = {
                         if (row != null) {
                             row(index, item)
