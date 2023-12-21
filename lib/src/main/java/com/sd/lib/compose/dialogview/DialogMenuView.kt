@@ -328,14 +328,14 @@ data class FDialogMenuViewTypography(
     /** 标题 */
     val title: TextStyle = TextStyle(
         fontWeight = FontWeight.Normal,
-        fontSize = 12.sp,
+        fontSize = 14.sp,
         letterSpacing = 0.25.sp,
     ),
 
     /** 内容 */
     val content: TextStyle = TextStyle(
         fontWeight = FontWeight.Normal,
-        fontSize = 14.sp,
+        fontSize = 16.sp,
         letterSpacing = 0.25.sp,
         textAlign = TextAlign.Center,
     ),
