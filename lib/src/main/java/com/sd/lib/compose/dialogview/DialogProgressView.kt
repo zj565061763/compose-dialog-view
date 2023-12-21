@@ -2,9 +2,15 @@ package com.sd.lib.compose.dialogview
 
 import android.content.Context
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -13,7 +19,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -75,7 +80,10 @@ fun FDialogProgressView(
 ) {
     Row(
         modifier = modifier
-            .background(color = Color.Black.copy(alpha = 0.3f), shape = RoundedCornerShape(4.dp))
+            .background(
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f),
+                shape = RoundedCornerShape(4.dp),
+            )
             .padding(10.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
@@ -85,14 +93,18 @@ fun FDialogProgressView(
         } else {
             CircularProgressIndicator(
                 modifier = modifier.size(16.dp),
-                color = Color.White.copy(alpha = 0.9f),
+                color = MaterialTheme.colorScheme.surface.copy(alpha = 0.9f),
                 strokeWidth = 2.dp,
             )
         }
 
         if (msg != null) {
             Spacer(modifier = Modifier.width(5.dp))
-            ProvideTextStyle(TextStyle(color = Color.White.copy(alpha = 0.9f), fontSize = 12.sp)) {
+            val textStyle = TextStyle(
+                color = MaterialTheme.colorScheme.surface.copy(alpha = 0.9f),
+                fontSize = 12.sp,
+            )
+            ProvideTextStyle(textStyle) {
                 msg()
             }
         }
