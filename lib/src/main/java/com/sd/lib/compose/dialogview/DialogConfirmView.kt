@@ -48,10 +48,10 @@ class FDialogConfirm(context: Context) : FDialog(context) {
     private var _confirm by mutableStateOf<@Composable (() -> Unit)?>(null)
 
     /** 点击取消 */
-    private var _onClickCancel: ((IDialog) -> Unit)? = { it.dismiss() }
+    private var _onClickCancel: ((IDialog) -> Unit)? = null
 
     /** 点击确认 */
-    private var _onClickConfirm: ((IDialog) -> Unit)? = { it.dismiss() }
+    private var _onClickConfirm: ((IDialog) -> Unit)? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -103,20 +103,22 @@ class FDialogConfirm(context: Context) : FDialog(context) {
      * 点击取消
      */
     fun onClickCancel(callback: ((IDialog) -> Unit)?) {
-        _onClickCancel = callback ?: { it.dismiss() }
+        _onClickCancel = callback ?: { dismiss() }
     }
 
     /**
      * 点击确认
      */
     fun onClickConfirm(callback: ((IDialog) -> Unit)?) {
-        _onClickConfirm = callback ?: { it.dismiss() }
+        _onClickConfirm = callback ?: { dismiss() }
     }
 
     init {
         setTitle { Text(text = stringResource(id = R.string.lib_compose_dialog_view_confirm_text_title)) }
         setCancel { Text(text = stringResource(id = R.string.lib_compose_dialog_view_confirm_text_cancel)) }
         setConfirm { Text(text = stringResource(id = R.string.lib_compose_dialog_view_confirm_text_confirm)) }
+        onClickCancel { dismiss() }
+        onClickConfirm { dismiss() }
     }
 }
 
