@@ -31,8 +31,10 @@ fun IDialog.setComposable(content: @Composable IDialog.() -> Unit) {
     }
 }
 
-fun fDialogCompose(content: @Composable IDialog.() -> Unit): IDialog? = fDialog()?.apply {
-    setComposable(content)
+fun fDialog(content: @Composable (IDialog.() -> Unit)? = null): IDialog? {
+    return fLastActivity?.let { FDialog(it) }?.apply {
+        if (content != null) {
+            setComposable(content)
+        }
+    }
 }
-
-fun fDialog(): IDialog? = fLastActivity?.let { FDialog(it) }

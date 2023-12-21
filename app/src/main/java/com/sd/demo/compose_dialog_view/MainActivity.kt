@@ -28,7 +28,7 @@ import com.sd.lib.compose.dialogview.FDialogProgressView
 import com.sd.lib.compose.dialogview.beConfirm
 import com.sd.lib.compose.dialogview.beMenu
 import com.sd.lib.compose.dialogview.beProgress
-import com.sd.lib.compose.dialogview.fDialogCompose
+import com.sd.lib.compose.dialogview.fDialog
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -97,7 +97,7 @@ fun MainView() {
  * 确认窗口
  */
 private fun showConfirmDialog() {
-    fDialogCompose {
+    fDialog {
         FDialogConfirmView(
             title = { Text(text = "Title") },
             cancel = { Text(text = "Cancel") },
@@ -138,7 +138,7 @@ private fun showMenuDialog() {
         "CSS",
     )
 
-    fDialogCompose {
+    fDialog {
         FDialogMenuView(
             data = list,
             title = { Text(text = "Select Language") },
@@ -158,7 +158,7 @@ private fun showMenuDialog() {
  * 加载窗口
  */
 private fun showProgressDialog() {
-    fDialogCompose {
+    fDialog {
         FDialogProgressView {
             Text(text = "加载中")
         }
