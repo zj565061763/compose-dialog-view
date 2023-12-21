@@ -12,6 +12,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -45,21 +46,9 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainView() {
-    var isLight by remember { mutableStateOf(true) }
-    LaunchedEffect(isLight) {
-        if (isLight) {
-            FDialogConfirmViewDefaults.colors = FDialogConfirmViewColors.light()
-            FDialogMenuViewDefaults.colors = FDialogMenuViewColors.light()
-        } else {
-            FDialogConfirmViewDefaults.colors = FDialogConfirmViewColors.dark()
-            FDialogMenuViewDefaults.colors = FDialogMenuViewColors.dark()
-        }
-    }
-
-    Column(
-        modifier = Modifier.fillMaxWidth()
-    ) {
+    Column(modifier = Modifier.fillMaxWidth()) {
         // Light or Dark
+        var isLight by lightState()
         Button(
             modifier = Modifier.fillMaxWidth(),
             onClick = { isLight = isLight.not() },
@@ -91,6 +80,21 @@ fun MainView() {
             Text(text = "Progress")
         }
     }
+}
+
+@Composable
+private fun lightState(): MutableState<Boolean> {
+    val lightState = remember { mutableStateOf(true) }
+    LaunchedEffect(lightState.value) {
+        if (lightState.value) {
+            FDialogConfirmViewDefaults.colors = FDialogConfirmViewColors.light()
+            FDialogMenuViewDefaults.colors = FDialogMenuViewColors.light()
+        } else {
+            FDialogConfirmViewDefaults.colors = FDialogConfirmViewColors.dark()
+            FDialogMenuViewDefaults.colors = FDialogMenuViewColors.dark()
+        }
+    }
+    return lightState
 }
 
 /**
