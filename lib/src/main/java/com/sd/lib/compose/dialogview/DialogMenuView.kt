@@ -29,6 +29,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sd.lib.compose.dialog.R
 
+/**
+ * 菜单框
+ */
 @Composable
 fun <T> FDialogMenuView(
     /** 数据 */

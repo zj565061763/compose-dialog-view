@@ -28,6 +28,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sd.lib.compose.dialog.R
 
+/**
+ * 确认框
+ */
 @Composable
 fun FDialogConfirmView(
     modifier: Modifier = Modifier,
