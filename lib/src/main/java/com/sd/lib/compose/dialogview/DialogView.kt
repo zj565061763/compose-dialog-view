@@ -15,7 +15,7 @@ object DialogView {
     fun confirm(context: Context, content: @Composable IDialog.() -> Unit): IDialog {
         return FDialog(context).apply {
             setCanceledOnTouchOutside(false)
-            setComposable { content() }
+            setComposable(content)
         }
     }
 
@@ -28,7 +28,7 @@ object DialogView {
             gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
             animatorFactory = SlideUpDownRItselfFactory()
             setCanceledOnTouchOutside(true)
-            setComposable { content() }
+            setComposable(content)
         }
     }
 
@@ -39,7 +39,7 @@ object DialogView {
         return FDialog(context).apply {
             padding.set(0, 0, 0, 0)
             setCanceledOnTouchOutside(false)
-            setComposable { content() }
+            setComposable(content)
         }
     }
 }
@@ -57,7 +57,7 @@ object DialogViewHook {
 /**
  * 设置内容
  */
-fun IDialog.setComposable(content: @Composable () -> Unit) {
+fun IDialog.setComposable(content: @Composable IDialog.() -> Unit) {
     val view = contentView
     val composeView = if (view is ComposeView) {
         view
@@ -68,6 +68,8 @@ fun IDialog.setComposable(content: @Composable () -> Unit) {
     }
 
     composeView.setContent {
-        DialogViewHook.hook(content)
+        DialogViewHook.hook {
+            content()
+        }
     }
 }
