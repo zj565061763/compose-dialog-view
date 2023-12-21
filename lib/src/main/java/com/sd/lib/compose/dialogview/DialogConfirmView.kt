@@ -34,16 +34,16 @@ import com.sd.lib.vdialog.IDialog
 
 class FDialogConfirm(context: Context) : FDialog(context) {
     /** 标题 */
-    internal var title by mutableStateOf<@Composable (() -> Unit)?>(null)
+    private var _title by mutableStateOf<@Composable (() -> Unit)?>(null)
 
     /** 内容 */
-    internal var content by mutableStateOf<@Composable (() -> Unit)?>(null)
+    private var _content by mutableStateOf<@Composable (() -> Unit)?>(null)
 
     /** 取消按钮 */
-    internal var cancel by mutableStateOf<@Composable (() -> Unit)?>(null)
+    private var _cancel by mutableStateOf<@Composable (() -> Unit)?>(null)
 
     /** 确认按钮 */
-    internal var confirm by mutableStateOf<@Composable (() -> Unit)?>(null)
+    private var _confirm by mutableStateOf<@Composable (() -> Unit)?>(null)
 
     /** 点击取消 */
     private var _onClickCancel: ((IDialog) -> Unit)? = { it.dismiss() }
@@ -55,10 +55,10 @@ class FDialogConfirm(context: Context) : FDialog(context) {
         super.onCreate()
         setComposable {
             FDialogConfirmView(
-                title = title,
-                content = content ?: {},
-                cancel = cancel,
-                confirm = confirm,
+                title = _title,
+                content = _content ?: {},
+                cancel = _cancel,
+                confirm = _confirm,
                 onClickCancel = {
                     _onClickCancel?.invoke(this@FDialogConfirm)
                 },
@@ -84,47 +84,31 @@ class FDialogConfirm(context: Context) : FDialog(context) {
     }
 
     /**
-     * 设置标题文字
+     * 设置标题
      */
-    fun setTextTitle(text: String?) {
-        this.title = if (text == null) {
-            null
-        } else {
-            { Text(text = text) }
-        }
+    fun setTitle(block: @Composable (() -> Unit)?) {
+        this._title = block
     }
 
     /**
-     * 设置内容文字
+     * 设置内容
      */
-    fun setTextContent(text: String?) {
-        this.content = if (text == null) {
-            null
-        } else {
-            { Text(text = text) }
-        }
+    fun setContent(block: @Composable (() -> Unit)?) {
+        this._content = block
     }
 
     /**
-     * 设置取消按钮的文字
+     * 设置取消按钮
      */
-    fun setTextCancel(text: String?) {
-        this.cancel = if (text == null) {
-            null
-        } else {
-            { Text(text = text) }
-        }
+    fun setCancel(block: @Composable (() -> Unit)?) {
+        this._cancel = block
     }
 
     /**
-     * 设置确认按钮的文字
+     * 设置确认按钮
      */
-    fun setTextConfirm(text: String?) {
-        this.confirm = if (text == null) {
-            null
-        } else {
-            { Text(text = text) }
-        }
+    fun setConfirm(block: @Composable (() -> Unit)?) {
+        this._confirm = block
     }
 
     init {
@@ -132,34 +116,6 @@ class FDialogConfirm(context: Context) : FDialog(context) {
         setCancel { Text(text = stringResource(id = R.string.lib_compose_dialog_view_confirm_text_cancel)) }
         setConfirm { Text(text = stringResource(id = R.string.lib_compose_dialog_view_confirm_text_confirm)) }
     }
-}
-
-/**
- * 设置标题
- */
-fun FDialogConfirm.setTitle(block: @Composable (() -> Unit)?) {
-    this.title = block
-}
-
-/**
- * 设置内容
- */
-fun FDialogConfirm.setContent(block: @Composable (() -> Unit)?) {
-    this.content = block
-}
-
-/**
- * 设置取消按钮
- */
-fun FDialogConfirm.setCancel(block: @Composable (() -> Unit)?) {
-    this.cancel = block
-}
-
-/**
- * 设置确认按钮
- */
-fun FDialogConfirm.setConfirm(block: @Composable (() -> Unit)?) {
-    this.confirm = block
 }
 
 val LocalFDialogConfirmViewColors = staticCompositionLocalOf<FDialogConfirmViewColors?> { null }
