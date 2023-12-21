@@ -11,7 +11,7 @@ object DialogHook {
     }
 }
 
-object DialogConfirmViewHook {
+object DialogHookConfirmView {
     /** 拦截整个[FDialogConfirmView] */
     var hook: @Composable ((@Composable () -> Unit)) -> Unit = { content ->
         content()
