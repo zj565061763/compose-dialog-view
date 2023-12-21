@@ -139,7 +139,7 @@ fun <T> FDialogMenuView(
     contentType: (index: Int, item: T) -> Any? = { _, _ -> null },
 
     /** 点击取消 */
-    onClickCancel: (() -> Unit)? = null,
+    onClickCancel: () -> Unit,
     /** 点击某一行 */
     onClickRow: (index: Int, item: T) -> Unit,
 ) {
@@ -195,7 +195,7 @@ fun FDialogMenuView(
     cancel: @Composable (() -> Unit)? = { Text(text = stringResource(id = R.string.lib_compose_dialog_view_menu_text_cancel)) },
 
     /** 点击取消 */
-    onClickCancel: (() -> Unit)? = null,
+    onClickCancel: () -> Unit,
 
     /** 列表项 */
     items: LazyListScope.() -> Unit,
@@ -244,7 +244,7 @@ fun FDialogMenuView(
                         .heightIn(50.dp),
                     contentColor = colors.cancel,
                     textStyle = typography.cancel,
-                    onClick = { onClickCancel?.invoke() },
+                    onClick = { onClickCancel() },
                     content = { cancel() }
                 )
             }
