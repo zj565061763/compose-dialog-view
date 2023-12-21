@@ -164,7 +164,7 @@ private fun DialogConfirmView(
     params: FDialogConfirmViewParams,
 ) {
     @Suppress("NAME_SHADOWING")
-    val params = DialogViewHook.dialogConfirmViewHook(params)
+    val params = DialogConfirmViewHook.paramsHook(params)
 
     val title = params.title
     val cancel = params.cancel

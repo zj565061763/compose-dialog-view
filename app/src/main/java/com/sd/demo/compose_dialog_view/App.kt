@@ -8,6 +8,7 @@ import androidx.compose.material3.Button
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.sd.demo.compose_dialog_view.ui.theme.AppTheme
+import com.sd.lib.compose.dialogview.DialogConfirmViewHook
 import com.sd.lib.compose.dialogview.DialogViewHook
 
 class App : Application() {
@@ -26,7 +27,7 @@ class App : Application() {
  */
 private fun hookConfirmView() {
     // 确认View参数拦截
-    DialogViewHook.dialogConfirmViewHook = { params ->
+    DialogConfirmViewHook.paramsHook = { params ->
         val cancel = params.cancel
         val confirm = params.confirm
         if (cancel != null && confirm != null) {

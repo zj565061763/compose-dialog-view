@@ -1,6 +1,9 @@
 package com.sd.lib.compose.dialogview
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.ComposeView
 import com.sd.lib.vdialog.IDialog
 
@@ -9,9 +12,14 @@ object DialogViewHook {
     var contentHook: @Composable ((@Composable () -> Unit)) -> Unit = { content ->
         content()
     }
+}
 
-    /** [FDialogConfirmView]拦截 */
-    var dialogConfirmViewHook: ((FDialogConfirmViewParams) -> FDialogConfirmViewParams) = { it }
+/**
+ * [FDialogConfirmView]拦截
+ */
+object DialogConfirmViewHook {
+    /** 参数拦截 */
+    var paramsHook: ((FDialogConfirmViewParams) -> FDialogConfirmViewParams) by mutableStateOf({ it })
 }
 
 /**
