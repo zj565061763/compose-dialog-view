@@ -35,7 +35,7 @@ import com.sd.lib.vdialog.FDialog
 import com.sd.lib.vdialog.IDialog
 import com.sd.lib.vdialog.animator.slide.SlideUpDownRItselfFactory
 
-open class FDialogMenu<T>(context: Context) : FDialog(context) {
+class FDialogMenu<T>(context: Context) : FDialog(context) {
     /** 数据 */
     val data = mutableStateListOf<T>()
 
@@ -57,27 +57,19 @@ open class FDialogMenu<T>(context: Context) : FDialog(context) {
     override fun onCreate() {
         super.onCreate()
         setComposable {
-            Content()
+            FDialogMenuView(
+                data = data,
+                row = row,
+                title = title,
+                cancel = cancel,
+                onClickCancel = {
+                    _onClickCancel?.invoke(this@FDialogMenu)
+                },
+                onClickRow = { index, item ->
+                    _onClickRow?.invoke(index, item, this@FDialogMenu)
+                },
+            )
         }
-    }
-
-    @Composable
-    protected open fun Content(
-        modifier: Modifier = Modifier,
-    ) {
-        FDialogMenuView(
-            modifier = modifier,
-            data = data,
-            row = row,
-            title = title,
-            cancel = cancel,
-            onClickCancel = {
-                _onClickCancel?.invoke(this@FDialogMenu)
-            },
-            onClickRow = { index, item ->
-                _onClickRow?.invoke(index, item, this@FDialogMenu)
-            },
-        )
     }
 
     /**
