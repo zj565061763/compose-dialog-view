@@ -148,7 +148,7 @@ private fun showMenuDialog() {
             },
             onClickRow = { index, item ->
                 dismiss()
-                Toast.makeText(context, "index:${index} item:${item}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "$index -> $item", Toast.LENGTH_SHORT).show()
             },
         )
     }.beMenu()
