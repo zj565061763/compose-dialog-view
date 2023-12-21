@@ -9,9 +9,6 @@ import com.sd.lib.vdialog.IDialog
 object DialogViewHook {
     /** 拦截[setComposable]的内容 */
     var hook: @Composable ((@Composable () -> Unit)) -> Unit = { it() }
-
-    /** 拦截[FDialogConfirmView]参数 */
-    var confirmViewParamsHook: ((FDialogConfirmViewParams) -> FDialogConfirmViewParams) = { it }
 }
 
 /**
