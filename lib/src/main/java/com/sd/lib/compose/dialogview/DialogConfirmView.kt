@@ -238,7 +238,7 @@ private fun DialogConfirmView(
                             ?: typography.title.copy(color = colors.title)
                     ) {
                         title()
-                        Spacer(modifier = Modifier.height(10.dp))
+                        Spacer(modifier = Modifier.height(8.dp))
                     }
                 }
 
