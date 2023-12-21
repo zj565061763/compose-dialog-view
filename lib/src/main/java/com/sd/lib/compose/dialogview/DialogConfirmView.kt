@@ -143,8 +143,9 @@ fun FDialogConfirmView(
     /** 内容 */
     content: @Composable () -> Unit,
 ) {
-    val params = DialogViewHook.dialogConfirmViewHook(
-        FDialogConfirmViewParams(
+    DialogConfirmView(
+        modifier = modifier,
+        params = FDialogConfirmViewParams(
             title = title,
             cancel = cancel,
             confirm = confirm,
@@ -153,8 +154,17 @@ fun FDialogConfirmView(
             onClickCancel = onClickCancel,
             onClickConfirm = onClickConfirm,
             content = content,
-        )
+        ),
     )
+}
+
+@Composable
+private fun DialogConfirmView(
+    modifier: Modifier = Modifier,
+    params: FDialogConfirmViewParams,
+) {
+    @Suppress("NAME_SHADOWING")
+    val params = DialogViewHook.dialogConfirmViewHook(params)
 
     val title = params.title
     val cancel = params.cancel
