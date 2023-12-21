@@ -133,7 +133,6 @@ fun FDialogConfirmView(
 
     /** 标题 */
     title: @Composable (() -> Unit)? = { Text(text = stringResource(id = R.string.lib_compose_dialog_view_confirm_text_title)) },
-
     /** 取消按钮 */
     cancel: @Composable (() -> Unit)? = { Text(text = stringResource(id = R.string.lib_compose_dialog_view_confirm_text_cancel)) },
     /** 确认按钮 */

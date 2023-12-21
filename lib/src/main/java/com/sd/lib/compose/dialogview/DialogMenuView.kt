@@ -150,16 +150,21 @@ fun <T> FDialogMenu<T>.setCancel(block: @Composable (() -> Unit)?) {
 
 @Composable
 fun <T> FDialogMenuView(
-    modifier: Modifier = Modifier,
     /** 数据 */
     data: List<T>,
 
+    modifier: Modifier = Modifier,
+    /** 形状 */
+    shapes: FDialogMenuViewShapes = FDialogMenuViewDefaults.shapes,
+    /** 颜色 */
+    colors: FDialogMenuViewColors = FDialogMenuViewDefaults.colors,
+    /** 字体 */
+    typography: FDialogMenuViewTypography = FDialogMenuViewDefaults.typography,
+
     /** 标题 */
     title: @Composable (() -> Unit)? = null,
-
     /** 每一行要显示的界面 */
     row: @Composable (RowScope.(index: Int, item: T) -> Unit)? = null,
-
     /** 取消按钮 */
     cancel: @Composable (() -> Unit)? = { Text(text = stringResource(id = R.string.lib_compose_dialog_view_menu_text_cancel)) },
 
@@ -167,13 +172,6 @@ fun <T> FDialogMenuView(
     onClickCancel: (() -> Unit)? = null,
     /** 点击某一行 */
     onClickRow: (index: Int, item: T) -> Unit,
-
-    /** 形状 */
-    shapes: FDialogMenuViewShapes = FDialogMenuViewDefaults.shapes,
-    /** 颜色 */
-    colors: FDialogMenuViewColors = FDialogMenuViewDefaults.colors,
-    /** 字体 */
-    typography: FDialogMenuViewTypography = FDialogMenuViewDefaults.typography,
 ) {
     Surface(
         modifier = modifier,
