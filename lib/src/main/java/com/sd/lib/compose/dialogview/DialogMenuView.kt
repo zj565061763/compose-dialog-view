@@ -2,12 +2,9 @@ package com.sd.lib.compose.dialogview
 
 import android.content.Context
 import android.view.Gravity
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -197,11 +194,9 @@ fun <T> FDialogMenuView(
 
             // 取消按钮
             if (cancel != null) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(10.dp)
-                        .background(color = colors.divider)
+                LibDialogDivider(
+                    color = colors.divider,
+                    thickness = 10.dp,
                 )
                 LibDialogButton(
                     modifier = Modifier
