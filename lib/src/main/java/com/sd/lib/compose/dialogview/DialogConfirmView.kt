@@ -384,7 +384,7 @@ data class FDialogConfirmViewColors(
 data class FDialogConfirmViewTypography(
     /** 标题 */
     val title: TextStyle = TextStyle(
-        fontWeight = FontWeight.Normal,
+        fontWeight = FontWeight.Medium,
         fontSize = 18.sp,
         letterSpacing = 0.25.sp
     ),
