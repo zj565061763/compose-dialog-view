@@ -72,45 +72,45 @@ class FDialogConfirm(context: Context) : FDialog(context) {
     }
 
     /**
-     * 点击取消
-     */
-    fun onClickCancel(callback: ((IDialog) -> Unit)?) {
-        _onClickCancel = callback
-    }
-
-    /**
-     * 点击确认
-     */
-    fun onClickConfirm(callback: ((IDialog) -> Unit)?) {
-        _onClickConfirm = callback
-    }
-
-    /**
-     * 设置标题
+     * 标题
      */
     fun setTitle(block: @Composable (() -> Unit)?) {
         this._title = block
     }
 
     /**
-     * 设置内容
+     * 内容
      */
     fun setContent(block: @Composable (() -> Unit)?) {
         this._content = block
     }
 
     /**
-     * 设置取消按钮
+     * 取消按钮
      */
     fun setCancel(block: @Composable (() -> Unit)?) {
         this._cancel = block
     }
 
     /**
-     * 设置确认按钮
+     * 确认按钮
      */
     fun setConfirm(block: @Composable (() -> Unit)?) {
         this._confirm = block
+    }
+
+    /**
+     * 点击取消
+     */
+    fun onClickCancel(callback: ((IDialog) -> Unit)?) {
+        _onClickCancel = callback ?: { it.dismiss() }
+    }
+
+    /**
+     * 点击确认
+     */
+    fun onClickConfirm(callback: ((IDialog) -> Unit)?) {
+        _onClickConfirm = callback ?: { it.dismiss() }
     }
 
     init {
