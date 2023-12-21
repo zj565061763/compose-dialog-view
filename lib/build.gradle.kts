@@ -41,6 +41,7 @@ dependencies {
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.compose.material3)
     api(libs.sd.viewDialog)
+    implementation(libs.sd.activity)
 }
 
 publishing {

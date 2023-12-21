@@ -34,6 +34,7 @@ androidx-test-ext-junit = "androidx.test.ext:junit:1.1.5"
 androidx-test-espresso-core = "androidx.test.espresso:espresso-core:3.5.1"
 
 sd-viewDialog = "com.github.zj565061763:view-dialog:latest.release"
+sd-activity = "com.github.zj565061763:activity:latest.release"
 
 [plugins]
 

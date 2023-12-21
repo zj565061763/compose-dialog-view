@@ -21,7 +21,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.sd.demo.compose_dialog_view.ui.theme.AppTheme
-import com.sd.lib.compose.dialogview.DialogView
 import com.sd.lib.compose.dialogview.FDialogConfirmView
 import com.sd.lib.compose.dialogview.FDialogConfirmViewColors
 import com.sd.lib.compose.dialogview.FDialogConfirmViewDefaults
@@ -29,9 +28,10 @@ import com.sd.lib.compose.dialogview.FDialogMenuView
 import com.sd.lib.compose.dialogview.FDialogMenuViewColors
 import com.sd.lib.compose.dialogview.FDialogMenuViewDefaults
 import com.sd.lib.compose.dialogview.FDialogProgressView
-import com.sd.lib.compose.dialogview.setComposable
-import com.sd.lib.vdialog.FDialog
-import com.sd.lib.vdialog.animator.scale.ScaleXYFactory
+import com.sd.lib.compose.dialogview.beConfirm
+import com.sd.lib.compose.dialogview.beMenu
+import com.sd.lib.compose.dialogview.beProgress
+import com.sd.lib.compose.dialogview.fDialogCompose
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -110,28 +110,23 @@ fun MainView() {
  * 确认窗口
  */
 private fun showConfirmDialog(context: Context) {
-    FDialog(context).apply {
-        // 设置动画
-        animatorFactory = ScaleXYFactory()
-
-        this.setComposable {
-            FDialogConfirmView(
-                title = { Text(text = "Title") },
-                cancel = { Text(text = "Cancel") },
-                confirm = { Text(text = "Confirm") },
-                onClickCancel = {
-                    Toast.makeText(context, "onCancel", Toast.LENGTH_SHORT).show()
-                    dismiss()
-                },
-                onClickConfirm = {
-                    Toast.makeText(context, "onConfirm", Toast.LENGTH_SHORT).show()
-                    dismiss()
-                }
-            ) {
-                Text(text = "Content")
+    fDialogCompose {
+        FDialogConfirmView(
+            title = { Text(text = "Title") },
+            cancel = { Text(text = "Cancel") },
+            confirm = { Text(text = "Confirm") },
+            onClickCancel = {
+                Toast.makeText(context, "onCancel", Toast.LENGTH_SHORT).show()
+                dismiss()
+            },
+            onClickConfirm = {
+                Toast.makeText(context, "onConfirm", Toast.LENGTH_SHORT).show()
+                dismiss()
             }
+        ) {
+            Text(text = "Content")
         }
-    }.show()
+    }.beConfirm()
 }
 
 /**
@@ -156,7 +151,7 @@ private fun showMenuDialog(context: Context) {
         "CSS",
     )
 
-    DialogView.menu(context) {
+    fDialogCompose {
         FDialogMenuView(
             data = list,
             onClickCancel = {
@@ -171,16 +166,16 @@ private fun showMenuDialog(context: Context) {
                 item
             }
         )
-    }.show()
+    }.beMenu()
 }
 
 /**
  * 加载窗口
  */
 private fun showProgressDialog(context: Context) {
-    DialogView.progress(context) {
+    fDialogCompose {
         FDialogProgressView {
             Text(text = "加载中")
         }
-    }.show()
+    }.beProgress()
 }
