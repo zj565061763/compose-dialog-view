@@ -345,7 +345,7 @@ data class FDialogConfirmViewColors(
     /** 背景 */
     val background: Color,
 
-    /** 在背景上面内容颜色 */
+    /** 背景上面的颜色 */
     val onBackground: Color,
 
     /** 标题 */
