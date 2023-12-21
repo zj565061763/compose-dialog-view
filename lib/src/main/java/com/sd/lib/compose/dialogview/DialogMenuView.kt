@@ -1,7 +1,5 @@
 package com.sd.lib.compose.dialogview
 
-import android.content.Context
-import android.view.Gravity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,7 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -31,92 +28,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sd.lib.compose.dialog.R
-import com.sd.lib.vdialog.FDialog
-import com.sd.lib.vdialog.IDialog
-import com.sd.lib.vdialog.animator.slide.SlideUpDownRItselfFactory
-
-class FDialogMenu<T>(context: Context) : FDialog(context) {
-    /** 数据 */
-    val data = mutableStateListOf<T>()
-
-    private val _data by mutableStateOf(listOf<T>())
-
-    /** 标题 */
-    private var _title by mutableStateOf<@Composable (() -> Unit)?>(null)
-
-    /** 每一行的布局 */
-    private var _row by mutableStateOf<@Composable (RowScope.(index: Int, item: T) -> Unit)?>(null)
-
-    /** 取消按钮 */
-    private var _cancel by mutableStateOf<@Composable (() -> Unit)?>(null)
-
-    /** 点击某一行 */
-    private var _onClickRow: ((index: Int, item: T, dialog: IDialog) -> Unit)? = null
-
-    /** 点击取消 */
-    private var _onClickCancel: ((IDialog) -> Unit)? = null
-
-    override fun onCreate() {
-        super.onCreate()
-        setComposable {
-            FDialogMenuView(
-                data = data,
-                title = _title,
-                row = _row,
-                cancel = _cancel,
-                onClickCancel = {
-                    _onClickCancel?.invoke(this@FDialogMenu)
-                },
-                onClickRow = { index, item ->
-                    _onClickRow?.invoke(index, item, this@FDialogMenu)
-                },
-            )
-        }
-    }
-
-    /**
-     * 设置标题
-     */
-    fun setTitle(block: @Composable (() -> Unit)?) {
-        this._title = block
-    }
-
-    /**
-     * 设置行的布局
-     */
-    fun setRow(block: @Composable (RowScope.(index: Int, item: T) -> Unit)?) {
-        this._row = block
-    }
-
-    /**
-     * 设置取消按钮
-     */
-    fun setCancel(block: @Composable (() -> Unit)?) {
-        this._cancel = block
-    }
-
-    /**
-     * 点击行
-     */
-    fun onClickRow(callback: ((index: Int, item: T, dialog: IDialog) -> Unit)?) {
-        _onClickRow = callback
-    }
-
-    /**
-     * 点击取消
-     */
-    fun onClickCancel(callback: ((IDialog) -> Unit)?) {
-        _onClickCancel = callback ?: { dismiss() }
-    }
-
-    init {
-        padding.set(0, 0, 0, 0)
-        gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
-        animatorFactory = SlideUpDownRItselfFactory()
-        setCancel { Text(text = stringResource(id = R.string.lib_compose_dialog_view_menu_text_cancel)) }
-        onClickCancel { dismiss() }
-    }
-}
 
 @Composable
 fun <T> FDialogMenuView(
@@ -141,9 +52,12 @@ fun <T> FDialogMenuView(
     contentType: (index: Int, item: T) -> Any? = { _, _ -> null },
 
     /** 点击取消 */
-    onClickCancel: () -> Unit,
+    onClickCancel: (() -> Unit)? = null,
     /** 点击某一行 */
     onClickRow: (index: Int, item: T) -> Unit,
+
+    /** 行内容 */
+    text: (index: Int, item: T) -> String,
 ) {
     FDialogMenuView(
         modifier = modifier,
@@ -169,7 +83,7 @@ fun <T> FDialogMenuView(
                         if (row != null) {
                             row(index, item)
                         } else {
-                            Text(data[index].toString())
+                            text(index, item)
                         }
                     }
                 )
@@ -197,7 +111,7 @@ fun FDialogMenuView(
     cancel: @Composable (() -> Unit)? = { Text(text = stringResource(id = R.string.lib_compose_dialog_view_menu_text_cancel)) },
 
     /** 点击取消 */
-    onClickCancel: () -> Unit,
+    onClickCancel: (() -> Unit)? = null,
 
     /** 列表项 */
     content: LazyListScope.() -> Unit,
@@ -247,7 +161,7 @@ fun FDialogMenuView(
                         .heightIn(50.dp),
                     contentColor = colors.cancel,
                     textStyle = typography.cancel,
-                    onClick = { onClickCancel() },
+                    onClick = { onClickCancel?.invoke() },
                     content = { cancel() },
                 )
             }

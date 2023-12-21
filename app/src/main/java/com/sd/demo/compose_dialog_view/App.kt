@@ -8,12 +8,12 @@ import androidx.compose.material3.Button
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.sd.demo.compose_dialog_view.ui.theme.AppTheme
-import com.sd.lib.compose.dialogview.DialogHook
+import com.sd.lib.compose.dialogview.DialogViewHook
 
 class App : Application() {
     override fun onCreate() {
         super.onCreate()
-        DialogHook.hook = { content ->
+        DialogViewHook.hook = { content ->
             AppTheme {
                 content()
             }
@@ -25,7 +25,7 @@ class App : Application() {
 
 
 private fun hookConfirmViewButton() {
-    DialogHook.confirmViewParamsHook = { params ->
+    DialogViewHook.confirmViewParamsHook = { params ->
         val cancel = params.cancel
         val confirm = params.confirm
         if (cancel != null && confirm != null) {

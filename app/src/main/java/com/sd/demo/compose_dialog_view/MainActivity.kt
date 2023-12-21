@@ -21,13 +21,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.sd.demo.compose_dialog_view.ui.theme.AppTheme
+import com.sd.lib.compose.dialogview.DialogView
 import com.sd.lib.compose.dialogview.FDialogConfirmView
 import com.sd.lib.compose.dialogview.FDialogConfirmViewColors
 import com.sd.lib.compose.dialogview.FDialogConfirmViewDefaults
-import com.sd.lib.compose.dialogview.FDialogMenu
+import com.sd.lib.compose.dialogview.FDialogMenuView
 import com.sd.lib.compose.dialogview.FDialogMenuViewColors
 import com.sd.lib.compose.dialogview.FDialogMenuViewDefaults
-import com.sd.lib.compose.dialogview.FDialogProgress
+import com.sd.lib.compose.dialogview.FDialogProgressView
 import com.sd.lib.compose.dialogview.setComposable
 import com.sd.lib.vdialog.FDialog
 import com.sd.lib.vdialog.animator.scale.ScaleXYFactory
@@ -96,9 +97,7 @@ fun MainView() {
         // Progress
         Button(
             onClick = {
-                FDialogProgress(context).apply {
-                    setMsg { Text(text = "加载中") }
-                }.show()
+                showProgressDialog(context)
             },
             modifier = Modifier.fillMaxWidth(),
         ) {
@@ -157,25 +156,31 @@ private fun showMenuDialog(context: Context) {
         "CSS",
     )
 
-    val dialog = FDialogMenu<String>(context).apply {
-        setTitle { Text(text = "title") }
-        setCancel { Text(text = "Cancel") }
+    DialogView.menu(context) {
+        FDialogMenuView(
+            data = list,
+            onClickCancel = {
+                dismiss()
+                Toast.makeText(context, "onCancel", Toast.LENGTH_SHORT).show()
+            },
+            onClickRow = { _, item ->
+                dismiss()
+                Toast.makeText(context, item, Toast.LENGTH_SHORT).show()
+            },
+            text = { _, item ->
+                item
+            }
+        )
+    }.show()
+}
 
-        data.addAll(list)
-
-        // 自定义每一行的样式
-//        setRow { index, item ->
-//            Text(text = "I'm row $item")
-//        }
-
-        onClickCancel {
-            dismiss()
-            Toast.makeText(context, "onCancel", Toast.LENGTH_SHORT).show()
+/**
+ * 加载窗口
+ */
+private fun showProgressDialog(context: Context) {
+    DialogView.progress(context) {
+        FDialogProgressView {
+            Text(text = "加载中")
         }
-        onClickRow { index, item, dialog ->
-            dismiss()
-            Toast.makeText(context, item, Toast.LENGTH_SHORT).show()
-        }
-    }
-    dialog.show()
+    }.show()
 }
