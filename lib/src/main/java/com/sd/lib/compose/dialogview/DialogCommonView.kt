@@ -74,14 +74,14 @@ internal fun LibDialogButton(
 internal fun LibDialogDivider(
     color: Color,
     thickness: Dp = with(LocalDensity.current) { 1f.toDp() },
-    horizontal: Boolean = true,
+    isHorizontal: Boolean = true,
     modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier
             .background(color = color)
             .let {
-                if (horizontal) {
+                if (isHorizontal) {
                     it
                         .fillMaxWidth()
                         .height(thickness)

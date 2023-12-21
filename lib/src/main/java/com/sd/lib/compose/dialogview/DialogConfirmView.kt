@@ -331,7 +331,7 @@ private fun FDialogConfirmButtons(
             if (showDivider) {
                 LibDialogDivider(
                     color = colors.divider,
-                    horizontal = false,
+                    isHorizontal = false,
                 )
             }
         }
