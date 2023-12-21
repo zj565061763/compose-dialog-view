@@ -22,11 +22,7 @@ class App : Application() {
     }
 }
 
-/**
- * 拦截
- */
-private fun hookConfirmView() {
-    // 确认View参数拦截
+private fun hookConfirmViewButton() {
     DialogConfirmViewHook.paramsHook = { params ->
         val cancel = params.cancel
         val confirm = params.confirm
