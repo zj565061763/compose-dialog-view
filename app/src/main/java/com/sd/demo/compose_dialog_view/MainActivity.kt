@@ -1,7 +1,5 @@
 package com.sd.demo.compose_dialog_view
 
-import android.app.Activity
-import android.content.Context
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -19,7 +17,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import com.sd.demo.compose_dialog_view.ui.theme.AppTheme
 import com.sd.lib.compose.dialogview.FDialogConfirmView
 import com.sd.lib.compose.dialogview.FDialogConfirmViewColors
@@ -48,8 +45,6 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainView() {
-    val context = LocalContext.current as Activity
-
     var isLight by remember { mutableStateOf(true) }
     LaunchedEffect(isLight) {
         if (isLight) {
@@ -66,40 +61,32 @@ fun MainView() {
     ) {
         // Light or Dark
         Button(
-            onClick = {
-                isLight = isLight.not()
-            },
             modifier = Modifier.fillMaxWidth(),
+            onClick = { isLight = isLight.not() },
         ) {
             Text(text = if (isLight) "Light" else "Dark")
         }
 
         // Confirm
         Button(
-            onClick = {
-                showConfirmDialog(context)
-            },
             modifier = Modifier.fillMaxWidth(),
+            onClick = { showConfirmDialog() },
         ) {
             Text(text = "Confirm")
         }
 
         // Menu
         Button(
-            onClick = {
-                showMenuDialog(context)
-            },
             modifier = Modifier.fillMaxWidth(),
+            onClick = { showMenuDialog() },
         ) {
             Text(text = "Menu")
         }
 
         // Progress
         Button(
-            onClick = {
-                showProgressDialog(context)
-            },
             modifier = Modifier.fillMaxWidth(),
+            onClick = { showProgressDialog() },
         ) {
             Text(text = "Progress")
         }
@@ -109,7 +96,7 @@ fun MainView() {
 /**
  * 确认窗口
  */
-private fun showConfirmDialog(context: Context) {
+private fun showConfirmDialog() {
     fDialogCompose {
         FDialogConfirmView(
             title = { Text(text = "Title") },
@@ -132,7 +119,7 @@ private fun showConfirmDialog(context: Context) {
 /**
  * 菜单窗口
  */
-private fun showMenuDialog(context: Context) {
+private fun showMenuDialog() {
     val list = listOf(
         "Kotlin",
         "Java",
@@ -172,7 +159,7 @@ private fun showMenuDialog(context: Context) {
 /**
  * 加载窗口
  */
-private fun showProgressDialog(context: Context) {
+private fun showProgressDialog() {
     fDialogCompose {
         FDialogProgressView {
             Text(text = "加载中")
