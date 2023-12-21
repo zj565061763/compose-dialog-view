@@ -152,8 +152,8 @@ private fun showMenuDialog(context: Context) {
     )
 
     val dialog = FDialogMenu<String>(context).apply {
-        setTextTitle("Title")
-        setTextCancel("Cancel")
+        setTitle { Text(text = "title") }
+        setCancel { Text(text = "Cancel") }
 
         data.addAll(list)
 

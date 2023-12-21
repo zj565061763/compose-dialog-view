@@ -39,14 +39,14 @@ class FDialogMenu<T>(context: Context) : FDialog(context) {
     /** 数据 */
     val data = mutableStateListOf<T>()
 
-    /** 每一行的布局 */
-    internal var row by mutableStateOf<@Composable (RowScope.(index: Int, item: T) -> Unit)?>(null)
-
     /** 标题 */
-    internal var title by mutableStateOf<@Composable (() -> Unit)?>(null)
+    private var _title by mutableStateOf<@Composable (() -> Unit)?>(null)
+
+    /** 每一行的布局 */
+    private var _row by mutableStateOf<@Composable (RowScope.(index: Int, item: T) -> Unit)?>(null)
 
     /** 取消按钮 */
-    internal var cancel by mutableStateOf<@Composable (() -> Unit)?>(null)
+    private var _cancel by mutableStateOf<@Composable (() -> Unit)?>(null)
 
     /** 点击某一行 */
     private var _onClickRow: ((index: Int, item: T, dialog: IDialog) -> Unit)? = null
@@ -59,9 +59,9 @@ class FDialogMenu<T>(context: Context) : FDialog(context) {
         setComposable {
             FDialogMenuView(
                 data = data,
-                row = row,
-                title = title,
-                cancel = cancel,
+                title = _title,
+                row = _row,
+                cancel = _cancel,
                 onClickCancel = {
                     _onClickCancel?.invoke(this@FDialogMenu)
                 },
@@ -73,72 +73,48 @@ class FDialogMenu<T>(context: Context) : FDialog(context) {
     }
 
     /**
-     * 点击取消
+     * 设置标题
      */
-    fun onClickCancel(callback: ((IDialog) -> Unit)?) {
-        _onClickCancel = callback
+    fun setTitle(block: @Composable (() -> Unit)?) {
+        this._title = block
     }
 
     /**
-     * 点击某一行
+     * 设置行的布局
+     */
+    fun setRow(block: @Composable (RowScope.(index: Int, item: T) -> Unit)?) {
+        this._row = block
+    }
+
+    /**
+     * 设置取消按钮
+     */
+    fun setCancel(block: @Composable (() -> Unit)?) {
+        this._cancel = block
+    }
+
+    /**
+     * 点击行
      */
     fun onClickRow(callback: ((index: Int, item: T, dialog: IDialog) -> Unit)?) {
         _onClickRow = callback
     }
 
     /**
-     * 设置标题文字
+     * 点击取消
      */
-    fun setTextTitle(text: String?) {
-        this.title = if (text == null) {
-            null
-        } else {
-            { Text(text = text) }
-        }
-    }
-
-    /**
-     * 设置取消按钮的文字
-     */
-    fun setTextCancel(text: String?) {
-        this.cancel = if (text == null) {
-            null
-        } else {
-            { Text(text = text) }
-        }
+    fun onClickCancel(callback: ((IDialog) -> Unit)?) {
+        _onClickCancel = callback ?: { it.dismiss() }
     }
 
     init {
         padding.set(0, 0, 0, 0)
         gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
         animatorFactory = SlideUpDownRItselfFactory()
-
-        cancel = {
-            Text(text = stringResource(id = R.string.lib_compose_dialog_view_menu_text_cancel))
-        }
+        setCancel { Text(text = stringResource(id = R.string.lib_compose_dialog_view_menu_text_cancel)) }
     }
 }
 
-/**
- * 设置每一行的布局
- */
-fun <T> FDialogMenu<T>.setRow(block: @Composable (RowScope.(index: Int, item: T) -> Unit)?) {
-    this.row = block
-}
-
-/**
- * 设置标题
- */
-fun <T> FDialogMenu<T>.setTitle(block: @Composable (() -> Unit)?) {
-    this.title = block
-}
-
-/**
- * 设置取消按钮
- */
-fun <T> FDialogMenu<T>.setCancel(block: @Composable (() -> Unit)?) {
-    this.cancel = block
-}
 
 @Composable
 fun <T> FDialogMenuView(
