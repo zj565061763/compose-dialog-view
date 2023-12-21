@@ -143,19 +143,21 @@ fun FDialogConfirmView(
     /** 内容 */
     content: @Composable () -> Unit,
 ) {
-    DialogConfirmView(
-        modifier = modifier,
-        params = FDialogConfirmViewParams(
-            title = title,
-            cancel = cancel,
-            confirm = confirm,
-            showDivider = showDivider,
-            buttons = buttons,
-            onClickCancel = onClickCancel,
-            onClickConfirm = onClickConfirm,
-            content = content,
-        ),
-    )
+    DialogConfirmViewHook.hook {
+        DialogConfirmView(
+            modifier = modifier,
+            params = FDialogConfirmViewParams(
+                title = title,
+                cancel = cancel,
+                confirm = confirm,
+                showDivider = showDivider,
+                buttons = buttons,
+                onClickCancel = onClickCancel,
+                onClickConfirm = onClickConfirm,
+                content = content,
+            ),
+        )
+    }
 }
 
 @Composable

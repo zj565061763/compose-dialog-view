@@ -1,25 +1,24 @@
 package com.sd.lib.compose.dialogview
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.ComposeView
 import com.sd.lib.vdialog.IDialog
 
-object DialogViewHook {
-    /** [setComposable]拦截 */
-    var contentHook: @Composable ((@Composable () -> Unit)) -> Unit = { content ->
+object DialogHook {
+    /** 拦截[setComposable]的内容 */
+    var hook: @Composable ((@Composable () -> Unit)) -> Unit = { content ->
         content()
     }
 }
 
-/**
- * [FDialogConfirmView]拦截
- */
 object DialogConfirmViewHook {
-    /** 参数拦截 */
-    var paramsHook: ((FDialogConfirmViewParams) -> FDialogConfirmViewParams) by mutableStateOf({ it })
+    /** 拦截整个[FDialogConfirmView] */
+    var hook: @Composable ((@Composable () -> Unit)) -> Unit = { content ->
+        content()
+    }
+
+    /** 拦截参数 */
+    var paramsHook: ((FDialogConfirmViewParams) -> FDialogConfirmViewParams) = { it }
 }
 
 /**
@@ -36,7 +35,8 @@ fun IDialog.setComposable(content: @Composable () -> Unit) {
     }
 
     composeView.setContent {
-        val hook = DialogViewHook.contentHook
-        hook(content)
+        DialogHook.hook {
+            content()
+        }
     }
 }

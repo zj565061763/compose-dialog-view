@@ -9,12 +9,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.sd.demo.compose_dialog_view.ui.theme.AppTheme
 import com.sd.lib.compose.dialogview.DialogConfirmViewHook
-import com.sd.lib.compose.dialogview.DialogViewHook
+import com.sd.lib.compose.dialogview.DialogHook
 
 class App : Application() {
     override fun onCreate() {
         super.onCreate()
-        DialogViewHook.contentHook = { content ->
+        DialogHook.hook = { content ->
             AppTheme {
                 content()
             }
