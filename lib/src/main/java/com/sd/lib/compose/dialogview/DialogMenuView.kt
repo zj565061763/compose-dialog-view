@@ -207,7 +207,7 @@ fun <T> FDialogMenuView(
                     modifier = Modifier
                         .fillMaxWidth()
                         .heightIn(50.dp),
-                    contentColor = colors.buttonCancel,
+                    contentColor = colors.cancel,
                     textStyle = typography.buttonCancel,
                     onClick = { onClickCancel?.invoke() },
                     content = { cancel() }
@@ -246,7 +246,7 @@ data class FDialogMenuViewColors(
     val content: Color,
 
     /** 取消按钮 */
-    val buttonCancel: Color,
+    val cancel: Color,
 
     /** 分割线 */
     val divider: Color,
@@ -264,7 +264,7 @@ data class FDialogMenuViewColors(
                 onBackground = onBackground,
                 title = onBackground.copy(alpha = 0.3f),
                 content = onBackground.copy(alpha = 0.7f),
-                buttonCancel = onBackground.copy(alpha = 0.6f),
+                cancel = onBackground.copy(alpha = 0.6f),
                 divider = onBackground.copy(alpha = 0.1f),
             )
         }
@@ -281,7 +281,7 @@ data class FDialogMenuViewColors(
                 onBackground = onBackground,
                 title = onBackground.copy(alpha = 0.3f),
                 content = onBackground.copy(alpha = 0.7f),
-                buttonCancel = onBackground.copy(alpha = 0.6f),
+                cancel = onBackground.copy(alpha = 0.6f),
                 divider = onBackground.copy(alpha = 0.1f),
             )
         }
