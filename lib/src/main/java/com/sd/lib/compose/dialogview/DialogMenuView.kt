@@ -39,6 +39,8 @@ class FDialogMenu<T>(context: Context) : FDialog(context) {
     /** 数据 */
     val data = mutableStateListOf<T>()
 
+    private val _data by mutableStateOf(listOf<T>())
+
     /** 标题 */
     private var _title by mutableStateOf<@Composable (() -> Unit)?>(null)
 
