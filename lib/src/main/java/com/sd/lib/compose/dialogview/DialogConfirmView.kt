@@ -32,7 +32,7 @@ import com.sd.lib.compose.dialog.R
 import com.sd.lib.vdialog.FDialog
 import com.sd.lib.vdialog.IDialog
 
-open class FDialogConfirm(context: Context) : FDialog(context) {
+class FDialogConfirm(context: Context) : FDialog(context) {
     /** 标题 */
     internal var title by mutableStateOf<@Composable (() -> Unit)?>(null)
 
@@ -54,27 +54,19 @@ open class FDialogConfirm(context: Context) : FDialog(context) {
     override fun onCreate() {
         super.onCreate()
         setComposable {
-            Content()
+            FDialogConfirmView(
+                title = title,
+                content = content ?: {},
+                cancel = cancel,
+                confirm = confirm,
+                onClickCancel = {
+                    _onClickCancel?.invoke(this@FDialogConfirm)
+                },
+                onClickConfirm = {
+                    _onClickConfirm?.invoke(this@FDialogConfirm)
+                },
+            )
         }
-    }
-
-    @Composable
-    protected open fun Content(
-        modifier: Modifier = Modifier,
-    ) {
-        FDialogConfirmView(
-            modifier = modifier,
-            title = title,
-            content = content ?: {},
-            cancel = cancel,
-            confirm = confirm,
-            onClickCancel = {
-                _onClickCancel?.invoke(this@FDialogConfirm)
-            },
-            onClickConfirm = {
-                _onClickConfirm?.invoke(this@FDialogConfirm)
-            },
-        )
     }
 
     /**
