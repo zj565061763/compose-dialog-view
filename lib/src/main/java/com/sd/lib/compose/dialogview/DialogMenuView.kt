@@ -18,7 +18,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -149,43 +148,43 @@ fun <T> FDialogMenu<T>.setCancel(block: @Composable (() -> Unit)?) {
     this.cancel = block
 }
 
-private val LocalFDialogMenuViewColors = staticCompositionLocalOf<FDialogMenuViewColors?> { null }
-
-private val LocalFDialogMenuViewTypography = staticCompositionLocalOf<FDialogMenuViewTypography?> { null }
-
-private val LocalFDialogMenuViewShapes = staticCompositionLocalOf<FDialogMenuViewShapes?> { null }
-
 @Composable
 fun <T> FDialogMenuView(
     modifier: Modifier = Modifier,
     /** 数据 */
     data: List<T>,
-    /** 每一行要显示的界面 */
-    row: @Composable (RowScope.(index: Int, item: T) -> Unit)? = null,
+
     /** 标题 */
     title: @Composable (() -> Unit)? = null,
+
+    /** 每一行要显示的界面 */
+    row: @Composable (RowScope.(index: Int, item: T) -> Unit)? = null,
+
     /** 取消按钮 */
     cancel: @Composable (() -> Unit)? = { Text(text = stringResource(id = R.string.lib_compose_dialog_view_menu_text_cancel)) },
+
     /** 点击取消 */
     onClickCancel: (() -> Unit)? = null,
     /** 点击某一行 */
     onClickRow: (index: Int, item: T) -> Unit,
-) {
-    val shapes = LocalFDialogMenuViewShapes.current ?: FDialogMenuViewDefaults.shapes
-    val colors = LocalFDialogMenuViewColors.current ?: FDialogMenuViewDefaults.colors
-    val typography = LocalFDialogMenuViewTypography.current ?: FDialogMenuViewDefaults.typography
 
+    /** 形状 */
+    shapes: FDialogMenuViewShapes = FDialogMenuViewDefaults.shapes,
+    /** 颜色 */
+    colors: FDialogMenuViewColors = FDialogMenuViewDefaults.colors,
+    /** 字体 */
+    typography: FDialogMenuViewTypography = FDialogMenuViewDefaults.typography,
+) {
     Surface(
+        modifier = modifier,
         shape = shapes.dialog,
         color = colors.background,
         contentColor = colors.onBackground,
-        modifier = modifier,
     ) {
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-
             // 标题
             if (title != null) {
                 LibDialogButton(
