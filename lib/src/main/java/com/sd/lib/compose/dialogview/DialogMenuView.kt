@@ -208,7 +208,7 @@ fun <T> FDialogMenuView(
                         .fillMaxWidth()
                         .heightIn(50.dp),
                     contentColor = colors.cancel,
-                    textStyle = typography.buttonCancel,
+                    textStyle = typography.cancel,
                     onClick = { onClickCancel?.invoke() },
                     content = { cancel() }
                 )
@@ -295,6 +295,7 @@ class FDialogMenuViewTypography(
         fontSize = 12.sp,
         letterSpacing = 0.25.sp,
     ),
+
     /** 内容 */
     val content: TextStyle = TextStyle(
         fontWeight = FontWeight.Normal,
@@ -302,8 +303,9 @@ class FDialogMenuViewTypography(
         letterSpacing = 0.25.sp,
         textAlign = TextAlign.Center,
     ),
+
     /** 取消按钮 */
-    val buttonCancel: TextStyle = TextStyle(
+    val cancel: TextStyle = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
         letterSpacing = 0.25.sp,
