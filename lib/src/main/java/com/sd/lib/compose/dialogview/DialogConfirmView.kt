@@ -166,6 +166,33 @@ fun FDialogConfirmView(
     )
 }
 
+@Immutable
+data class FDialogConfirmViewParams(
+    /** 标题 */
+    val title: @Composable (() -> Unit)?,
+
+    /** 取消按钮 */
+    val cancel: @Composable (() -> Unit)?,
+
+    /** 确认按钮 */
+    val confirm: @Composable (() -> Unit)?,
+
+    /** 是否显示分割线 */
+    val showDivider: Boolean,
+
+    /** 按钮 */
+    val buttons: @Composable (() -> Unit)?,
+
+    /** 点击取消 */
+    val onClickCancel: (() -> Unit)?,
+
+    /** 点击确认 */
+    val onClickConfirm: (() -> Unit)?,
+
+    /** 内容 */
+    val content: @Composable () -> Unit,
+)
+
 @Composable
 private fun DialogConfirmView(
     modifier: Modifier = Modifier,
@@ -208,7 +235,7 @@ private fun DialogConfirmView(
                             ?: typography.title.copy(color = colors.title)
                     ) {
                         title()
-                        Spacer(modifier = Modifier.height(15.dp))
+                        Spacer(modifier = Modifier.height(10.dp))
                     }
                 }
 
@@ -245,33 +272,6 @@ private fun DialogConfirmView(
         }
     }
 }
-
-@Immutable
-data class FDialogConfirmViewParams(
-    /** 标题 */
-    val title: @Composable (() -> Unit)?,
-
-    /** 取消按钮 */
-    val cancel: @Composable (() -> Unit)?,
-
-    /** 确认按钮 */
-    val confirm: @Composable (() -> Unit)?,
-
-    /** 是否显示分割线 */
-    val showDivider: Boolean,
-
-    /** 按钮 */
-    val buttons: @Composable (() -> Unit)?,
-
-    /** 点击取消 */
-    val onClickCancel: (() -> Unit)?,
-
-    /** 点击确认 */
-    val onClickConfirm: (() -> Unit)?,
-
-    /** 内容 */
-    val content: @Composable () -> Unit,
-)
 
 @Composable
 private fun FDialogConfirmButtons(
