@@ -5,11 +5,13 @@ import androidx.compose.ui.platform.ComposeView
 import com.sd.lib.vdialog.IDialog
 
 object DialogViewHook {
-    /** 确认View参数拦截 */
-    var confirmViewParamsHook: ((FDialogConfirmViewParams) -> Unit)? = null
-
     /** [setComposable]拦截 */
-    var setComposableHook: (@Composable (content: (@Composable () -> Unit), dialog: IDialog) -> Unit)? = null
+    var contentHook: @Composable ((@Composable () -> Unit)) -> Unit = { content ->
+        content()
+    }
+
+    /** [FDialogConfirmView]拦截 */
+    var dialogConfirmViewHook: ((FDialogConfirmViewParams) -> FDialogConfirmViewParams) = { it }
 }
 
 /**
@@ -26,11 +28,7 @@ fun IDialog.setComposable(content: @Composable () -> Unit) {
     }
 
     composeView.setContent {
-        val hook = DialogViewHook.setComposableHook
-        if (hook == null) {
-            content()
-        } else {
-            hook(content, this@setComposable)
-        }
+        val hook = DialogViewHook.contentHook
+        hook(content)
     }
 }

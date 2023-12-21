@@ -14,6 +14,7 @@ import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -142,17 +143,18 @@ fun FDialogConfirmView(
     /** 内容 */
     content: @Composable () -> Unit,
 ) {
-    val params = FDialogConfirmViewParams().apply {
-        this.title = title
-        this.cancel = cancel
-        this.confirm = confirm
-        this.showDivider = showDivider
-        this.buttons = buttons
-        this.onClickCancel = onClickCancel
-        this.onClickConfirm = onClickConfirm
-        this.content = content
-    }
-    DialogViewHook.confirmViewParamsHook?.invoke(params)
+    val params = DialogViewHook.dialogConfirmViewHook(
+        FDialogConfirmViewParams(
+            title = title,
+            cancel = cancel,
+            confirm = confirm,
+            showDivider = showDivider,
+            buttons = buttons,
+            onClickCancel = onClickCancel,
+            onClickConfirm = onClickConfirm,
+            content = content,
+        )
+    )
 
     val title = params.title
     val cancel = params.cancel
@@ -230,31 +232,32 @@ fun FDialogConfirmView(
     }
 }
 
-class FDialogConfirmViewParams {
+@Immutable
+data class FDialogConfirmViewParams(
     /** 标题 */
-    var title: @Composable (() -> Unit)? = null
+    val title: @Composable (() -> Unit)?,
 
     /** 取消按钮 */
-    var cancel: @Composable (() -> Unit)? = null
+    val cancel: @Composable (() -> Unit)?,
 
     /** 确认按钮 */
-    var confirm: @Composable (() -> Unit)? = null
+    val confirm: @Composable (() -> Unit)?,
 
     /** 是否显示分割线 */
-    var showDivider: Boolean = true
+    val showDivider: Boolean,
 
     /** 按钮 */
-    var buttons: @Composable (() -> Unit)? = null
+    val buttons: @Composable (() -> Unit)?,
 
     /** 点击取消 */
-    var onClickCancel: (() -> Unit)? = null
+    val onClickCancel: (() -> Unit)?,
 
     /** 点击确认 */
-    var onClickConfirm: (() -> Unit)? = null
+    val onClickConfirm: (() -> Unit)?,
 
     /** 内容 */
-    var content: @Composable () -> Unit = {}
-}
+    val content: @Composable () -> Unit,
+)
 
 @Composable
 private fun FDialogConfirmButtons(
@@ -320,6 +323,7 @@ object FDialogConfirmViewDefaults {
 /**
  * 颜色
  */
+@Immutable
 data class FDialogConfirmViewColors(
     /** 背景 */
     val background: Color,
@@ -381,6 +385,7 @@ data class FDialogConfirmViewColors(
 /**
  * 字体
  */
+@Immutable
 data class FDialogConfirmViewTypography(
     /** 标题 */
     val title: TextStyle = TextStyle(
@@ -414,6 +419,7 @@ data class FDialogConfirmViewTypography(
 /**
  * 形状
  */
+@Immutable
 data class FDialogConfirmViewShapes(
     /** 窗口形状 */
     val dialog: Shape = RoundedCornerShape(8.dp),
