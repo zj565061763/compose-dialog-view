@@ -9,16 +9,9 @@ object DialogHook {
     var hook: @Composable ((@Composable () -> Unit)) -> Unit = { content ->
         content()
     }
-}
 
-object DialogHookConfirmView {
-    /** 拦截整个[FDialogConfirmView] */
-    var hook: @Composable ((@Composable () -> Unit)) -> Unit = { content ->
-        content()
-    }
-
-    /** 拦截参数 */
-    var paramsHook: ((FDialogConfirmViewParams) -> FDialogConfirmViewParams) = { it }
+    /** 拦截[FDialogConfirmView]参数 */
+    var confirmViewParamsHook: ((FDialogConfirmViewParams) -> FDialogConfirmViewParams) = { it }
 }
 
 /**
