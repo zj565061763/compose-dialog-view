@@ -299,7 +299,7 @@ private fun FDialogConfirmButtons(
             LibDialogButton(
                 modifier = Modifier.weight(1f),
                 contentColor = colors.cancel,
-                textStyle = typography.buttonCancel,
+                textStyle = typography.cancel,
                 onClick = onClickCancel,
                 content = { cancel() },
             )
@@ -318,7 +318,7 @@ private fun FDialogConfirmButtons(
             LibDialogButton(
                 modifier = Modifier.weight(1f),
                 contentColor = colors.confirm,
-                textStyle = typography.buttonConfirm,
+                textStyle = typography.confirm,
                 onClick = onClickConfirm,
                 content = { confirm() },
             )
@@ -419,14 +419,14 @@ data class FDialogConfirmViewTypography(
     ),
 
     /** 取消按钮 */
-    val buttonCancel: TextStyle = TextStyle(
+    val cancel: TextStyle = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
         letterSpacing = 0.25.sp,
     ),
 
     /** 确认按钮 */
-    val buttonConfirm: TextStyle = TextStyle(
+    val confirm: TextStyle = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
         letterSpacing = 0.25.sp,
