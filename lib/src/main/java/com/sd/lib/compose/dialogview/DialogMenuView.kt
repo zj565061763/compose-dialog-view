@@ -14,6 +14,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -227,21 +228,28 @@ object FDialogMenuViewDefaults {
     var shapes by mutableStateOf(FDialogMenuViewShapes())
 }
 
-class FDialogMenuViewColors(
-    /** 背景 */
-    val background: Color,
-    /** 在背景上面内容颜色 */
-    val onBackground: Color,
-    /** 标题 */
-    val title: Color,
-    /** 内容 */
-    val content: Color,
-    /** 取消按钮 */
-    val buttonCancel: Color,
-    /** 分割线 */
-    val divider: Color,
+@Immutable
+data class FDialogMenuViewColors(
     /** 是否亮色 */
     val isLight: Boolean,
+
+    /** 背景 */
+    val background: Color,
+
+    /** 背景上面的颜色 */
+    val onBackground: Color,
+
+    /** 标题 */
+    val title: Color,
+
+    /** 内容 */
+    val content: Color,
+
+    /** 取消按钮 */
+    val buttonCancel: Color,
+
+    /** 分割线 */
+    val divider: Color,
 ) {
     companion object {
         /**
@@ -251,13 +259,13 @@ class FDialogMenuViewColors(
             val background = Color.White
             val onBackground = Color.Black
             return FDialogMenuViewColors(
+                isLight = true,
                 background = background,
                 onBackground = onBackground,
                 title = onBackground.copy(alpha = 0.3f),
                 content = onBackground.copy(alpha = 0.7f),
                 buttonCancel = onBackground.copy(alpha = 0.6f),
                 divider = onBackground.copy(alpha = 0.1f),
-                isLight = true,
             )
         }
 
@@ -268,13 +276,13 @@ class FDialogMenuViewColors(
             val background = Color.Black
             val onBackground = Color.White
             return FDialogMenuViewColors(
+                isLight = false,
                 background = background,
                 onBackground = onBackground,
                 title = onBackground.copy(alpha = 0.3f),
                 content = onBackground.copy(alpha = 0.7f),
                 buttonCancel = onBackground.copy(alpha = 0.6f),
                 divider = onBackground.copy(alpha = 0.1f),
-                isLight = false,
             )
         }
     }

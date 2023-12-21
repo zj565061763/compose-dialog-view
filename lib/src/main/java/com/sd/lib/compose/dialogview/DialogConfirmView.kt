@@ -366,6 +366,9 @@ data class FDialogConfirmViewColors(
     val divider: Color,
 ) {
     companion object {
+        /**
+         * 亮色
+         */
         fun light(): FDialogConfirmViewColors {
             val background = Color.White
             val onBackground = Color.Black
@@ -381,6 +384,9 @@ data class FDialogConfirmViewColors(
             )
         }
 
+        /**
+         * 暗色
+         */
         fun dark(): FDialogConfirmViewColors {
             val background = Color.Black
             val onBackground = Color.White
