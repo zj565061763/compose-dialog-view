@@ -218,7 +218,8 @@ fun FDialogMenuView(
                         .heightIn(50.dp),
                     contentColor = colors.title,
                     textStyle = typography.title,
-                    content = { title() }
+                    onClick = null,
+                    content = { title() },
                 )
                 LibDialogDivider(color = colors.divider)
             }

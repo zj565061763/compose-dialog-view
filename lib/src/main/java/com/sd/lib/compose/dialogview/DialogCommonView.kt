@@ -33,7 +33,7 @@ internal fun LibDialogButton(
     modifier: Modifier = Modifier,
     contentColor: Color,
     textStyle: TextStyle,
-    onClick: (() -> Unit)? = null,
+    onClick: (() -> Unit)?,
     content: @Composable RowScope.() -> Unit,
 ) {
     Surface(
