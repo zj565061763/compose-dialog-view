@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -193,11 +194,10 @@ private fun DialogConfirmView(
         contentColor = colors.onBackground,
         modifier = modifier,
     ) {
-        val padding = 15.dp
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = padding),
+                .padding(top = 15.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
@@ -207,6 +207,7 @@ private fun DialogConfirmView(
                     typography.title.takeIf { it.color.isSpecified }
                         ?: typography.title.copy(color = colors.title)
                 ) {
+                    Spacer(modifier = Modifier.height(5.dp))
                     title()
                 }
             }
@@ -219,7 +220,8 @@ private fun DialogConfirmView(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(padding)
+                        .padding(horizontal = 15.dp)
+                        .padding(top = 10.dp, bottom = 15.dp)
                         .verticalScroll(rememberScrollState()),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
