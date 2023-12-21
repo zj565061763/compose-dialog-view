@@ -381,18 +381,21 @@ data class FDialogConfirmViewTypography(
         fontSize = 18.sp,
         letterSpacing = 0.25.sp
     ),
+
     /** 内容 */
     val content: TextStyle = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
         letterSpacing = 0.25.sp
     ),
+
     /** 取消按钮 */
     val buttonCancel: TextStyle = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
         letterSpacing = 0.25.sp,
     ),
+
     /** 确认按钮 */
     val buttonConfirm: TextStyle = TextStyle(
         fontWeight = FontWeight.Normal,
