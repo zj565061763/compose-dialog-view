@@ -31,7 +31,6 @@ import androidx.compose.ui.unit.dp
 @Composable
 internal fun LibDialogButton(
     modifier: Modifier = Modifier,
-    backgroundColor: Color,
     contentColor: Color,
     textStyle: TextStyle,
     onClick: (() -> Unit)? = null,
@@ -52,7 +51,7 @@ internal fun LibDialogButton(
                     it
                 }
             },
-        color = backgroundColor,
+        color = Color.Transparent,
         contentColor = contentColor,
     ) {
         ProvideTextStyle(

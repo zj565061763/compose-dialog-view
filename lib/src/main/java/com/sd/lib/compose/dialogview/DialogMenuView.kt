@@ -3,12 +3,22 @@ package com.sd.lib.compose.dialogview
 import android.content.Context
 import android.view.Gravity
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -41,6 +51,7 @@ open class FDialogMenu<T>(context: Context) : FDialog(context) {
 
     /** 点击某一行 */
     private var _onClickRow: ((index: Int, item: T, dialog: IDialog) -> Unit)? = null
+
     /** 点击取消 */
     private var _onClickCancel: ((IDialog) -> Unit)? = { it.dismiss() }
 
@@ -181,7 +192,6 @@ fun <T> FDialogMenuView(
                     modifier = Modifier
                         .fillMaxWidth()
                         .heightIn(50.dp),
-                    backgroundColor = Color.Transparent,
                     contentColor = colors.title,
                     textStyle = typography.title,
                     content = { title() }
@@ -200,7 +210,6 @@ fun <T> FDialogMenuView(
                     Column(modifier = Modifier.fillMaxWidth()) {
                         LibDialogButton(
                             modifier = Modifier.fillMaxWidth(),
-                            backgroundColor = Color.Transparent,
                             contentColor = colors.content,
                             textStyle = typography.content,
                             onClick = { onClickRow.invoke(index, data[index]) },
@@ -231,7 +240,6 @@ fun <T> FDialogMenuView(
                     modifier = Modifier
                         .fillMaxWidth()
                         .heightIn(50.dp),
-                    backgroundColor = Color.Transparent,
                     contentColor = colors.buttonCancel,
                     textStyle = typography.buttonCancel,
                     onClick = { onClickCancel?.invoke() },
@@ -245,8 +253,10 @@ fun <T> FDialogMenuView(
 object FDialogMenuViewDefaults {
     /** 颜色 */
     var colors by mutableStateOf(FDialogMenuViewColors.light())
+
     /** 字体 */
     var typography by mutableStateOf(FDialogMenuViewTypography())
+
     /** 形状 */
     var shapes by mutableStateOf(FDialogMenuViewShapes())
 }

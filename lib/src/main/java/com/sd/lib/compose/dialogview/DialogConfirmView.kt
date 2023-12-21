@@ -298,7 +298,6 @@ private fun FDialogConfirmButtons(
         if (cancel != null) {
             LibDialogButton(
                 modifier = Modifier.weight(1f),
-                backgroundColor = Color.Transparent,
                 contentColor = colors.cancel,
                 textStyle = typography.buttonCancel,
                 onClick = onClickCancel,
@@ -318,7 +317,6 @@ private fun FDialogConfirmButtons(
         if (confirm != null) {
             LibDialogButton(
                 modifier = Modifier.weight(1f),
-                backgroundColor = Color.Transparent,
                 contentColor = colors.confirm,
                 textStyle = typography.buttonConfirm,
                 onClick = onClickConfirm,
