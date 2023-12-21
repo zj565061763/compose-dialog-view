@@ -323,18 +323,25 @@ object FDialogConfirmViewDefaults {
 data class FDialogConfirmViewColors(
     /** 背景 */
     val background: Color,
+
     /** 在背景上面内容颜色 */
     val onBackground: Color,
+
     /** 标题 */
     val title: Color,
+
     /** 内容 */
     val content: Color,
+
     /** 取消按钮 */
     val buttonCancel: Color,
+
     /** 确认按钮 */
     val buttonConfirm: Color,
+
     /** 分割线 */
     val divider: Color,
+
     /** 是否亮色 */
     val isLight: Boolean,
 ) {
