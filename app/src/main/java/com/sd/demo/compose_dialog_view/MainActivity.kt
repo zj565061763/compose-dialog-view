@@ -27,7 +27,7 @@ import com.sd.lib.compose.dialogview.FDialogConfirmViewDefaults
 import com.sd.lib.compose.dialogview.FDialogMenu
 import com.sd.lib.compose.dialogview.FDialogMenuViewColors
 import com.sd.lib.compose.dialogview.FDialogMenuViewDefaults
-import com.sd.lib.compose.dialogview.FDialogProgress
+import com.sd.lib.compose.dialogview.fDialogProgress
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,7 +75,7 @@ fun MainView() {
         // Progress
         Button(
             modifier = Modifier.fillMaxWidth(),
-            onClick = { showProgressDialog(context) },
+            onClick = { showProgressDialog() },
         ) {
             Text(text = "Progress")
         }
@@ -158,8 +158,9 @@ private fun showMenuDialog(context: Context) {
 /**
  * 加载窗口
  */
-private fun showProgressDialog(context: Context) {
-    FDialogProgress(context).apply {
+private fun showProgressDialog() {
+    fDialogProgress {
         this.text = { Text(text = "加载中") }
-    }.show()
+        this.show()
+    }
 }

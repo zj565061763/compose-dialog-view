@@ -21,7 +21,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.sd.lib.activity.fLastActivity
 import com.sd.lib.vdialog.FDialog
+
+fun fDialogProgress(
+    context: Context? = fLastActivity,
+    block: FDialogProgress.() -> Unit,
+): FDialogProgress? {
+    return context?.let {
+        FDialogProgress(it).also(block)
+    }
+}
 
 /**
  * 加载框
