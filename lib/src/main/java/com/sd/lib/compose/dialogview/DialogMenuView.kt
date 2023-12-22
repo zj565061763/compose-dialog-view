@@ -38,6 +38,13 @@ class FDialogMenu<T>(context: Context) : FDialog(context) {
     /** 数据 */
     var data by mutableStateOf(listOf<T>())
 
+    /** 形状 */
+    var shapes: FDialogMenuViewShapes by mutableStateOf(FDialogMenuViewDefaults.shapes)
+    /** 颜色 */
+    var colors: FDialogMenuViewColors by mutableStateOf(FDialogMenuViewDefaults.colors)
+    /** 字体 */
+    var typography: FDialogMenuViewTypography by mutableStateOf(FDialogMenuViewDefaults.typography)
+
     /** 标题 */
     var title by mutableStateOf<@Composable (() -> Unit)?>(null)
     /** 取消按钮 */
@@ -68,6 +75,10 @@ class FDialogMenu<T>(context: Context) : FDialog(context) {
                 FDialogMenuView(
                     data = data,
 
+                    shapes = shapes,
+                    colors = colors,
+                    typography = typography,
+
                     title = title,
                     cancel = cancel,
                     row = row,
@@ -85,8 +96,13 @@ class FDialogMenu<T>(context: Context) : FDialog(context) {
                 )
             } else {
                 FDialogMenuView(
+                    shapes = shapes,
+                    colors = colors,
+                    typography = typography,
+
                     title = title,
                     cancel = cancel,
+
                     onClickCancel = {
                         onClickCancel?.invoke(this@FDialogMenu)
                     },

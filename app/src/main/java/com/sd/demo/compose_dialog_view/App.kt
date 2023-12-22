@@ -25,5 +25,12 @@ class App : Application() {
                 dialog = RoundedCornerShape(30.dp)
             )
         }
+
+        // 配置菜单窗口行为
+        DialogBehavior.menu {
+            this.shapes = this.shapes.copy(
+                dialog = RoundedCornerShape(30.dp)
+            )
+        }
     }
 }
