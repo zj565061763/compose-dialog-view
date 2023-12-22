@@ -44,19 +44,18 @@ class FDialogConfirm(context: Context) : FDialog(context) {
 
     /** 标题 */
     var title by mutableStateOf<@Composable (() -> Unit)?>(null)
-
+    /** 取消按钮 */
+    var cancel by mutableStateOf<@Composable (() -> Unit)?>(null)
+    /** 确认按钮 */
+    var confirm by mutableStateOf<@Composable (() -> Unit)?>(null)
     /** 内容 */
     var content by mutableStateOf<@Composable (() -> Unit)?>(null)
 
-    /** 取消按钮 */
-    var cancel by mutableStateOf<@Composable (() -> Unit)?>(null)
-
-    /** 确认按钮 */
-    var confirm by mutableStateOf<@Composable (() -> Unit)?>(null)
+    /** 自定义按钮 */
+    var buttons by mutableStateOf<@Composable (() -> Unit)?>(null)
 
     /** 点击取消 */
     var onClickCancel: ((IDialog) -> Unit)? = null
-
     /** 点击确认 */
     var onClickConfirm: ((IDialog) -> Unit)? = null
 
@@ -71,6 +70,7 @@ class FDialogConfirm(context: Context) : FDialog(context) {
                 title = title,
                 cancel = cancel,
                 confirm = confirm,
+                buttons = buttons,
                 content = content ?: {},
 
                 onClickCancel = {
