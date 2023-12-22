@@ -52,6 +52,9 @@ class FDialogMenu<T>(context: Context) : FDialog(context) {
     /** 行的内容类型 */
     var rowContentType by mutableStateOf<((index: Int, item: T) -> Any?)?>(null)
 
+    /** 列表项 */
+    var content by mutableStateOf<(LazyListScope.() -> Unit)?>(null)
+
     /** 点击取消 */
     var onClickCancel: ((IDialog) -> Unit)? = null
     /** 点击某一行 */
@@ -60,23 +63,36 @@ class FDialogMenu<T>(context: Context) : FDialog(context) {
     override fun onCreate() {
         super.onCreate()
         setComposable {
-            FDialogMenuView(
-                data = data,
+            val cnt = content
+            if (cnt == null) {
+                FDialogMenuView(
+                    data = data,
 
-                title = title,
-                cancel = cancel,
-                row = row,
-                rowText = rowText,
-                rowKey = rowKey,
-                rowContentType = rowContentType,
+                    title = title,
+                    cancel = cancel,
+                    row = row,
 
-                onClickCancel = {
-                    onClickCancel?.invoke(this@FDialogMenu)
-                },
-                onClickRow = { index, item ->
-                    onClickRow?.invoke(index, item, this@FDialogMenu)
-                },
-            )
+                    rowText = rowText,
+                    rowKey = rowKey,
+                    rowContentType = rowContentType,
+
+                    onClickCancel = {
+                        onClickCancel?.invoke(this@FDialogMenu)
+                    },
+                    onClickRow = { index, item ->
+                        onClickRow?.invoke(index, item, this@FDialogMenu)
+                    },
+                )
+            } else {
+                FDialogMenuView(
+                    title = title,
+                    cancel = cancel,
+                    onClickCancel = {
+                        onClickCancel?.invoke(this@FDialogMenu)
+                    },
+                    content = cnt,
+                )
+            }
         }
     }
 
