@@ -53,6 +53,8 @@ class FDialogConfirm(context: Context) : FDialog(context) {
     /** 内容 */
     var content by mutableStateOf<@Composable (() -> Unit)?>(null)
 
+    /** 是否显示分割线 */
+    var showDivider by mutableStateOf(true)
     /** 自定义按钮 */
     var buttons by mutableStateOf<@Composable (RowScope.() -> Unit)?>(null)
 
@@ -72,8 +74,10 @@ class FDialogConfirm(context: Context) : FDialog(context) {
                 title = title,
                 cancel = cancel,
                 confirm = confirm,
-                buttons = buttons,
                 content = content ?: {},
+
+                buttons = buttons,
+                showDivider = showDivider,
 
                 onClickCancel = {
                     onClickCancel?.invoke(this@FDialogConfirm)
