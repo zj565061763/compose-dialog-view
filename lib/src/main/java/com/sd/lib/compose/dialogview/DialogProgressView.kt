@@ -44,14 +44,14 @@ class FDialogProgress(context: Context) : FDialog(context) {
     }
 
     /**
-     * 设置文字
+     * 文字
      */
     fun setMsg(block: @Composable (() -> Unit)?) {
         _msg = block
     }
 
     /**
-     * 设置加载框
+     * 加载框
      */
     fun setProgress(block: @Composable (() -> Unit)?) {
         _progress = block
@@ -69,7 +69,11 @@ class FDialogProgress(context: Context) : FDialog(context) {
 @Composable
 fun FDialogProgressView(
     modifier: Modifier = Modifier,
+
+    /** 加载框 */
     progress: (@Composable () -> Unit)? = null,
+
+    /** 文字 */
     msg: (@Composable () -> Unit)? = null,
 ) {
     Row(
