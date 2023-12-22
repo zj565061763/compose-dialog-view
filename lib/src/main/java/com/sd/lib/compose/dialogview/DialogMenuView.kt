@@ -1,5 +1,7 @@
 package com.sd.lib.compose.dialogview
 
+import android.content.Context
+import android.view.Gravity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,6 +30,66 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sd.lib.compose.dialog.R
+import com.sd.lib.vdialog.FDialog
+import com.sd.lib.vdialog.IDialog
+import com.sd.lib.vdialog.animator.slide.SlideUpDownRItselfFactory
+
+class FDialogMenu<T>(context: Context) : FDialog(context) {
+    /** 数据 */
+    var data by mutableStateOf(listOf<T>())
+
+    /** 标题 */
+    var title by mutableStateOf<@Composable (() -> Unit)?>(null)
+    /** 取消按钮 */
+    var cancel by mutableStateOf<@Composable (() -> Unit)?>(null)
+    /** 行的布局 */
+    var row by mutableStateOf<@Composable (RowScope.(index: Int, item: T) -> Unit)?>(null)
+
+    /** 行的文字 */
+    var rowText by mutableStateOf<((index: Int, item: T) -> String)?>(null)
+    /** 行的key */
+    var rowKey by mutableStateOf<((index: Int, item: T) -> Any)?>(null)
+    /** 行的内容类型 */
+    var rowContentType by mutableStateOf<((index: Int, item: T) -> Any?)?>(null)
+
+    /** 点击取消 */
+    var onClickCancel: ((IDialog) -> Unit)? = null
+    /** 点击某一行 */
+    var onClickRow: ((index: Int, item: T, dialog: IDialog) -> Unit)? = null
+
+    override fun onCreate() {
+        super.onCreate()
+        setComposable {
+            FDialogMenuView(
+                data = data,
+
+                title = title,
+                cancel = cancel,
+                row = row,
+                rowText = rowText,
+                rowKey = rowKey,
+                rowContentType = rowContentType,
+
+                onClickCancel = {
+                    onClickCancel?.invoke(this@FDialogMenu)
+                },
+                onClickRow = { index, item ->
+                    onClickRow?.invoke(index, item, this@FDialogMenu)
+                },
+            )
+        }
+    }
+
+    init {
+        padding.set(0, 0, 0, 0)
+        gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
+        animatorFactory = SlideUpDownRItselfFactory()
+        setCanceledOnTouchOutside(true)
+        this.cancel = { Text(text = stringResource(id = R.string.lib_compose_dialog_view_menu_text_cancel)) }
+        this.onClickCancel = { dismiss() }
+        DialogBehavior.menu?.invoke(this)
+    }
+}
 
 /**
  * 菜单框
@@ -49,16 +111,18 @@ fun <T> FDialogMenuView(
     title: @Composable (() -> Unit)? = null,
     /** 取消按钮 */
     cancel: @Composable (() -> Unit)? = { Text(text = stringResource(id = R.string.lib_compose_dialog_view_menu_text_cancel)) },
-    /** 每一行要显示的界面 */
+    /** 行的布局 */
     row: @Composable (RowScope.(index: Int, item: T) -> Unit)? = null,
-    /** 行内容 */
-    text: (index: Int, item: T) -> String = { _, item -> item.toString() },
 
-    key: ((index: Int, item: T) -> Any)? = null,
-    contentType: (index: Int, item: T) -> Any? = { _, _ -> null },
+    /** 行的文字 */
+    rowText: ((index: Int, item: T) -> String)? = null,
+    /** 行的key */
+    rowKey: ((index: Int, item: T) -> Any)? = null,
+    /** 行的内容类型 */
+    rowContentType: ((index: Int, item: T) -> Any?)? = null,
 
     /** 点击取消 */
-    onClickCancel: (() -> Unit)? = null,
+    onClickCancel: () -> Unit,
     /** 点击某一行 */
     onClickRow: (index: Int, item: T) -> Unit,
 ) {
@@ -73,8 +137,8 @@ fun <T> FDialogMenuView(
     ) {
         itemsIndexed(
             items = data,
-            key = key,
-            contentType = contentType,
+            key = rowKey,
+            contentType = rowContentType ?: { _, _ -> null },
         ) { index, item ->
             Column {
                 LibDialogButton(
@@ -86,7 +150,7 @@ fun <T> FDialogMenuView(
                         if (row != null) {
                             row(index, item)
                         } else {
-                            Text(text = text(index, item))
+                            Text(text = rowText?.invoke(index, item) ?: item.toString())
                         }
                     }
                 )
