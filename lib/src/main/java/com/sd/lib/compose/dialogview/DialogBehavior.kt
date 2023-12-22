@@ -8,7 +8,7 @@ import com.sd.lib.vdialog.animator.slide.SlideUpDownRItselfFactory
  * 窗口行为
  */
 object DialogBehavior {
-    internal var confirm: IDialog.() -> Unit = {
+    internal var confirm: FDialogConfirm.() -> Unit = {
         setCanceledOnTouchOutside(false)
     }
 
@@ -19,7 +19,7 @@ object DialogBehavior {
         setCanceledOnTouchOutside(true)
     }
 
-    internal var progress: IDialog.() -> Unit = {
+    internal var progress: FDialogProgress.() -> Unit = {
         padding.set(0, 0, 0, 0)
         setCanceledOnTouchOutside(false)
     }
@@ -28,7 +28,7 @@ object DialogBehavior {
      * 配置确认窗口行为
      */
     @JvmStatic
-    fun confirm(block: IDialog.() -> Unit) {
+    fun confirm(block: FDialogConfirm.() -> Unit) {
         this.confirm = block
     }
 
@@ -44,31 +44,7 @@ object DialogBehavior {
      * 配置加载窗口行为
      */
     @JvmStatic
-    fun progress(block: IDialog.() -> Unit) {
+    fun progress(block: FDialogProgress.() -> Unit) {
         this.progress = block
     }
-}
-
-/**
- * 确认窗口行为
- */
-fun IDialog?.beConfirm(show: Boolean = true): IDialog? = this?.apply {
-    DialogBehavior.confirm(this)
-    if (show) show()
-}
-
-/**
- * 菜单窗口行为
- */
-fun IDialog?.beMenu(show: Boolean = true): IDialog? = this?.apply {
-    DialogBehavior.menu(this)
-    if (show) show()
-}
-
-/**
- * 加载窗口行为
- */
-fun IDialog?.beProgress(show: Boolean = true): IDialog? = this?.apply {
-    DialogBehavior.progress(this)
-    if (show) show()
 }

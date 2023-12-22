@@ -1,6 +1,8 @@
 package com.sd.demo.compose_dialog_view
 
 import android.app.Application
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.unit.dp
 import com.sd.demo.compose_dialog_view.ui.theme.AppTheme
 import com.sd.lib.compose.dialogview.DialogBehavior
 import com.sd.lib.compose.dialogview.DialogViewHook
@@ -19,6 +21,9 @@ class App : Application() {
         // 配置确认窗口行为
         DialogBehavior.confirm {
             this.animatorFactory = ScaleXYFactory()
+            this.shapes = this.shapes.copy(
+                dialog = RoundedCornerShape(30.dp)
+            )
         }
     }
 }

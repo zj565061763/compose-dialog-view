@@ -8,7 +8,6 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -21,18 +20,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import com.sd.demo.compose_dialog_view.ui.theme.AppTheme
 import com.sd.lib.compose.dialogview.FDialogConfirm
 import com.sd.lib.compose.dialogview.FDialogConfirmViewColors
 import com.sd.lib.compose.dialogview.FDialogConfirmViewDefaults
-import com.sd.lib.compose.dialogview.FDialogMenuView
 import com.sd.lib.compose.dialogview.FDialogMenuViewColors
 import com.sd.lib.compose.dialogview.FDialogMenuViewDefaults
 import com.sd.lib.compose.dialogview.FDialogProgress
-import com.sd.lib.compose.dialogview.beMenu
-import com.sd.lib.compose.dialogview.fDialog
-import com.sd.lib.vdialog.animator.scale.ScaleXYFactory
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -107,12 +101,6 @@ private fun lightState(): MutableState<Boolean> {
  */
 private fun showConfirmDialog(context: Context) {
     FDialogConfirm(context).apply {
-        this.animatorFactory = ScaleXYFactory()
-
-        this.shapes = this.shapes.copy(
-            dialog = RoundedCornerShape(30.dp)
-        )
-
         this.title = { Text(text = "Title") }
         this.content = { Text(text = "Content") }
         this.cancel = { Text(text = "Cancel") }
@@ -151,20 +139,20 @@ private fun showMenuDialog() {
         "CSS",
     )
 
-    fDialog {
-        FDialogMenuView(
-            data = list,
-            title = { Text(text = "Select Language") },
-            onClickCancel = {
-                dismiss()
-                Toast.makeText(context, "onCancel", Toast.LENGTH_SHORT).show()
-            },
-            onClickRow = { index, item ->
-                dismiss()
-                Toast.makeText(context, "$index -> $item", Toast.LENGTH_SHORT).show()
-            },
-        )
-    }.beMenu()
+//    fDialog {
+//        FDialogMenuView(
+//            data = list,
+//            title = { Text(text = "Select Language") },
+//            onClickCancel = {
+//                dismiss()
+//                Toast.makeText(context, "onCancel", Toast.LENGTH_SHORT).show()
+//            },
+//            onClickRow = { index, item ->
+//                dismiss()
+//                Toast.makeText(context, "$index -> $item", Toast.LENGTH_SHORT).show()
+//            },
+//        )
+//    }.beMenu()
 }
 
 /**
