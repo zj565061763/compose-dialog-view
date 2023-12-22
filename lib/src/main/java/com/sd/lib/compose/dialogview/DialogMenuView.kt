@@ -38,6 +38,9 @@ import com.sd.lib.vdialog.animator.slide.SlideUpDownRItselfFactory
  * 菜单窗口
  */
 class FDialogMenu<T>(context: Context) : FDialog(context) {
+    /** 拦截[setComposable]的内容 */
+    var hook: @Composable ((@Composable () -> Unit)) -> Unit = { it() }
+
     /** 数据 */
     var data by mutableStateOf(listOf<T>())
 
@@ -73,44 +76,46 @@ class FDialogMenu<T>(context: Context) : FDialog(context) {
     override fun onCreate() {
         super.onCreate()
         setComposable {
-            val cnt = content
-            if (cnt == null) {
-                FDialogMenuView(
-                    data = data,
+            hook {
+                val cnt = content
+                if (cnt == null) {
+                    FDialogMenuView(
+                        data = data,
 
-                    shapes = shapes,
-                    colors = colors,
-                    typography = typography,
+                        shapes = shapes,
+                        colors = colors,
+                        typography = typography,
 
-                    title = title,
-                    cancel = cancel,
-                    row = row,
+                        title = title,
+                        cancel = cancel,
+                        row = row,
 
-                    rowText = rowText,
-                    rowKey = rowKey,
-                    rowContentType = rowContentType,
+                        rowText = rowText,
+                        rowKey = rowKey,
+                        rowContentType = rowContentType,
 
-                    onClickCancel = {
-                        onClickCancel?.invoke(this@FDialogMenu)
-                    },
-                    onClickRow = { index, item ->
-                        onClickRow?.invoke(index, item, this@FDialogMenu)
-                    },
-                )
-            } else {
-                FDialogMenuView(
-                    shapes = shapes,
-                    colors = colors,
-                    typography = typography,
+                        onClickCancel = {
+                            onClickCancel?.invoke(this@FDialogMenu)
+                        },
+                        onClickRow = { index, item ->
+                            onClickRow?.invoke(index, item, this@FDialogMenu)
+                        },
+                    )
+                } else {
+                    FDialogMenuView(
+                        shapes = shapes,
+                        colors = colors,
+                        typography = typography,
 
-                    title = title,
-                    cancel = cancel,
+                        title = title,
+                        cancel = cancel,
 
-                    onClickCancel = {
-                        onClickCancel?.invoke(this@FDialogMenu)
-                    },
-                    content = cnt,
-                )
+                        onClickCancel = {
+                            onClickCancel?.invoke(this@FDialogMenu)
+                        },
+                        content = cnt,
+                    )
+                }
             }
         }
     }

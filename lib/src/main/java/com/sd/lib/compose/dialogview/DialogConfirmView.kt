@@ -37,6 +37,9 @@ import com.sd.lib.vdialog.IDialog
  * 确认窗口
  */
 class FDialogConfirm(context: Context) : FDialog(context) {
+    /** 拦截[setComposable]的内容 */
+    var hook: @Composable ((@Composable () -> Unit)) -> Unit = { it() }
+
     /** 形状 */
     var shapes: FDialogConfirmViewShapes by mutableStateOf(FDialogConfirmViewDefaults.shapes)
     /** 颜色 */
@@ -66,26 +69,28 @@ class FDialogConfirm(context: Context) : FDialog(context) {
     override fun onCreate() {
         super.onCreate()
         setComposable {
-            FDialogConfirmView(
-                shapes = shapes,
-                colors = colors,
-                typography = typography,
+            hook {
+                FDialogConfirmView(
+                    shapes = shapes,
+                    colors = colors,
+                    typography = typography,
 
-                title = title,
-                cancel = cancel,
-                confirm = confirm,
-                content = content ?: {},
+                    title = title,
+                    cancel = cancel,
+                    confirm = confirm,
+                    content = content ?: {},
 
-                buttons = buttons,
-                showDivider = showDivider,
+                    buttons = buttons,
+                    showDivider = showDivider,
 
-                onClickCancel = {
-                    onClickCancel?.invoke(this@FDialogConfirm)
-                },
-                onClickConfirm = {
-                    onClickConfirm?.invoke(this@FDialogConfirm)
-                },
-            )
+                    onClickCancel = {
+                        onClickCancel?.invoke(this@FDialogConfirm)
+                    },
+                    onClickConfirm = {
+                        onClickConfirm?.invoke(this@FDialogConfirm)
+                    },
+                )
+            }
         }
     }
 
