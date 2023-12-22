@@ -24,6 +24,7 @@ import com.sd.demo.compose_dialog_view.ui.theme.AppTheme
 import com.sd.lib.compose.dialogview.FDialogConfirm
 import com.sd.lib.compose.dialogview.FDialogConfirmViewColors
 import com.sd.lib.compose.dialogview.FDialogConfirmViewDefaults
+import com.sd.lib.compose.dialogview.FDialogMenu
 import com.sd.lib.compose.dialogview.FDialogMenuViewColors
 import com.sd.lib.compose.dialogview.FDialogMenuViewDefaults
 import com.sd.lib.compose.dialogview.FDialogProgress
@@ -66,7 +67,7 @@ fun MainView() {
         // Menu
         Button(
             modifier = Modifier.fillMaxWidth(),
-            onClick = { showMenuDialog() },
+            onClick = { showMenuDialog(context) },
         ) {
             Text(text = "Menu")
         }
@@ -120,7 +121,7 @@ private fun showConfirmDialog(context: Context) {
 /**
  * 菜单窗口
  */
-private fun showMenuDialog() {
+private fun showMenuDialog(context: Context) {
     val list = listOf(
         "Kotlin",
         "Java",
@@ -139,20 +140,19 @@ private fun showMenuDialog() {
         "CSS",
     )
 
-//    fDialog {
-//        FDialogMenuView(
-//            data = list,
-//            title = { Text(text = "Select Language") },
-//            onClickCancel = {
-//                dismiss()
-//                Toast.makeText(context, "onCancel", Toast.LENGTH_SHORT).show()
-//            },
-//            onClickRow = { index, item ->
-//                dismiss()
-//                Toast.makeText(context, "$index -> $item", Toast.LENGTH_SHORT).show()
-//            },
-//        )
-//    }.beMenu()
+    FDialogMenu<String>(context).apply {
+        this.data = list
+        this.title = { Text(text = "Select Language") }
+
+        this.onClickCancel = {
+            dismiss()
+            Toast.makeText(context, "onCancel", Toast.LENGTH_SHORT).show()
+        }
+        this.onClickRow = { index, item, _ ->
+            dismiss()
+            Toast.makeText(context, "$index -> $item", Toast.LENGTH_SHORT).show()
+        }
+    }.show()
 }
 
 /**
