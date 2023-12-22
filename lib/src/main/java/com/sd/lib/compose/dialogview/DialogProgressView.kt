@@ -28,33 +28,19 @@ import com.sd.lib.vdialog.FDialog
  */
 class FDialogProgress(context: Context) : FDialog(context) {
     /** 文字 */
-    private var _msg by mutableStateOf<@Composable (() -> Unit)?>(null)
+    var text by mutableStateOf<@Composable (() -> Unit)?>(null)
 
     /** 加载框 */
-    private var _progress by mutableStateOf<@Composable (() -> Unit)?>(null)
+    var progress by mutableStateOf<@Composable (() -> Unit)?>(null)
 
     override fun onCreate() {
         super.onCreate()
         setComposable {
             FDialogProgressView(
-                msg = _msg,
-                progress = _progress,
+                progress = progress,
+                text = text,
             )
         }
-    }
-
-    /**
-     * 文字
-     */
-    fun setMsg(block: @Composable (() -> Unit)?) {
-        _msg = block
-    }
-
-    /**
-     * 加载框
-     */
-    fun setProgress(block: @Composable (() -> Unit)?) {
-        _progress = block
     }
 
     init {
@@ -74,7 +60,7 @@ fun FDialogProgressView(
     progress: (@Composable () -> Unit)? = null,
 
     /** 文字 */
-    msg: (@Composable () -> Unit)? = null,
+    text: (@Composable () -> Unit)? = null,
 ) {
     Row(
         modifier = modifier
@@ -96,14 +82,14 @@ fun FDialogProgressView(
             )
         }
 
-        if (msg != null) {
+        if (text != null) {
             Spacer(modifier = Modifier.width(5.dp))
             val textStyle = TextStyle(
                 color = MaterialTheme.colorScheme.surface.copy(alpha = 0.9f),
                 fontSize = 12.sp,
             )
             ProvideTextStyle(textStyle) {
-                msg()
+                text()
             }
         }
     }

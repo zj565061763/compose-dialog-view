@@ -172,6 +172,6 @@ private fun showMenuDialog() {
  */
 private fun showProgressDialog(context: Context) {
     FDialogProgress(context).apply {
-        setMsg { Text(text = "加载中") }
+        this.text = { Text(text = "加载中") }
     }.show()
 }
