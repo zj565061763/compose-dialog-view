@@ -29,11 +29,27 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.sd.lib.activity.fLastActivity
 import com.sd.lib.compose.dialog.R
 import com.sd.lib.vdialog.FDialog
 import com.sd.lib.vdialog.IDialog
 import com.sd.lib.vdialog.animator.slide.SlideUpDownRItselfFactory
 
+/**
+ * 菜单窗口
+ */
+fun <T> fDialogMenu(
+    context: Context? = fLastActivity,
+    block: FDialogMenu<T>.() -> Unit,
+): FDialogMenu<T>? {
+    return context?.let {
+        FDialogMenu<T>(it).also(block)
+    }
+}
+
+/**
+ * 菜单窗口
+ */
 class FDialogMenu<T>(context: Context) : FDialog(context) {
     /** 数据 */
     var data by mutableStateOf(listOf<T>())

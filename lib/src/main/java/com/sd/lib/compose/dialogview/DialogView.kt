@@ -1,10 +1,7 @@
 package com.sd.lib.compose.dialogview
 
-import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.ComposeView
-import com.sd.lib.activity.fLastActivity
-import com.sd.lib.vdialog.FDialog
 import com.sd.lib.vdialog.IDialog
 
 object DialogViewHook {
@@ -28,17 +25,6 @@ fun IDialog.setComposable(content: @Composable IDialog.() -> Unit) {
     composeView.setContent {
         DialogViewHook.hook {
             content()
-        }
-    }
-}
-
-fun fDialog(
-    context: Context? = fLastActivity,
-    content: @Composable (IDialog.() -> Unit)? = null,
-): IDialog? {
-    return context?.let { FDialog(it) }?.apply {
-        if (content != null) {
-            setComposable(content)
         }
     }
 }
