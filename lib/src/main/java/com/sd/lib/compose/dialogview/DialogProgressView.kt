@@ -27,11 +27,11 @@ import com.sd.lib.vdialog.FDialog
  * 加载框
  */
 class FDialogProgress(context: Context) : FDialog(context) {
-    /** 文字 */
-    var text by mutableStateOf<@Composable (() -> Unit)?>(null)
-
     /** 加载框 */
     var progress by mutableStateOf<@Composable (() -> Unit)?>(null)
+
+    /** 文字 */
+    var text by mutableStateOf<@Composable (() -> Unit)?>(null)
 
     override fun onCreate() {
         super.onCreate()
