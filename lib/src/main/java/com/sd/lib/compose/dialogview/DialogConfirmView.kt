@@ -114,6 +114,7 @@ class FDialogConfirm(context: Context) : FDialog(context) {
     }
 
     init {
+        setCanceledOnTouchOutside(false)
         setTitle { Text(text = stringResource(id = R.string.lib_compose_dialog_view_confirm_text_title)) }
         setCancel { Text(text = stringResource(id = R.string.lib_compose_dialog_view_confirm_text_cancel)) }
         setConfirm { Text(text = stringResource(id = R.string.lib_compose_dialog_view_confirm_text_confirm)) }
