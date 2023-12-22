@@ -32,6 +32,18 @@ fun IDialog.setComposable(content: @Composable IDialog.() -> Unit) {
 }
 
 /**
+ * 加载窗口
+ */
+fun fDialogLoading(
+    context: Context? = fLastActivity,
+    block: FDialogLoading.() -> Unit,
+): FDialogLoading? {
+    return context?.let {
+        FDialogLoading(it).also(block)
+    }
+}
+
+/**
  * 确认窗口
  */
 fun fDialogConfirm(
@@ -52,17 +64,5 @@ fun <T> fDialogMenu(
 ): FDialogMenu<T>? {
     return context?.let {
         FDialogMenu<T>(it).also(block)
-    }
-}
-
-/**
- * 加载窗口
- */
-fun fDialogLoading(
-    context: Context? = fLastActivity,
-    block: FDialogLoading.() -> Unit,
-): FDialogLoading? {
-    return context?.let {
-        FDialogLoading(it).also(block)
     }
 }
