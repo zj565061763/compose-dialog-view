@@ -1,6 +1,5 @@
 package com.sd.demo.compose_dialog_view
 
-import android.content.Context
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -19,14 +18,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import com.sd.demo.compose_dialog_view.ui.theme.AppTheme
 import com.sd.lib.compose.dialogview.FDialogConfirmViewColors
 import com.sd.lib.compose.dialogview.FDialogConfirmViewDefaults
-import com.sd.lib.compose.dialogview.FDialogMenu
 import com.sd.lib.compose.dialogview.FDialogMenuViewColors
 import com.sd.lib.compose.dialogview.FDialogMenuViewDefaults
 import com.sd.lib.compose.dialogview.fDialogConfirm
+import com.sd.lib.compose.dialogview.fDialogMenu
 import com.sd.lib.compose.dialogview.fDialogProgress
 
 class MainActivity : ComponentActivity() {
@@ -44,8 +42,6 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainView() {
-    val context = LocalContext.current
-
     Column(modifier = Modifier.fillMaxWidth()) {
         // Light or Dark
         var isLight by lightState()
@@ -67,7 +63,7 @@ fun MainView() {
         // Menu
         Button(
             modifier = Modifier.fillMaxWidth(),
-            onClick = { showMenuDialog(context) },
+            onClick = { showMenuDialog() },
         ) {
             Text(text = "Menu")
         }
@@ -122,7 +118,7 @@ private fun showConfirmDialog() {
 /**
  * 菜单窗口
  */
-private fun showMenuDialog(context: Context) {
+private fun showMenuDialog() {
     val list = listOf(
         "Kotlin",
         "Java",
@@ -141,7 +137,7 @@ private fun showMenuDialog(context: Context) {
         "CSS",
     )
 
-    FDialogMenu<String>(context).apply {
+    fDialogMenu<String> {
         this.data = list
         this.title = { Text(text = "Select Language") }
 
@@ -153,7 +149,8 @@ private fun showMenuDialog(context: Context) {
             dismiss()
             Toast.makeText(context, "$index -> $item", Toast.LENGTH_SHORT).show()
         }
-    }.show()
+        this.show()
+    }
 }
 
 /**
