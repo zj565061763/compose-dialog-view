@@ -21,16 +21,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.sd.demo.compose_dialog_view.ui.theme.AppTheme
-import com.sd.lib.compose.dialogview.FDialogConfirmView
+import com.sd.lib.compose.dialogview.FDialogConfirm
 import com.sd.lib.compose.dialogview.FDialogConfirmViewColors
 import com.sd.lib.compose.dialogview.FDialogConfirmViewDefaults
 import com.sd.lib.compose.dialogview.FDialogMenuView
 import com.sd.lib.compose.dialogview.FDialogMenuViewColors
 import com.sd.lib.compose.dialogview.FDialogMenuViewDefaults
 import com.sd.lib.compose.dialogview.FDialogProgress
-import com.sd.lib.compose.dialogview.beConfirm
 import com.sd.lib.compose.dialogview.beMenu
 import com.sd.lib.compose.dialogview.fDialog
+import com.sd.lib.vdialog.animator.scale.ScaleXYFactory
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,7 +62,7 @@ fun MainView() {
         // Confirm
         Button(
             modifier = Modifier.fillMaxWidth(),
-            onClick = { showConfirmDialog() },
+            onClick = { showConfirmDialog(context) },
         ) {
             Text(text = "Confirm")
         }
@@ -103,24 +103,22 @@ private fun lightState(): MutableState<Boolean> {
 /**
  * 确认窗口
  */
-private fun showConfirmDialog() {
-    fDialog {
-        FDialogConfirmView(
-            title = { Text(text = "Title") },
-            cancel = { Text(text = "Cancel") },
-            confirm = { Text(text = "Confirm") },
-            onClickCancel = {
-                Toast.makeText(context, "onCancel", Toast.LENGTH_SHORT).show()
-                dismiss()
-            },
-            onClickConfirm = {
-                Toast.makeText(context, "onConfirm", Toast.LENGTH_SHORT).show()
-                dismiss()
-            },
-        ) {
-            Text(text = "Content")
+private fun showConfirmDialog(context: Context) {
+    FDialogConfirm(context).apply {
+        animatorFactory = ScaleXYFactory()
+        setTitle { Text(text = "Title") }
+        setContent { Text(text = "Content") }
+        setCancel { Text(text = "Cancel") }
+        setConfirm { Text(text = "Confirm") }
+        onClickCancel {
+            Toast.makeText(context, "onCancel", Toast.LENGTH_SHORT).show()
+            dismiss()
         }
-    }.beConfirm()
+        onClickConfirm {
+            Toast.makeText(context, "onConfirm", Toast.LENGTH_SHORT).show()
+            dismiss()
+        }
+    }.show()
 }
 
 /**
