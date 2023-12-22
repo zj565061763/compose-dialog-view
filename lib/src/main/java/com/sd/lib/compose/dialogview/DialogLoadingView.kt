@@ -26,7 +26,7 @@ import com.sd.lib.vdialog.FDialog
 /**
  * 加载窗口
  */
-class FDialogProgress(context: Context) : FDialog(context) {
+class FDialogLoading(context: Context) : FDialog(context) {
     /** 拦截[setComposable]的内容 */
     var hook: @Composable ((@Composable () -> Unit)) -> Unit = { it() }
 
@@ -40,7 +40,7 @@ class FDialogProgress(context: Context) : FDialog(context) {
         super.onCreate()
         setComposable {
             hook {
-                FDialogProgressView(
+                FDialogLoadingView(
                     progress = progress,
                     text = text,
                 )
@@ -51,7 +51,7 @@ class FDialogProgress(context: Context) : FDialog(context) {
     init {
         padding.set(0, 0, 0, 0)
         setCanceledOnTouchOutside(false)
-        DialogBehavior.progress?.invoke(this)
+        DialogBehavior.loading?.invoke(this)
     }
 }
 
@@ -59,7 +59,7 @@ class FDialogProgress(context: Context) : FDialog(context) {
  * 加载框
  */
 @Composable
-fun FDialogProgressView(
+fun FDialogLoadingView(
     modifier: Modifier = Modifier,
 
     /** 加载框 */

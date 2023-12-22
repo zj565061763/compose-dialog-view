@@ -58,11 +58,11 @@ fun <T> fDialogMenu(
 /**
  * 加载窗口
  */
-fun fDialogProgress(
+fun fDialogLoading(
     context: Context? = fLastActivity,
-    block: FDialogProgress.() -> Unit,
-): FDialogProgress? {
+    block: FDialogLoading.() -> Unit,
+): FDialogLoading? {
     return context?.let {
-        FDialogProgress(it).also(block)
+        FDialogLoading(it).also(block)
     }
 }

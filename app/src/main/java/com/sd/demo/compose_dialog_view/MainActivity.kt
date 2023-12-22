@@ -24,8 +24,8 @@ import com.sd.lib.compose.dialogview.FDialogConfirmViewDefaults
 import com.sd.lib.compose.dialogview.FDialogMenuViewColors
 import com.sd.lib.compose.dialogview.FDialogMenuViewDefaults
 import com.sd.lib.compose.dialogview.fDialogConfirm
+import com.sd.lib.compose.dialogview.fDialogLoading
 import com.sd.lib.compose.dialogview.fDialogMenu
-import com.sd.lib.compose.dialogview.fDialogProgress
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,10 +52,18 @@ fun MainView() {
             Text(text = if (isLight) "Light" else "Dark")
         }
 
+        // Loading
+        Button(
+            modifier = Modifier.fillMaxWidth(),
+            onClick = { showDialogLoading(isLight) },
+        ) {
+            Text(text = "Loading")
+        }
+
         // Confirm
         Button(
             modifier = Modifier.fillMaxWidth(),
-            onClick = { showConfirmDialog() },
+            onClick = { showDialogConfirm() },
         ) {
             Text(text = "Confirm")
         }
@@ -63,17 +71,9 @@ fun MainView() {
         // Menu
         Button(
             modifier = Modifier.fillMaxWidth(),
-            onClick = { showMenuDialog() },
+            onClick = { showDialogMenu() },
         ) {
             Text(text = "Menu")
-        }
-
-        // Progress
-        Button(
-            modifier = Modifier.fillMaxWidth(),
-            onClick = { showProgressDialog(isLight) },
-        ) {
-            Text(text = "Progress")
         }
     }
 }
@@ -94,9 +94,24 @@ private fun lightState(): MutableState<Boolean> {
 }
 
 /**
+ * 加载窗口
+ */
+private fun showDialogLoading(isLight: Boolean) {
+    fDialogLoading {
+        this.hook = { content ->
+            AppTheme(isLight = isLight) {
+                content()
+            }
+        }
+        this.text = { Text(text = "加载中") }
+        this.show()
+    }
+}
+
+/**
  * 确认窗口
  */
-private fun showConfirmDialog() {
+private fun showDialogConfirm() {
     fDialogConfirm {
         this.title = { Text(text = "Title") }
         this.content = { Text(text = "Content") }
@@ -118,7 +133,7 @@ private fun showConfirmDialog() {
 /**
  * 菜单窗口
  */
-private fun showMenuDialog() {
+private fun showDialogMenu() {
     val list = listOf(
         "Kotlin",
         "Java",
@@ -149,21 +164,6 @@ private fun showMenuDialog() {
             dismiss()
             Toast.makeText(context, "$index -> $item", Toast.LENGTH_SHORT).show()
         }
-        this.show()
-    }
-}
-
-/**
- * 加载窗口
- */
-private fun showProgressDialog(isLight: Boolean) {
-    fDialogProgress {
-        this.hook = { content ->
-            AppTheme(isLight = isLight) {
-                content()
-            }
-        }
-        this.text = { Text(text = "加载中") }
         this.show()
     }
 }

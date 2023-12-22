@@ -4,14 +4,22 @@ package com.sd.lib.compose.dialogview
  * 窗口行为
  */
 object DialogBehavior {
+    internal var loading: (FDialogLoading.() -> Unit)? = null
+        private set
+
     internal var confirm: (FDialogConfirm.() -> Unit)? = null
         private set
 
     internal var menu: (FDialogMenu<*>.() -> Unit)? = null
         private set
 
-    internal var progress: (FDialogProgress.() -> Unit)? = null
-        private set
+    /**
+     * 配置加载窗口行为
+     */
+    @JvmStatic
+    fun loading(block: FDialogLoading.() -> Unit) {
+        this.loading = block
+    }
 
     /**
      * 配置确认窗口行为
@@ -27,13 +35,5 @@ object DialogBehavior {
     @JvmStatic
     fun menu(block: FDialogMenu<*>.() -> Unit) {
         this.menu = block
-    }
-
-    /**
-     * 配置加载窗口行为
-     */
-    @JvmStatic
-    fun progress(block: FDialogProgress.() -> Unit) {
-        this.progress = block
     }
 }
