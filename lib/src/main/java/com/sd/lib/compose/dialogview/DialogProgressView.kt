@@ -24,6 +24,9 @@ import androidx.compose.ui.unit.sp
 import com.sd.lib.activity.fLastActivity
 import com.sd.lib.vdialog.FDialog
 
+/**
+ * 加载窗口
+ */
 fun fDialogProgress(
     context: Context? = fLastActivity,
     block: FDialogProgress.() -> Unit,
@@ -34,7 +37,7 @@ fun fDialogProgress(
 }
 
 /**
- * 加载框
+ * 加载窗口
  */
 class FDialogProgress(context: Context) : FDialog(context) {
     /** 加载框 */

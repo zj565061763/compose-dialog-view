@@ -21,12 +21,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.sd.demo.compose_dialog_view.ui.theme.AppTheme
-import com.sd.lib.compose.dialogview.FDialogConfirm
 import com.sd.lib.compose.dialogview.FDialogConfirmViewColors
 import com.sd.lib.compose.dialogview.FDialogConfirmViewDefaults
 import com.sd.lib.compose.dialogview.FDialogMenu
 import com.sd.lib.compose.dialogview.FDialogMenuViewColors
 import com.sd.lib.compose.dialogview.FDialogMenuViewDefaults
+import com.sd.lib.compose.dialogview.fDialogConfirm
 import com.sd.lib.compose.dialogview.fDialogProgress
 
 class MainActivity : ComponentActivity() {
@@ -59,7 +59,7 @@ fun MainView() {
         // Confirm
         Button(
             modifier = Modifier.fillMaxWidth(),
-            onClick = { showConfirmDialog(context) },
+            onClick = { showConfirmDialog() },
         ) {
             Text(text = "Confirm")
         }
@@ -100,8 +100,8 @@ private fun lightState(): MutableState<Boolean> {
 /**
  * 确认窗口
  */
-private fun showConfirmDialog(context: Context) {
-    FDialogConfirm(context).apply {
+private fun showConfirmDialog() {
+    fDialogConfirm {
         this.title = { Text(text = "Title") }
         this.content = { Text(text = "Content") }
         this.cancel = { Text(text = "Cancel") }
@@ -115,7 +115,8 @@ private fun showConfirmDialog(context: Context) {
             Toast.makeText(context, "onConfirm", Toast.LENGTH_SHORT).show()
             dismiss()
         }
-    }.show()
+        this.show()
+    }
 }
 
 /**
