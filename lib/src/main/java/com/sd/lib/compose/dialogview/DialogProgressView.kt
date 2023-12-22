@@ -44,7 +44,9 @@ class FDialogProgress(context: Context) : FDialog(context) {
     }
 
     init {
-        DialogBehavior.progress(this)
+        padding.set(0, 0, 0, 0)
+        setCanceledOnTouchOutside(false)
+        DialogBehavior.progress?.invoke(this)
     }
 }
 
