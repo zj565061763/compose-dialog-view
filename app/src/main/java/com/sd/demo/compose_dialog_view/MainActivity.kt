@@ -1,5 +1,6 @@
 package com.sd.demo.compose_dialog_view
 
+import android.content.Context
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -18,6 +19,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import com.sd.demo.compose_dialog_view.ui.theme.AppTheme
 import com.sd.lib.compose.dialogview.FDialogConfirmView
 import com.sd.lib.compose.dialogview.FDialogConfirmViewColors
@@ -25,10 +27,9 @@ import com.sd.lib.compose.dialogview.FDialogConfirmViewDefaults
 import com.sd.lib.compose.dialogview.FDialogMenuView
 import com.sd.lib.compose.dialogview.FDialogMenuViewColors
 import com.sd.lib.compose.dialogview.FDialogMenuViewDefaults
-import com.sd.lib.compose.dialogview.FDialogProgressView
+import com.sd.lib.compose.dialogview.FDialogProgress
 import com.sd.lib.compose.dialogview.beConfirm
 import com.sd.lib.compose.dialogview.beMenu
-import com.sd.lib.compose.dialogview.beProgress
 import com.sd.lib.compose.dialogview.fDialog
 
 class MainActivity : ComponentActivity() {
@@ -46,6 +47,8 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainView() {
+    val context = LocalContext.current
+
     Column(modifier = Modifier.fillMaxWidth()) {
         // Light or Dark
         var isLight by lightState()
@@ -75,7 +78,7 @@ fun MainView() {
         // Progress
         Button(
             modifier = Modifier.fillMaxWidth(),
-            onClick = { showProgressDialog() },
+            onClick = { showProgressDialog(context) },
         ) {
             Text(text = "Progress")
         }
@@ -161,10 +164,8 @@ private fun showMenuDialog() {
 /**
  * 加载窗口
  */
-private fun showProgressDialog() {
-    fDialog {
-        FDialogProgressView {
-            Text(text = "加载中")
-        }
-    }.beProgress()
+private fun showProgressDialog(context: Context) {
+    FDialogProgress(context).apply {
+        setMsg { Text(text = "加载中") }
+    }.show()
 }
