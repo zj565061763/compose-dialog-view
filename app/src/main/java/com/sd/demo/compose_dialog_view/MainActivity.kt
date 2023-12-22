@@ -71,7 +71,7 @@ fun MainView() {
         // Progress
         Button(
             modifier = Modifier.fillMaxWidth(),
-            onClick = { showProgressDialog() },
+            onClick = { showProgressDialog(isLight) },
         ) {
             Text(text = "Progress")
         }
@@ -156,8 +156,13 @@ private fun showMenuDialog() {
 /**
  * 加载窗口
  */
-private fun showProgressDialog() {
+private fun showProgressDialog(isLight: Boolean) {
     fDialogProgress {
+        this.hook = { content ->
+            AppTheme(isLight = isLight) {
+                content()
+            }
+        }
         this.text = { Text(text = "加载中") }
         this.show()
     }

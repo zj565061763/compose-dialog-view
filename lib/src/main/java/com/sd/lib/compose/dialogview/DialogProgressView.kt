@@ -27,6 +27,9 @@ import com.sd.lib.vdialog.FDialog
  * 加载窗口
  */
 class FDialogProgress(context: Context) : FDialog(context) {
+    /** 拦截[setComposable]的内容 */
+    var hook: @Composable ((@Composable () -> Unit)) -> Unit = { it() }
+
     /** 加载框 */
     var progress by mutableStateOf<@Composable (() -> Unit)?>(null)
 
@@ -36,10 +39,12 @@ class FDialogProgress(context: Context) : FDialog(context) {
     override fun onCreate() {
         super.onCreate()
         setComposable {
-            FDialogProgressView(
-                progress = progress,
-                text = text,
-            )
+            hook {
+                FDialogProgressView(
+                    progress = progress,
+                    text = text,
+                )
+            }
         }
     }
 
