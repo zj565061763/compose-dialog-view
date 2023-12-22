@@ -1,9 +1,11 @@
 package com.sd.lib.compose.dialogview
 
 import android.content.Context
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -52,7 +54,7 @@ class FDialogConfirm(context: Context) : FDialog(context) {
     var content by mutableStateOf<@Composable (() -> Unit)?>(null)
 
     /** 自定义按钮 */
-    var buttons by mutableStateOf<@Composable (() -> Unit)?>(null)
+    var buttons by mutableStateOf<@Composable (RowScope.() -> Unit)?>(null)
 
     /** 点击取消 */
     var onClickCancel: ((IDialog) -> Unit)? = null
@@ -117,7 +119,7 @@ fun FDialogConfirmView(
     /** 是否显示分割线 */
     showDivider: Boolean = true,
     /** 按钮 */
-    buttons: @Composable (() -> Unit)? = null,
+    buttons: @Composable (RowScope.() -> Unit)? = null,
 
     /** 点击取消 */
     onClickCancel: () -> Unit,
@@ -171,7 +173,15 @@ fun FDialogConfirmView(
 
             // 按钮
             if (buttons != null) {
-                buttons()
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(IntrinsicSize.Min),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                ) {
+                    buttons()
+                }
             } else {
                 FDialogConfirmButtons(
                     colors = colors,
