@@ -35,91 +35,61 @@ import com.sd.lib.vdialog.IDialog
  * 确认窗口
  */
 class FDialogConfirm(context: Context) : FDialog(context) {
+    /** 形状 */
+    var shapes: FDialogConfirmViewShapes by mutableStateOf(FDialogConfirmViewDefaults.shapes)
+    /** 颜色 */
+    var colors: FDialogConfirmViewColors by mutableStateOf(FDialogConfirmViewDefaults.colors)
+    /** 字体 */
+    var typography: FDialogConfirmViewTypography by mutableStateOf(FDialogConfirmViewDefaults.typography)
+
     /** 标题 */
-    private var _title by mutableStateOf<@Composable (() -> Unit)?>(null)
+    var title by mutableStateOf<@Composable (() -> Unit)?>(null)
 
     /** 内容 */
-    private var _content by mutableStateOf<@Composable (() -> Unit)?>(null)
+    var content by mutableStateOf<@Composable (() -> Unit)?>(null)
 
     /** 取消按钮 */
-    private var _cancel by mutableStateOf<@Composable (() -> Unit)?>(null)
+    var cancel by mutableStateOf<@Composable (() -> Unit)?>(null)
 
     /** 确认按钮 */
-    private var _confirm by mutableStateOf<@Composable (() -> Unit)?>(null)
+    var confirm by mutableStateOf<@Composable (() -> Unit)?>(null)
 
     /** 点击取消 */
-    private var _onClickCancel: ((IDialog) -> Unit)? = null
+    var onClickCancel: ((IDialog) -> Unit)? = null
 
     /** 点击确认 */
-    private var _onClickConfirm: ((IDialog) -> Unit)? = null
+    var onClickConfirm: ((IDialog) -> Unit)? = null
 
     override fun onCreate() {
         super.onCreate()
         setComposable {
             FDialogConfirmView(
-                title = _title,
-                content = _content ?: {},
-                cancel = _cancel,
-                confirm = _confirm,
+                shapes = shapes,
+                colors = colors,
+                typography = typography,
+
+                title = title,
+                cancel = cancel,
+                confirm = confirm,
+                content = content ?: {},
+
                 onClickCancel = {
-                    _onClickCancel?.invoke(this@FDialogConfirm)
+                    onClickCancel?.invoke(this@FDialogConfirm)
                 },
                 onClickConfirm = {
-                    _onClickConfirm?.invoke(this@FDialogConfirm)
+                    onClickConfirm?.invoke(this@FDialogConfirm)
                 },
             )
         }
     }
 
-    /**
-     * 标题
-     */
-    fun setTitle(block: @Composable (() -> Unit)?) {
-        this._title = block
-    }
-
-    /**
-     * 内容
-     */
-    fun setContent(block: @Composable (() -> Unit)?) {
-        this._content = block
-    }
-
-    /**
-     * 取消按钮
-     */
-    fun setCancel(block: @Composable (() -> Unit)?) {
-        this._cancel = block
-    }
-
-    /**
-     * 确认按钮
-     */
-    fun setConfirm(block: @Composable (() -> Unit)?) {
-        this._confirm = block
-    }
-
-    /**
-     * 点击取消
-     */
-    fun onClickCancel(callback: ((IDialog) -> Unit)?) {
-        _onClickCancel = callback ?: { dismiss() }
-    }
-
-    /**
-     * 点击确认
-     */
-    fun onClickConfirm(callback: ((IDialog) -> Unit)?) {
-        _onClickConfirm = callback ?: { dismiss() }
-    }
-
     init {
         setCanceledOnTouchOutside(false)
-        setTitle { Text(text = stringResource(id = R.string.lib_compose_dialog_view_confirm_text_title)) }
-        setCancel { Text(text = stringResource(id = R.string.lib_compose_dialog_view_confirm_text_cancel)) }
-        setConfirm { Text(text = stringResource(id = R.string.lib_compose_dialog_view_confirm_text_confirm)) }
-        onClickCancel { dismiss() }
-        onClickConfirm { dismiss() }
+        this.title = { Text(text = stringResource(id = R.string.lib_compose_dialog_view_confirm_text_title)) }
+        this.cancel = { Text(text = stringResource(id = R.string.lib_compose_dialog_view_confirm_text_cancel)) }
+        this.confirm = { Text(text = stringResource(id = R.string.lib_compose_dialog_view_confirm_text_confirm)) }
+        this.onClickCancel = { dismiss() }
+        this.onClickConfirm = { dismiss() }
     }
 }
 
@@ -264,15 +234,24 @@ private fun FDialogConfirmButtons(
 }
 
 object FDialogConfirmViewDefaults {
+    /** 形状 */
+    var shapes by mutableStateOf(FDialogConfirmViewShapes())
+
     /** 颜色 */
     var colors by mutableStateOf(FDialogConfirmViewColors.light())
 
     /** 字体 */
     var typography by mutableStateOf(FDialogConfirmViewTypography())
-
-    /** 形状 */
-    var shapes by mutableStateOf(FDialogConfirmViewShapes())
 }
+
+/**
+ * 形状
+ */
+@Immutable
+data class FDialogConfirmViewShapes(
+    /** 窗口形状 */
+    val dialog: Shape = RoundedCornerShape(10.dp),
+)
 
 /**
  * 颜色
@@ -374,13 +353,4 @@ data class FDialogConfirmViewTypography(
         fontSize = 14.sp,
         letterSpacing = 0.25.sp,
     ),
-)
-
-/**
- * 形状
- */
-@Immutable
-data class FDialogConfirmViewShapes(
-    /** 窗口形状 */
-    val dialog: Shape = RoundedCornerShape(10.dp),
 )

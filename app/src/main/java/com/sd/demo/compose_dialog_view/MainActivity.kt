@@ -8,6 +8,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -20,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import com.sd.demo.compose_dialog_view.ui.theme.AppTheme
 import com.sd.lib.compose.dialogview.FDialogConfirm
 import com.sd.lib.compose.dialogview.FDialogConfirmViewColors
@@ -105,16 +107,22 @@ private fun lightState(): MutableState<Boolean> {
  */
 private fun showConfirmDialog(context: Context) {
     FDialogConfirm(context).apply {
-        animatorFactory = ScaleXYFactory()
-        setTitle { Text(text = "Title") }
-        setContent { Text(text = "Content") }
-        setCancel { Text(text = "Cancel") }
-        setConfirm { Text(text = "Confirm") }
-        onClickCancel {
+        this.animatorFactory = ScaleXYFactory()
+
+        this.shapes = this.shapes.copy(
+            dialog = RoundedCornerShape(30.dp)
+        )
+
+        this.title = { Text(text = "Title") }
+        this.content = { Text(text = "Content") }
+        this.cancel = { Text(text = "Cancel") }
+        this.confirm = { Text(text = "Confirm") }
+
+        this.onClickCancel = {
             Toast.makeText(context, "onCancel", Toast.LENGTH_SHORT).show()
             dismiss()
         }
-        onClickConfirm {
+        this.onClickConfirm = {
             Toast.makeText(context, "onConfirm", Toast.LENGTH_SHORT).show()
             dismiss()
         }
