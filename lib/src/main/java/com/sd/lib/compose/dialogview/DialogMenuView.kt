@@ -237,15 +237,21 @@ fun FDialogMenuView(
 }
 
 object FDialogMenuViewDefaults {
+    /** 形状 */
+    var shapes by mutableStateOf(FDialogMenuViewShapes())
+
     /** 颜色 */
     var colors by mutableStateOf(FDialogMenuViewColors.light())
 
     /** 字体 */
     var typography by mutableStateOf(FDialogMenuViewTypography())
-
-    /** 形状 */
-    var shapes by mutableStateOf(FDialogMenuViewShapes())
 }
+
+@Immutable
+data class FDialogMenuViewShapes(
+    /** 窗口形状 */
+    val dialog: Shape = RoundedCornerShape(0.dp),
+)
 
 @Immutable
 data class FDialogMenuViewColors(
@@ -330,10 +336,4 @@ data class FDialogMenuViewTypography(
         fontSize = 14.sp,
         letterSpacing = 0.25.sp,
     ),
-)
-
-@Immutable
-data class FDialogMenuViewShapes(
-    /** 窗口形状 */
-    val dialog: Shape = RoundedCornerShape(0.dp),
 )
