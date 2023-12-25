@@ -136,10 +136,10 @@ class FDialogMenu<T>(context: Context) : FDialog(context) {
  */
 @Composable
 fun <T> FDialogMenuView(
+    modifier: Modifier = Modifier,
     /** 数据 */
     data: List<T>,
 
-    modifier: Modifier = Modifier,
     /** 形状 */
     shapes: FDialogMenuViewShapes = FDialogMenuViewDefaults.shapes,
     /** 颜色 */
