@@ -1,6 +1,5 @@
 package com.sd.lib.compose.dialogview
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -68,13 +67,12 @@ internal fun LibDialogButton(
     }
 }
 
-@SuppressLint("ModifierParameter")
 @Composable
 internal fun LibDialogDivider(
+    modifier: Modifier = Modifier,
     color: Color,
     thickness: Dp = with(LocalDensity.current) { 1f.toDp() },
     isHorizontal: Boolean = true,
-    modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier

@@ -208,6 +208,7 @@ fun FDialogConfirmView(
 
 @Composable
 private fun FDialogConfirmButtons(
+    modifier: Modifier = Modifier,
     colors: FDialogConfirmViewColors,
     typography: FDialogConfirmViewTypography,
     cancel: @Composable (() -> Unit)? = null,
@@ -217,7 +218,7 @@ private fun FDialogConfirmButtons(
     onClickConfirm: (() -> Unit)? = null,
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(IntrinsicSize.Min),
         verticalAlignment = Alignment.CenterVertically,
