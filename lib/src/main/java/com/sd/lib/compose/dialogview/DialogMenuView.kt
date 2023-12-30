@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.Gravity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.lazy.LazyColumn
@@ -21,8 +22,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -80,6 +79,7 @@ class FDialogMenu<T>(context: Context) : FDialog(context) {
                 val cnt = content
                 if (cnt == null) {
                     FDialogMenuView(
+                        modifier = Modifier.fillMaxHeight(0.6f),
                         data = data,
 
                         shapes = shapes,
@@ -230,7 +230,6 @@ fun FDialogMenuView(
         contentColor = colors.onBackground,
     ) {
         Column(
-            modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             // 标题
@@ -248,11 +247,8 @@ fun FDialogMenuView(
             }
 
             // 内容
-            val maxHeight = LocalContext.current.resources.displayMetrics.heightPixels / 2f
             LazyColumn(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .heightIn(max = with(LocalDensity.current) { maxHeight.toDp() }),
+                modifier = Modifier.fillMaxWidth(),
                 content = content,
             )
 
