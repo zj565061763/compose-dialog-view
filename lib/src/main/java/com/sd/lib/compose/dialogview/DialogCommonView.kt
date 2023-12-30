@@ -37,7 +37,7 @@ internal fun LibDialogButton(
 ) {
     Surface(
         modifier = modifier
-            .heightIn(40.dp)
+            .heightIn(50.dp)
             .let {
                 if (onClick != null) {
                     it.clickable(
