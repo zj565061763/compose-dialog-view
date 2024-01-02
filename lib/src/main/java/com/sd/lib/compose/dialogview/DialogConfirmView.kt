@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
@@ -27,6 +28,7 @@ import androidx.compose.ui.graphics.isSpecified
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sd.lib.compose.dialog.R
@@ -61,6 +63,11 @@ class FDialogConfirm(context: Context) : FDialog(context) {
     /** 自定义按钮 */
     var buttons by mutableStateOf<@Composable (RowScope.() -> Unit)?>(null)
 
+    /** 上半部分padding */
+    var titleContentPadding by mutableStateOf(PaddingValues(horizontal = 15.dp, vertical = 20.dp))
+    /** [title]和[content]之间的间距 */
+    var titleContentSpacing by mutableStateOf(20.dp)
+
     /** 点击取消 */
     var onClickCancel: ((IDialog) -> Unit)? = null
     /** 点击确认 */
@@ -82,6 +89,7 @@ class FDialogConfirm(context: Context) : FDialog(context) {
 
                     buttons = buttons,
                     showDivider = showDivider,
+                    titleContentPadding = titleContentPadding,
 
                     onClickCancel = {
                         onClickCancel?.invoke(this@FDialogConfirm)
@@ -130,6 +138,11 @@ fun FDialogConfirmView(
     /** 按钮 */
     buttons: @Composable (RowScope.() -> Unit)? = null,
 
+    /** 上半部分padding */
+    titleContentPadding: PaddingValues = PaddingValues(horizontal = 15.dp, vertical = 20.dp),
+    /** [title]和[content]之间的间距 */
+    titleContentSpacing: Dp = 20.dp,
+
     /** 点击取消 */
     onClickCancel: () -> Unit,
     /** 点击确认 */
@@ -150,7 +163,7 @@ fun FDialogConfirmView(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(15.dp),
+                    .padding(titleContentPadding),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 // 标题
@@ -160,7 +173,7 @@ fun FDialogConfirmView(
                             ?: typography.title.copy(color = colors.title)
                     ) {
                         title()
-                        Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(titleContentSpacing))
                     }
                 }
 
@@ -350,28 +363,28 @@ data class FDialogConfirmViewTypography(
     /** 标题 */
     val title: TextStyle = TextStyle(
         fontWeight = FontWeight.SemiBold,
-        fontSize = 20.sp,
+        fontSize = 18.sp,
         letterSpacing = 0.25.sp
     ),
 
     /** 内容 */
     val content: TextStyle = TextStyle(
         fontWeight = FontWeight.Normal,
-        fontSize = 14.sp,
+        fontSize = 16.sp,
         letterSpacing = 0.25.sp
     ),
 
     /** 取消按钮 */
     val cancel: TextStyle = TextStyle(
         fontWeight = FontWeight.Normal,
-        fontSize = 14.sp,
+        fontSize = 16.sp,
         letterSpacing = 0.25.sp,
     ),
 
     /** 确认按钮 */
     val confirm: TextStyle = TextStyle(
         fontWeight = FontWeight.Normal,
-        fontSize = 14.sp,
+        fontSize = 16.sp,
         letterSpacing = 0.25.sp,
     ),
 )
