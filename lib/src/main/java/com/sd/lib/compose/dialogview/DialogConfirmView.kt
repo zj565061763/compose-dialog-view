@@ -90,6 +90,7 @@ class FDialogConfirm(context: Context) : FDialog(context) {
                     buttons = buttons,
                     showDivider = showDivider,
                     titleContentPadding = titleContentPadding,
+                    titleContentSpacing = titleContentSpacing,
 
                     onClickCancel = {
                         onClickCancel?.invoke(this@FDialogConfirm)
