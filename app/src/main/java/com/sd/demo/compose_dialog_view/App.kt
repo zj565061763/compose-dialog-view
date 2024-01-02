@@ -21,9 +21,6 @@ class App : Application() {
         // 配置确认窗口行为
         DialogBehavior.confirm {
             this.animatorFactory = ScaleXYFactory()
-            this.shapes = this.shapes.copy(
-                dialog = RoundedCornerShape(30.dp)
-            )
         }
 
         // 配置菜单窗口行为
