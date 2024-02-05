@@ -21,7 +21,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.sd.lib.activity.fLastActivity
 import com.sd.lib.vdialog.FDialog
+
+/**
+ * 加载窗口
+ */
+fun fDialogLoading(
+    context: Context? = fLastActivity,
+    block: FDialogLoading.() -> Unit,
+): FDialogLoading? {
+    return context?.let {
+        FDialogLoading(it).also(block)
+    }
+}
 
 /**
  * 加载窗口

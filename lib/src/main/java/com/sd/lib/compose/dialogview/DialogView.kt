@@ -1,9 +1,7 @@
 package com.sd.lib.compose.dialogview
 
-import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.ComposeView
-import com.sd.lib.activity.fLastActivity
 import com.sd.lib.vdialog.IDialog
 
 object DialogViewHook {
@@ -28,41 +26,5 @@ fun IDialog.setComposable(content: @Composable IDialog.() -> Unit) {
         DialogViewHook.hook {
             content()
         }
-    }
-}
-
-/**
- * 加载窗口
- */
-fun fDialogLoading(
-    context: Context? = fLastActivity,
-    block: FDialogLoading.() -> Unit,
-): FDialogLoading? {
-    return context?.let {
-        FDialogLoading(it).also(block)
-    }
-}
-
-/**
- * 确认窗口
- */
-fun fDialogConfirm(
-    context: Context? = fLastActivity,
-    block: FDialogConfirm.() -> Unit,
-): FDialogConfirm? {
-    return context?.let {
-        FDialogConfirm(it).also(block)
-    }
-}
-
-/**
- * 菜单窗口
- */
-fun <T> fDialogMenu(
-    context: Context? = fLastActivity,
-    block: FDialogMenu<T>.() -> Unit,
-): FDialogMenu<T>? {
-    return context?.let {
-        FDialogMenu<T>(it).also(block)
     }
 }

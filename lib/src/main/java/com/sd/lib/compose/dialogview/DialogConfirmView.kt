@@ -31,9 +31,22 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.sd.lib.activity.fLastActivity
 import com.sd.lib.compose.dialog.R
 import com.sd.lib.vdialog.FDialog
 import com.sd.lib.vdialog.IDialog
+
+/**
+ * 确认窗口
+ */
+fun fDialogConfirm(
+    context: Context? = fLastActivity,
+    block: FDialogConfirm.() -> Unit,
+): FDialogConfirm? {
+    return context?.let {
+        FDialogConfirm(it).also(block)
+    }
+}
 
 /**
  * 确认窗口
