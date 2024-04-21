@@ -6,7 +6,7 @@ plugins {
 
 val libGroupId = "com.sd.lib.android"
 val libArtifactId = "compose-dialog-view"
-val libVersion = "1.0.0-beta08"
+val libVersion = "1.0.0-beta09"
 
 android {
     namespace = "com.sd.lib.compose.dialog"
